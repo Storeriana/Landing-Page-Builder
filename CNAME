@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Landing Page Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f0ece6;min-height:100vh}
+.app{display:grid;grid-template-columns:380px 1fr;min-height:100vh}
+@media(max-width:768px){.app{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+.editor{background:#f7f5f2;border-right:1px solid #e0d8ce;display:flex;flex-direction:column;overflow:hidden;max-height:100vh;position:sticky;top:0}
+.editor-header{padding:14px 16px;border-bottom:1px solid #e0d8ce;background:#fff;display:flex;align-items:center;justify-content:space-between}
+.editor-header h1{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#666}
+.tabs{display:flex;border-bottom:1px solid #e0d8ce;background:#fff}
+.tab{flex:1;padding:10px 4px;font-size:11px;font-weight:500;text-align:center;cursor:pointer;color:#888;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s}
+.tab.active{color:#8B6340;border-bottom-color:#8B6340}
+.fields{flex:1;overflow-y:auto;padding:14px}
+.fg{margin-bottom:13px}
+.fg label{display:block;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:4px}
+.fg input,.fg textarea,.fg select{width:100%;padding:8px 10px;font-size:12px;border:1px solid #ddd;border-radius:6px;background:#fff;color:#222;font-family:'Inter',sans-serif;outline:none;transition:border .15s}
+.fg textarea{resize:vertical;line-height:1.5}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:#8B6340}
+.img-slot{display:grid;grid-template-columns:22px 1fr 36px;gap:6px;align-items:center;margin-bottom:6px}
+.img-num{font-size:10px;font-weight:600;color:#aaa;text-align:center}
+.img-ok{width:32px;height:32px;border-radius:5px;background:#e6f7f0;border:1px solid #9fe1cb;display:flex;align-items:center;justify-content:center;font-size:10px;color:#1a6645;font-weight:600}
+.img-empty{width:32px;height:32px;border-radius:5px;background:#f5f5f5;border:1px dashed #ccc;display:flex;align-items:center;justify-content:center;font-size:16px}
+.feat-row{display:grid;grid-template-columns:36px 1fr;gap:6px;align-items:start;margin-bottom:8px}
+.feat-sub{display:grid;gap:4px}
+.btn-add{width:100%;padding:7px;font-size:11px;border:1px dashed #ccc;border-radius:6px;background:none;color:#aaa;cursor:pointer;font-family:'Inter',sans-serif;margin-top:3px;transition:all .15s}
+.btn-add:hover{background:#fff;color:#666;border-color:#aaa}
+.color-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.ci label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#888;display:block;margin-bottom:3px}
+.ci input[type=color]{width:100%;height:34px;border:1px solid #ddd;border-radius:6px;padding:2px;cursor:pointer}
+.gen-bar{padding:12px 14px;border-top:1px solid #e0d8ce;background:#fff;display:flex;gap:8px}
+.btn-gen{flex:1;background:#3a2d1f;color:#fff;border:none;border-radius:7px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background .15s}
+.btn-gen:hover{background:#2a1f14}
+.btn-reset{background:none;border:1px solid #ddd;border-radius:7px;padding:10px 14px;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;color:#444;transition:all .15s}
+.btn-reset:hover{background:#f5f5f5}
+.tab-content{display:none}.tab-content.active{display:block}
+.preview{overflow-y:auto;background:#e8e2da;padding:20px;display:flex;flex-direction:column;align-items:center}
+.preview-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:14px}
+.lp-wrap{width:100%;max-width:420px;background:#fff;border-radius:14px;overflow:hidden;font-family:'Inter',sans-serif;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.hint{font-size:10px;color:#888;margin-top:5px;line-height:1.5;padding:7px 9px;background:#f9f5f0;border-radius:6px;border-left:2px solid #8B6340}
+.embed-status{font-size:11px;padding:7px 9px;border-radius:6px;margin-top:5px}
+.embed-ok{background:#e6f7f0;color:#1a6645;border:1px solid #9fe1cb}
+.embed-wait{background:#f5f5f5;color:#888;border:1px dashed #ddd}
+.cors-note{background:#fff8e6;border:1px solid #f0d080;border-radius:6px;padding:8px 10px;font-size:10px;color:#7a5c00;margin-bottom:10px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- EDITOR -->
+  <div class="editor">
+    <div class="editor-header">
+      <h1>⚡ Landing Page Builder</h1>
+      <span style="font-size:10px;color:#aaa">v4.0</span>
+    </div>
+    <div class="tabs">
+      <button class="tab active" onclick="sw('produk',this)">Produk</button>
+      <button class="tab" onclick="sw('foto',this)">Foto</button>
+      <button class="tab" onclick="sw('harga',this)">Harga</button>
+      <button class="tab" onclick="sw('fitur',this)">Fitur</button>
+      <button class="tab" onclick="sw('order',this)">Order</button>
+      <button class="tab" onclick="sw('desain',this)">Desain</button>
+    </div>
+    <div class="fields">
+
+      <div id="tab-produk" class="tab-content active">
+        <div class="fg"><label>Nama Brand / Toko</label><input id="f-brand" placeholder="contoh: WAC Hijab" oninput="lu()"></div>
+        <div class="fg"><label>Nama Produk</label><input id="f-produk" placeholder="contoh: Pashmina Turban Instan" oninput="lu()"></div>
+        <div class="fg"><label>Sub Judul / Varian</label><input id="f-sub" placeholder="contoh: Ceruty Babydoll" oninput="lu()"></div>
+        <div class="fg"><label>Tagline / Deskripsi</label><textarea id="f-tagline" rows="3" placeholder="Deskripsi singkat produk..." oninput="lu()"></textarea></div>
+        <div class="fg"><label>Badge (pisah koma)</label><input id="f-badges" placeholder="Premium, Terlaris, Diskon" oninput="lu()"></div>
+        <div class="fg"><label>Teks Footer</label><input id="f-footer" placeholder="© 2025 Nama Toko" oninput="lu()"></div>
+      </div>
+
+      <div id="tab-foto" class="tab-content">
+        <div class="cors-note">⚠ Preview di sini tidak tampilkan gambar karena batasan browser. <strong>Foto tampil normal di file hasil Export.</strong></div>
+        <div id="img-slots"></div>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <button class="btn-add" onclick="addImg()" id="btn-add-img">+ Tambah Foto</button>
+          <button class="btn-add" onclick="removeImg()" id="btn-rem-img">− Hapus Foto</button>
+        </div>
+        <div class="hint" style="margin-top:10px">Foto 1 = hero utama (tampil besar). Foto 2–6 = thumbnail galeri yang bisa diklik.</div>
+      </div>
+
+      <div id="tab-harga" class="tab-content">
+        <div class="fg"><label>Harga Jual</label><input id="f-harga" placeholder="89.000" oninput="lu()"></div>
+        <div class="fg"><label>Harga Coret (opsional)</label><input id="f-harga-old" placeholder="130.000" oninput="lu()"></div>
+        <div class="fg"><label>Teks Urgency</label><input id="f-urgency" placeholder="Stok terbatas — tersisa 17 pcs" oninput="lu()"></div>
+        <div class="fg"><label>Perks / Keuntungan (1 per baris)</label><textarea id="f-perks" rows="3" placeholder="Free ongkir se-Indonesia&#10;Garansi produk asli&#10;Ready stok langsung kirim" oninput="lu()"></textarea></div>
+      </div>
+
+      <div id="tab-fitur" class="tab-content">
+        <div id="feats-container"></div>
+        <button class="btn-add" onclick="addFeat()">+ Tambah Fitur</button>
+      </div>
+
+      <div id="tab-order" class="tab-content">
+        <div class="fg"><label>Judul Section Order</label><input id="f-order-title" value="Pesan Sekarang" oninput="lu()"></div>
+        <div class="fg"><label>Sub Teks</label><input id="f-order-sub" value="Isi form di bawah, kami proses dalam 1x24 jam" oninput="lu()"></div>
+        <div class="fg">
+          <label>Kode Embed OrderOnline / Form</label>
+          <textarea id="f-embed-code" rows="7" oninput="checkEmbed()" style="font-size:10px;font-family:monospace" placeholder="Paste seluruh kode embed dari OrderOnline di sini...&#10;&#10;Cara: Buka produk → Bagikan → Embed → salin semua kode"></textarea>
+          <div id="embed-status" class="embed-status embed-wait" style="display:none"></div>
+          <div class="hint" style="margin-top:6px"><strong>OrderOnline:</strong> Produk → Bagikan → Embed → salin semua kode HTML+Script</div>
+        </div>
+      </div>
+
+      <div id="tab-desain" class="tab-content">
+        <div class="fg">
+          <label>Skema Warna</label>
+          <select id="f-theme" onchange="applyTheme();lu()">
+            <option value="coklat">Coklat Elegan</option>
+            <option value="hitam">Hitam Premium</option>
+            <option value="pink">Pink Feminin</option>
+            <option value="hijau">Hijau Natural</option>
+            <option value="navy">Navy Profesional</option>
+            <option value="ungu">Ungu Mewah</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+        <div class="color-grid" id="custom-colors" style="display:none">
+          <div class="ci"><label>Warna Utama</label><input type="color" id="c-primary" value="#3a2d1f" oninput="lu()"></div>
+          <div class="ci"><label>Warna Aksen</label><input type="color" id="c-accent" value="#8B6340" oninput="lu()"></div>
+          <div class="ci"><label>Background</label><input type="color" id="c-bg" value="#f9f5f0" oninput="lu()"></div>
+          <div class="ci"><label>Teks Aksen</label><input type="color" id="c-text" value="#8B6340" oninput="lu()"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="gen-bar">
+      <button class="btn-gen" onclick="doExport()">⬇ Export Landing Page</button>
+      <button class="btn-reset" onclick="doReset()">↺ Reset</button>
+    </div>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview">
+    <div class="preview-label">Preview Live — Foto tampil di file Export</div>
+    <div class="lp-wrap" id="lp-preview"></div>
+  </div>
+</div>
+
+<script>
+const themes={
+  coklat:{primary:'#3a2d1f',accent:'#8B6340',bg:'#f9f5f0',text:'#8B6340'},
+  hitam:{primary:'#111',accent:'#555',bg:'#f5f5f5',text:'#555'},
+  pink:{primary:'#8B1A4A',accent:'#C2557A',bg:'#fdf0f4',text:'#C2557A'},
+  hijau:{primary:'#1a4a2e',accent:'#3a7d52',bg:'#f0f7f3',text:'#3a7d52'},
+  navy:{primary:'#1a2550',accent:'#3a4f8B',bg:'#f0f3f9',text:'#3a4f8B'},
+  ungu:{primary:'#3d1a6e',accent:'#7c3aed',bg:'#f5f0fd',text:'#7c3aed'},
+};
+let imgs=['','','',''];
+let feats=[
+  {icon:'🌿',label:'Bahan Premium',sub:'Kualitas terjamin'},
+  {icon:'🤍',label:'Lembut & Nyaman',sub:'Cocok dipakai lama'},
+  {icon:'✅',label:'Berkualitas',sub:'Pilihan terbaik'},
+  {icon:'⏱️',label:'Praktis',sub:'Hemat waktu'},
+];
+
+function gv(id){return(document.getElementById(id)||{}).value||'';}
+
+function sw(name,el){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  el.classList.add('active');
+  if(name==='fitur') renderFeats();
+  if(name==='foto') renderImgSlots();
+}
+
+function getColors(){
+  const th=gv('f-theme');
+  if(th!=='custom') return themes[th]||themes.coklat;
+  return{primary:gv('c-primary'),accent:gv('c-accent'),bg:gv('c-bg'),text:gv('c-text')};
+}
+
+function applyTheme(){
+  const th=gv('f-theme');
+  document.getElementById('custom-colors').style.display=th==='custom'?'grid':'none';
+  if(th!=='custom'&&themes[th]){
+    const t=themes[th];
+    document.getElementById('c-primary').value=t.primary;
+    document.getElementById('c-accent').value=t.accent;
+    document.getElementById('c-bg').value=t.bg;
+    document.getElementById('c-text').value=t.text;
+  }
+}
+
+function checkEmbed(){
+  const code=gv('f-embed-code').trim();
+  const st=document.getElementById('embed-status');
+  st.style.display='block';
+  if(!code){st.className='embed-status embed-wait';st.textContent='Belum ada kode embed.';return;}
+  const hasOO=code.includes('orderonline')||code.includes('ooef')||code.includes('ooe(');
+  if(hasOO){st.className='embed-status embed-ok';st.textContent='✓ Terdeteksi: OrderOnline embed — siap!';}
+  else if(code.includes('<form')||code.includes('<iframe')){st.className='embed-status embed-ok';st.textContent='✓ Form embed terdeteksi — siap!';}
+  else{st.className='embed-status embed-wait';st.textContent='⚠ Kode tidak dikenali, pastikan salin semua kode embed.';}
+  lu();
+}
+
+function renderImgSlots(){
+  const c=document.getElementById('img-slots');
+  c.innerHTML=imgs.map((url,i)=>`
+    <div class="img-slot">
+      <div class="img-num">${i+1}</div>
+      <input type="text" placeholder="https://..." value="${url}" oninput="imgs[${i}]=this.value;updateThumb(${i},this.value)" style="font-size:11px">
+      <div id="thumb-${i}" class="${url?'img-ok':'img-empty'}">${url?'OK':'🖼'}</div>
+    </div>`).join('');
+  document.getElementById('btn-add-img').style.opacity=imgs.length>=6?'0.4':'1';
+  document.getElementById('btn-rem-img').style.opacity=imgs.length<=2?'0.4':'1';
+}
+
+function updateThumb(i,url){
+  const box=document.getElementById('thumb-'+i);
+  if(!box) return;
+  if(url&&url.startsWith('http')){box.className='img-ok';box.textContent='OK';}
+  else{box.className='img-empty';box.textContent='🖼';}
+  imgs[i]=url;
+  lu();
+}
+
+function addImg(){if(imgs.length<6){imgs.push('');renderImgSlots();lu();}}
+function removeImg(){if(imgs.length>2){imgs.pop();renderImgSlots();lu();}}
+
+function renderFeats(){
+  document.getElementById('feats-container').innerHTML=feats.map((f,i)=>`
+    <div class="feat-row">
+      <input type="text" value="${f.icon}" oninput="feats[${i}].icon=this.value;lu()" style="text-align:center;font-size:16px;padding:6px 2px">
+      <div class="feat-sub">
+        <input type="text" value="${f.label}" oninput="feats[${i}].label=this.value;lu()" placeholder="Nama fitur" style="font-size:11px">
+        <input type="text" value="${f.sub}" oninput="feats[${i}].sub=this.value;lu()" placeholder="Sub teks" style="font-size:11px">
+        <button onclick="rmFeat(${i})" style="font-size:10px;padding:2px 7px;border:1px solid #ddd;border-radius:4px;background:none;cursor:pointer;width:fit-content;font-family:Inter,sans-serif;color:#888">✕ Hapus</button>
+      </div>
+    </div>`).join('');
+}
+
+function addFeat(){feats.push({icon:'⭐',label:'Fitur Baru',sub:'Deskripsi'});renderFeats();lu();}
+function rmFeat(i){feats.splice(i,1);renderFeats();lu();}
+
+function buildPreview(colors){
+  const brand=gv('f-brand')||'Nama Brand';
+  const produk=gv('f-produk')||'Nama Produk';
+  const sub=gv('f-sub');
+  const tagline=gv('f-tagline');
+  const badgesRaw=gv('f-badges');
+  const harga=gv('f-harga');
+  const hargaOld=gv('f-harga-old');
+  const urgency=gv('f-urgency');
+  const perksRaw=gv('f-perks');
+  const footer=gv('f-footer')||'© 2025 Toko Saya';
+  const orderTitle=gv('f-order-title')||'Pesan Sekarang';
+  const orderSub=gv('f-order-sub');
+  const embedCode=gv('f-embed-code').trim();
+  const badges=badgesRaw.split(',').map(b=>b.trim()).filter(Boolean);
+  const perks=perksRaw.split('\n').map(p=>p.trim()).filter(Boolean);
+  const validImgs=imgs.filter(u=>u.trim());
+
+  const heroBlock=`<div style="background:${colors.bg};min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;text-align:center;border-bottom:1px solid #eee">
+    ${validImgs.length>0
+      ?`<div style="font-size:12px;color:#1a6645;font-weight:600;margin-bottom:8px">✓ ${validImgs.length} foto tersimpan</div>
+         <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center">
+           ${validImgs.map((u,i)=>`<div style="width:44px;height:44px;border-radius:6px;background:${i===0?colors.accent+'33':'#f0f0f0'};border:${i===0?'2px solid '+colors.accent:'1px solid #ccc'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:${i===0?colors.accent:'#999'}">${i===0?'Hero':i+1}</div>`).join('')}
+         </div>
+         <div style="font-size:9px;color:#bbb;margin-top:6px">Foto tampil di file export</div>`
+      :`<div style="font-size:24px;margin-bottom:5px">🖼</div><div style="font-size:11px;color:#bbb">Belum ada foto — isi di tab Foto</div>`}
+  </div>`;
+
+  const embedPreview=embedCode
+    ?`<div style="background:#e6f7f0;border:1px solid #9fe1cb;border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:12px;color:#1a6645;font-weight:600;margin-bottom:2px">✓ Form OrderOnline Terpasang</div>
+        <div style="font-size:10px;color:#3a7d60">Form aktif di file export</div>
+      </div>`
+    :`<div style="background:#f9f5f0;border:1px dashed #d4b896;border-radius:8px;padding:14px;text-align:center;color:#bbb;font-size:11px">Form order — paste kode di tab Order</div>`;
+
+  return `
+<div style="background:${colors.bg}">${heroBlock}
+  <div style="padding:14px;text-align:center">
+    <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;font-weight:600;color:${colors.text};margin-bottom:7px">${brand}</div>
+    <div style="display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:8px">
+      ${badges.map(b=>`<span style="background:${colors.primary};color:#fff;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:2px">${b}</span>`).join('')}
+    </div>
+    <div style="font-family:'Playfair Display',Georgia,serif;font-size:20px;font-weight:700;color:#1a1a1a;line-height:1.2;margin-bottom:3px">${produk}</div>
+    ${sub?`<div style="font-size:11px;font-style:italic;color:${colors.text};margin-bottom:6px">${sub}</div>`:''}
+    ${tagline?`<div style="font-size:11px;color:#666;line-height:1.6">${tagline}</div>`:''}
+  </div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px;background:#fff">
+  ${feats.map(f=>`<div style="background:${colors.bg};border-radius:8px;padding:10px;text-align:center">
+    <div style="font-size:18px;margin-bottom:3px">${f.icon}</div>
+    <div style="font-size:10px;font-weight:600;color:#2a1f14;line-height:1.3">${f.label}</div>
+    <div style="font-size:9px;color:${colors.text};margin-top:2px">${f.sub}</div>
+  </div>`).join('')}
+</div>
+${harga?`<div style="padding:12px;background:#fff;border-top:1px solid #f0ebe3">
+  <div style="background:${colors.bg};border-radius:10px;padding:12px">
+    <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:${colors.text};margin-bottom:3px">Harga Spesial</div>
+    <div style="font-size:22px;font-weight:700;color:#1a1a1a">Rp ${harga}</div>
+    ${hargaOld?`<div style="font-size:10px;color:#999;text-decoration:line-through;margin-bottom:5px">Rp ${hargaOld}</div>`:''}
+    ${perks.length?`<div style="margin-top:6px;display:flex;flex-direction:column;gap:3px">${perks.map(p=>`<div style="font-size:10px;color:#555;display:flex;align-items:center;gap:5px"><span style="width:5px;height:5px;border-radius:50%;background:${colors.accent};display:inline-block;flex-shrink:0"></span>${p}</div>`).join('')}</div>`:''}
+  </div>
+</div>`:''}
+${urgency?`<div style="background:${colors.primary};color:#f0e6d6;padding:8px 12px;text-align:center;font-size:10px;font-weight:500">${urgency}</div>`:''}
+<div style="padding:12px;background:#fff;border-top:1px solid #f0ebe3">
+  <div style="font-size:14px;font-weight:700;color:#1a1a1a;text-align:center;margin-bottom:3px">${orderTitle}</div>
+  ${orderSub?`<div style="font-size:11px;color:#888;text-align:center;margin-bottom:10px">${orderSub}</div>`:'<div style="margin-bottom:10px"></div>'}
+  ${embedPreview}
+</div>
+<div style="padding:10px;text-align:center;font-size:9px;color:#bbb;border-top:1px solid #f0ebe3;background:#fff">${footer}</div>`;
+}
+
+function buildExportHTML(colors){
+  const brand=gv('f-brand')||'Toko';
+  const produk=gv('f-produk')||'Produk';
+  const sub=gv('f-sub');
+  const tagline=gv('f-tagline');
+  const badgesRaw=gv('f-badges');
+  const harga=gv('f-harga');
+  const hargaOld=gv('f-harga-old');
+  const urgency=gv('f-urgency');
+  const perksRaw=gv('f-perks');
+  const footer=gv('f-footer')||'© 2025';
+  const orderTitle=gv('f-order-title')||'Pesan Sekarang';
+  const orderSub=gv('f-order-sub');
+  const embedCode=gv('f-embed-code').trim();
+  const badges=badgesRaw.split(',').map(b=>b.trim()).filter(Boolean);
+  const perks=perksRaw.split('\n').map(p=>p.trim()).filter(Boolean);
+  const validImgs=imgs.filter(u=>u.trim());
+
+  const galleryScript=validImgs.length>1?`<script>function switchImg(url,el){document.getElementById('hero-img').src=url;document.querySelectorAll('.th').forEach(t=>{t.style.border='1px solid #ddd';t.style.opacity='0.7';});el.style.border='2px solid ${colors.accent}';el.style.opacity='1';}<\/script>`:'';
+
+  const heroBlock=validImgs.length>0?`
+<div style="background:#f0f0f0;overflow:hidden;line-height:0">
+  <img id="hero-img" src="${validImgs[0]}" alt="${produk}" style="width:100%;display:block;max-height:500px;object-fit:cover">
+</div>
+${validImgs.length>1?`<div style="display:flex;gap:8px;padding:10px 16px;background:#fff;overflow-x:auto">
+  ${validImgs.map((u,i)=>`<img src="${u}" alt="" class="th" style="width:70px;height:70px;object-fit:cover;border-radius:8px;flex-shrink:0;cursor:pointer;border:${i===0?'2px solid '+colors.accent:'1px solid #ddd'};opacity:${i===0?'1':'0.7'}" onclick="switchImg('${u}',this)">`).join('')}
+</div>`:''}`:'';
+
+  return `<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>${brand} — ${produk}</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#ede9e3;min-height:100vh;display:flex;justify-content:center;padding:24px 0}
+.wrap{width:100%;max-width:520px;background:#fff}
+@media(max-width:560px){body{padding:0}.wrap{max-width:100%}}
+</style>
+${galleryScript}
+</head>
+<body>
+<div class="wrap">
+${heroBlock}
+<div style="background:${colors.bg};padding:22px 20px 16px;text-align:center">
+  <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:600;color:${colors.text};margin-bottom:10px">${brand}</div>
+  <div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+    ${badges.map(b=>`<span style="background:${colors.primary};color:#fff;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:2px">${b}</span>`).join('')}
+  </div>
+  <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#1a1a1a;line-height:1.2;margin-bottom:4px">${produk}</div>
+  ${sub?`<div style="font-size:13px;font-style:italic;color:${colors.text};margin-bottom:8px">${sub}</div>`:''}
+  ${tagline?`<div style="font-size:13px;color:#666;line-height:1.7">${tagline}</div>`:''}
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px;background:#fff">
+  ${feats.map(f=>`<div style="background:${colors.bg};border-radius:10px;padding:14px;text-align:center">
+    <div style="font-size:24px;margin-bottom:6px">${f.icon}</div>
+    <div style="font-size:12px;font-weight:600;color:#2a1f14;line-height:1.3">${f.label}</div>
+    <div style="font-size:11px;color:${colors.text};margin-top:2px">${f.sub}</div>
+  </div>`).join('')}
+</div>
+${harga?`<div style="padding:14px 16px;background:#fff;border-top:1px solid #f0ebe3">
+  <div style="background:${colors.bg};border-radius:12px;padding:16px">
+    <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:${colors.text};margin-bottom:4px">Harga Spesial</div>
+    <div style="font-size:32px;font-weight:700;color:#1a1a1a;margin-bottom:2px">Rp ${harga}</div>
+    ${hargaOld?`<div style="font-size:13px;color:#999;text-decoration:line-through;margin-bottom:8px">Rp ${hargaOld}</div>`:''}
+    ${perks.length?`<div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">${perks.map(p=>`<div style="font-size:12px;color:#555;display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:${colors.accent};display:inline-block;flex-shrink:0"></span>${p}</div>`).join('')}</div>`:''}
+  </div>
+</div>`:''}
+${urgency?`<div style="background:${colors.primary};color:#f0e6d6;padding:10px 16px;text-align:center;font-size:13px;font-weight:500;letter-spacing:.5px">${urgency}</div>`:''}
+<div style="padding:22px 16px;background:#fff;border-top:1px solid #f0ebe3">
+  <div style="font-size:20px;font-weight:700;color:#1a1a1a;text-align:center;margin-bottom:4px">${orderTitle}</div>
+  ${orderSub?`<div style="font-size:13px;color:#888;text-align:center;margin-bottom:18px">${orderSub}</div>`:'<div style="margin-bottom:18px"></div>'}
+  ${embedCode||'<p style="text-align:center;color:#bbb;font-size:13px;padding:20px">Form order belum dikonfigurasi.</p>'}
+</div>
+<div style="padding:14px 16px;text-align:center;font-size:11px;color:#bbb;border-top:1px solid #f0ebe3">${footer}</div>
+</div>
+</body>
+</html>`;
+}
+
+function lu(){
+  document.getElementById('lp-preview').innerHTML=buildPreview(getColors());
+}
+
+function doExport(){
+  const colors=getColors();
+  const html=buildExportHTML(colors);
+  const brand=(gv('f-brand')||'landing-page').replace(/\s+/g,'-').toLowerCase();
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=brand+'.html';a.click();
+  URL.revokeObjectURL(url);
+}
+
+function doReset(){
+  if(!confirm('Reset semua data form?')) return;
+  ['f-brand','f-produk','f-sub','f-tagline','f-badges','f-footer','f-harga','f-harga-old','f-urgency','f-perks','f-order-title','f-order-sub','f-embed-code'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  document.getElementById('f-order-title').value='Pesan Sekarang';
+  document.getElementById('f-order-sub').value='Isi form di bawah, kami proses dalam 1x24 jam';
+  imgs=['','','',''];
+  feats=[
+    {icon:'🌿',label:'Bahan Premium',sub:'Kualitas terjamin'},
+    {icon:'🤍',label:'Lembut & Nyaman',sub:'Cocok dipakai lama'},
+    {icon:'✅',label:'Berkualitas',sub:'Pilihan terbaik'},
+    {icon:'⏱️',label:'Praktis',sub:'Hemat waktu'},
+  ];
+  const st=document.getElementById('embed-status');
+  if(st){st.style.display='none';}
+  renderImgSlots();renderFeats();lu();
+}
+
+renderImgSlots();
+renderFeats();
+lu();
+</script>
+</body>
+</html>
