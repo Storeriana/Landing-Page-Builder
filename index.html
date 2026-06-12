@@ -136,8 +136,8 @@ body{font-family:'Inter',sans-serif;background:#1a1a2e;min-height:100vh;color:#f
               <input id="f-brand-rating" type="number" value="4.9" min="1" max="5" step="0.1" oninput="lu()" style="text-align:center">
             </div>
             <div class="fg" style="margin:0">
-              <label>Jumlah Ulasan</label>
-              <input id="f-brand-review" placeholder="2.4rb" oninput="lu()">
+              <label>Terjual</label>
+              <input id="f-brand-review" placeholder="1.2rb" oninput="lu()">
             </div>
           </div>
         </div>
@@ -145,7 +145,20 @@ body{font-family:'Inter',sans-serif;background:#1a1a2e;min-height:100vh;color:#f
         <div class="fg"><label>Sub Judul / Varian</label><input id="f-sub" placeholder="Varian atau sub judul" oninput="lu()"></div>
         <div class="fg"><label>Tagline / Deskripsi</label><textarea id="f-tagline" rows="3" placeholder="Deskripsi singkat produk..." oninput="lu()"></textarea></div>
         <div class="fg"><label>Badge (pisah koma)</label><input id="f-badges" placeholder="Premium, Terlaris, Diskon" oninput="lu()"></div>
-        <div class="fg"><label>Teks Footer</label><input id="f-footer" placeholder="© 2025 Nama Toko" oninput="lu()"></div>
+        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:8px;padding:10px;margin-top:4px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">Footer</div>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+              <span style="font-size:10px;color:#718096">Tampil</span>
+              <div style="position:relative;width:36px;height:20px" onclick="toggleFooter()">
+                <input type="checkbox" id="f-footer-on" checked style="opacity:0;width:0;height:0;position:absolute">
+                <div id="f-footer-track" style="position:absolute;inset:0;border-radius:10px;background:#e94560;transition:background .2s;cursor:pointer"></div>
+                <div id="f-footer-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(16px)"></div>
+              </div>
+            </label>
+          </div>
+          <div class="fg" style="margin:0"><label>Teks Footer</label><input id="f-footer" placeholder="© 2025 Nama Toko" oninput="lu()"></div>
+        </div>
       </div>
 
       <div id="tab-hero" class="tab-content">
@@ -163,38 +176,56 @@ body{font-family:'Inter',sans-serif;background:#1a1a2e;min-height:100vh;color:#f
       <div id="tab-harga" class="tab-content">
         <div class="fg"><label>Harga Jual</label><input id="f-harga" placeholder="89.000" oninput="lu()"></div>
         <div class="fg"><label>Harga Coret</label><input id="f-harga-old" placeholder="130.000" oninput="lu()"></div>
-        <div class="fg"><label>Teks Urgency</label><input id="f-urgency" placeholder="Stok terbatas — tersisa 17 pcs" oninput="lu()"></div>
+        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:8px;padding:10px;margin-bottom:2px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">⚡ Teks Urgency</div>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+              <span style="font-size:10px;color:#718096">Tampil</span>
+              <div style="position:relative;width:36px;height:20px" onclick="toggleUrgency()">
+                <input type="checkbox" id="f-urgency-on" checked style="opacity:0;width:0;height:0;position:absolute">
+                <div id="f-urgency-track" style="position:absolute;inset:0;border-radius:10px;background:#e94560;transition:background .2s;cursor:pointer"></div>
+                <div id="f-urgency-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(16px)"></div>
+              </div>
+            </label>
+          </div>
+          <div class="fg" style="margin:0"><label>Teks</label><input id="f-urgency" placeholder="Stok terbatas — tersisa 17 pcs" oninput="lu()"></div>
+        </div>
         <div class="fg"><label>Keuntungan (1 per baris)</label><textarea id="f-perks" rows="3" placeholder="Free ongkir se-Indonesia&#10;Garansi produk asli&#10;Ready stok" oninput="lu()"></textarea></div>
         <div style="background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:12px;margin-top:4px">
-          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560;margin-bottom:10px">⏱ Promo Countdown Timer</div>
-          <div class="fg" style="margin-bottom:9px">
-            <label>Label Timer</label>
-            <input id="f-timer-label" value="Promo Berakhir Dalam" oninput="lu()" placeholder="Promo Berakhir Dalam">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">⏱ Promo Countdown Timer</div>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+              <span style="font-size:10px;color:#718096">Tampil</span>
+              <div style="position:relative;width:36px;height:20px" onclick="toggleTimer()">
+                <input type="checkbox" id="f-timer-on" style="opacity:0;width:0;height:0;position:absolute">
+                <div id="f-timer-track" style="position:absolute;inset:0;border-radius:10px;background:#2d3748;transition:background .2s;cursor:pointer"></div>
+                <div id="f-timer-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(0)"></div>
+              </div>
+            </label>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:9px">
-            <div class="fg" style="margin:0">
-              <label>Hari</label>
-              <input id="f-timer-d" type="number" value="0" min="0" max="99" oninput="lu()" style="text-align:center">
+          <div id="f-timer-body" style="opacity:0.4;pointer-events:none">
+            <div style="background:#16213e;border:1px solid #2d3748;border-radius:8px;padding:9px;margin-bottom:8px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                <div style="font-size:10px;font-weight:600;color:#a0aec0">Label Timer</div>
+                <label style="display:flex;align-items:center;gap:5px;cursor:pointer">
+                  <span style="font-size:10px;color:#718096">Tampil</span>
+                  <div style="position:relative;width:32px;height:18px" onclick="toggleTimerLabel()">
+                    <input type="checkbox" id="f-timer-label-on" checked style="opacity:0;width:0;height:0;position:absolute">
+                    <div id="f-timer-label-track" style="position:absolute;inset:0;border-radius:9px;background:#e94560;transition:background .2s;cursor:pointer"></div>
+                    <div id="f-timer-label-knob" style="position:absolute;top:1px;left:1px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(14px)"></div>
+                  </div>
+                </label>
+              </div>
+              <div class="fg" style="margin:0">
+                <input id="f-timer-label" value="Promo Berakhir Dalam" oninput="lu()" placeholder="Promo Berakhir Dalam">
+              </div>
             </div>
-            <div class="fg" style="margin:0">
-              <label>Jam</label>
-              <input id="f-timer-h" type="number" value="12" min="0" max="23" oninput="lu()" style="text-align:center">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:0">
+              <div class="fg" style="margin:0"><label>Hari</label><input id="f-timer-d" type="number" value="0" min="0" max="99" oninput="lu()" style="text-align:center"></div>
+              <div class="fg" style="margin:0"><label>Jam</label><input id="f-timer-h" type="number" value="12" min="0" max="23" oninput="lu()" style="text-align:center"></div>
+              <div class="fg" style="margin:0"><label>Menit</label><input id="f-timer-m" type="number" value="30" min="0" max="59" oninput="lu()" style="text-align:center"></div>
+              <div class="fg" style="margin:0"><label>Detik</label><input id="f-timer-s" type="number" value="0" min="0" max="59" oninput="lu()" style="text-align:center"></div>
             </div>
-            <div class="fg" style="margin:0">
-              <label>Menit</label>
-              <input id="f-timer-m" type="number" value="30" min="0" max="59" oninput="lu()" style="text-align:center">
-            </div>
-            <div class="fg" style="margin:0">
-              <label>Detik</label>
-              <input id="f-timer-s" type="number" value="0" min="0" max="59" oninput="lu()" style="text-align:center">
-            </div>
-          </div>
-          <div class="fg" style="margin:0">
-            <label>Aktifkan Timer</label>
-            <select id="f-timer-on" onchange="lu()" style="font-size:12px">
-              <option value="1">Ya — tampilkan timer</option>
-              <option value="0">Tidak — sembunyikan</option>
-            </select>
           </div>
         </div>
       </div>
@@ -244,6 +275,31 @@ body{font-family:'Inter',sans-serif;background:#1a1a2e;min-height:100vh;color:#f
               <button onclick="addPresetSize('sepatu')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:Inter,sans-serif">36 37 38 39 40</button>
               <button onclick="addPresetSize('universal')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:Inter,sans-serif">XS S M L XL</button>
             </div>
+
+            <!-- Detail Ukuran -->
+            <div style="margin-top:10px;background:#16213e;border:1px solid #2d3748;border-radius:8px;padding:10px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#a0aec0">📏 Detail / Panduan Ukuran</div>
+                <label style="display:flex;align-items:center;gap:5px;cursor:pointer">
+                  <span style="font-size:10px;color:#718096">Tampil</span>
+                  <div style="position:relative;width:32px;height:18px" onclick="toggleSizeDetail()">
+                    <input type="checkbox" id="v-size-detail-on" style="opacity:0;width:0;height:0;position:absolute">
+                    <div id="v-size-detail-track" style="position:absolute;inset:0;border-radius:9px;background:#2d3748;transition:background .2s;cursor:pointer"></div>
+                    <div id="v-size-detail-knob" style="position:absolute;top:1px;left:1px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(0)"></div>
+                  </div>
+                </label>
+              </div>
+              <div id="v-size-detail-body" style="opacity:0.4;pointer-events:none">
+                <div class="fg" style="margin-bottom:7px">
+                  <label>Judul Panduan</label>
+                  <input id="v-size-detail-title" placeholder="contoh: Panduan Ukuran" value="Panduan Ukuran" oninput="lu()">
+                </div>
+                <div class="fg" style="margin:0">
+                  <label>Isi Detail Ukuran</label>
+                  <textarea id="v-size-detail-text" rows="5" oninput="lu()" placeholder="contoh:&#10;S = Lingkar dada 80-85cm&#10;M = Lingkar dada 86-90cm&#10;L = Lingkar dada 91-96cm&#10;XL = Lingkar dada 97-102cm&#10;XXL = Lingkar dada 103-108cm"></textarea>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -267,6 +323,29 @@ body{font-family:'Inter',sans-serif;background:#1a1a2e;min-height:100vh;color:#f
             </div>
             <div id="color-slots"></div>
             <button class="btn-add-main" onclick="addColor()">+ Tambah Warna</button>
+          </div>
+        </div>
+
+        <!-- PAKET -->
+        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:12px;margin-top:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">📦 Pilihan Paket</div>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+              <span style="font-size:10px;color:#718096">Aktif</span>
+              <div style="position:relative;width:36px;height:20px" onclick="toggleVarian('paket')">
+                <input type="checkbox" id="v-paket-on" style="opacity:0;width:0;height:0;position:absolute">
+                <div id="v-paket-track" style="position:absolute;inset:0;border-radius:10px;background:#2d3748;transition:background .2s;cursor:pointer"></div>
+                <div id="v-paket-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(0)"></div>
+              </div>
+            </label>
+          </div>
+          <div id="v-paket-body" style="opacity:0.4;pointer-events:none">
+            <div class="fg" style="margin-bottom:8px">
+              <label>Label Paket</label>
+              <input id="v-paket-label" value="Pilih Paket" oninput="lu()">
+            </div>
+            <div id="paket-slots"></div>
+            <button class="btn-add-main" onclick="addPaket()" id="btn-add-paket">+ Tambah Paket</button>
           </div>
         </div>
       </div>
@@ -398,6 +477,70 @@ const STYLES = {
 // Helper
 function gv(id){return(document.getElementById(id)||{}).value||'';}
 
+function toggleTimer(){
+  var cb=document.getElementById('f-timer-on');
+  var track=document.getElementById('f-timer-track');
+  var knob=document.getElementById('f-timer-knob');
+  var body=document.getElementById('f-timer-body');
+  if(!cb) return;
+  cb.checked=!cb.checked;
+  var on=cb.checked;
+  if(track) track.style.background=on?'#e94560':'#2d3748';
+  if(knob)  knob.style.transform=on?'translateX(16px)':'translateX(0)';
+  if(body){body.style.opacity=on?'1':'0.4';body.style.pointerEvents=on?'auto':'none';}
+  lu();
+}
+
+function toggleTimerLabel(){
+  var cb=document.getElementById('f-timer-label-on');
+  var track=document.getElementById('f-timer-label-track');
+  var knob=document.getElementById('f-timer-label-knob');
+  if(!cb) return;
+  cb.checked=!cb.checked;
+  var on=cb.checked;
+  if(track) track.style.background=on?'#e94560':'#2d3748';
+  if(knob)  knob.style.transform=on?'translateX(14px)':'translateX(0)';
+  lu();
+}
+
+function toggleUrgency(){
+  var cb=document.getElementById('f-urgency-on');
+  var track=document.getElementById('f-urgency-track');
+  var knob=document.getElementById('f-urgency-knob');
+  if(!cb) return;
+  cb.checked=!cb.checked;
+  var on=cb.checked;
+  if(track) track.style.background=on?'#e94560':'#2d3748';
+  if(knob)  knob.style.transform=on?'translateX(16px)':'translateX(0)';
+  lu();
+}
+
+function toggleFooter(){
+  var cb=document.getElementById('f-footer-on');
+  var track=document.getElementById('f-footer-track');
+  var knob=document.getElementById('f-footer-knob');
+  if(!cb) return;
+  cb.checked = !cb.checked;
+  var on = cb.checked;
+  if(track) track.style.background = on ? '#e94560' : '#2d3748';
+  if(knob)  knob.style.transform   = on ? 'translateX(16px)' : 'translateX(0)';
+  lu();
+}
+
+function toggleSizeDetail(){
+  var cb=document.getElementById('v-size-detail-on');
+  var track=document.getElementById('v-size-detail-track');
+  var knob=document.getElementById('v-size-detail-knob');
+  var body=document.getElementById('v-size-detail-body');
+  if(!cb) return;
+  cb.checked=!cb.checked;
+  var on=cb.checked;
+  if(track) track.style.background=on?'#e94560':'#2d3748';
+  if(knob)  knob.style.transform=on?'translateX(14px)':'translateX(0)';
+  if(body){body.style.opacity=on?'1':'0.4';body.style.pointerEvents=on?'auto':'none';}
+  lu();
+}
+
 function toggleVarian(type){
   const cb=document.getElementById('v-'+type+'-on');
   const track=document.getElementById('v-'+type+'-track');
@@ -406,10 +549,12 @@ function toggleVarian(type){
   if(!cb) return;
   cb.checked=!cb.checked;
   const on=cb.checked;
+  // Simpan ke state variabel — aman dipanggil dari mana saja
+  varianState[type]=on;
   if(track) track.style.background=on?'#e94560':'#2d3748';
   if(knob)  knob.style.transform=on?'translateX(16px)':'translateX(0)';
   if(body)  body.style.opacity=on?'1':'0.4';
-  if(body)  body.style.pointerEvents=on?'':'none';
+  if(body)  body.style.pointerEvents=on?'auto':'none';
   lu();
 }
 
@@ -445,6 +590,10 @@ let feats = [
 ];
 
 let sizeSlots  = [{val:'S'},{val:'M'},{val:'L'},{val:'XL'},{val:'XXL'}];
+let paketSlots = [{nama:'1 pcs',harga:'',ket:''},{nama:'2 pcs',harga:'',ket:'Hemat 10%'},{nama:'3 pcs',harga:'',ket:'Hemat 20%'}];
+
+// State toggle varian — tidak baca DOM agar aman saat dipanggil dari string builder
+let varianState = {size: true, color: true, paket: false};
 let colorSlots = [
   {name:'Hitam', hex:'#111111', img:''},
   {name:'Putih', hex:'#FFFFFF', img:''},
@@ -468,8 +617,8 @@ function buildCarousel(heroSlots, accent, h, isE){
 <div id="${uid}-t" style="display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1);cursor:grab;user-select:none;will-change:transform;align-items:flex-start">${slides}</div>
 <button id="${uid}-p" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);color:#fff;border:none;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9;backdrop-filter:blur(4px)">&#8249;</button>
 <button id="${uid}-n" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);color:#fff;border:none;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9;backdrop-filter:blur(4px)">&#8250;</button>
-<div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:9">${dots}</div>
-${tot>1?`<div id="${uid}-c" style="position:absolute;bottom:12px;right:14px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:3px 9px;border-radius:10px;font-family:Inter,sans-serif">1/${tot}</div>`:''}
+<div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:9;line-height:0">${dots}</div>
+${tot>1?`<div id="${uid}-c" style="position:absolute;bottom:8px;right:12px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:3px 9px;border-radius:10px;font-family:Inter,sans-serif;line-height:1.4">1/${tot}</div>`:''}
 </div>
 <script>
 (function(){var c=0,t=${tot},sx=0,dx=0,dr=false;
@@ -527,6 +676,22 @@ ${kList.map(k=>`<div style="display:flex;align-items:flex-start;gap:${isE?'13':'
 // SHARED LAYOUT ENGINE — struktur profesional seperti marketplace
 // Setiap style hanya ganti tema visual (warna, font, radius, dll)
 // ════════════════════════════════════════════════════════════════
+
+function buildUrgency(P, ac, bf, E){
+  if(!P.urgency) return '';
+  var fs = E ? '12px' : '10px';
+  var ifs = E ? '14px' : '12px';
+  var pad = E ? '8px 0' : '5px 0';
+  var txt = P.urgency.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  var item = '<span style="display:inline-flex;align-items:center;gap:8px;padding:0 28px;font-size:'+fs+';font-weight:700;color:#fff;font-family:'+bf+';letter-spacing:.3px;line-height:1.6">'
+           + '<span style="font-size:'+ifs+'">⚡</span>'+txt+'</span>';
+  return '<div style="background:'+ac+';padding:'+pad+';overflow:hidden;margin:0;display:block">'
+       + '<div id="lp-uq-wrap" style="display:flex;white-space:nowrap;animation:lpUQ 6s linear infinite">'
+       + item+item+item+item
+       + '</div>'
+       + '<style id="lp-uq-style">@keyframes lpUQ{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}#lp-uq-wrap{display:flex;white-space:nowrap;animation:lpUQ 6s linear infinite;}</style>'
+       + '</div>';
+}
 
 function buildLP(s, d, isE) {
   const E = isE, P = d;
@@ -589,7 +754,7 @@ function buildLP(s, d, isE) {
   ${P.sub ? `<div style="font-size:${E?'13':'11'}px;color:${ac};font-family:${bf};font-weight:600;margin-bottom:4px">${P.sub}</div>` : ''}
   ${P.tagline ? `<div style="font-size:${E?'12':'10'}px;color:${textSub};line-height:1.6;font-family:${bf}">${P.tagline}</div>` : ''}
   ${P.timerOn ? `<div id="lp-timer-wrap" style="background:linear-gradient(135deg,${ac}18,${ac}0c);border:1px solid ${ac}33;border-radius:${E?'10':'8'}px;padding:${E?'10px 14px':'7px 10px'};margin-top:${E?'10':'7'}px;margin-bottom:${E?'2':'1'}px">
-    <div style="font-size:${E?'10':'8'}px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:${ac};margin-bottom:${E?'8':'5'}px;font-family:${bf};opacity:.9">${P.timerLabel}</div>
+    ${P.timerLabelOn !== false ? `<div style="font-size:${E?'10':'8'}px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:${ac};margin-bottom:${E?'8':'5'}px;font-family:${bf};opacity:.9">${P.timerLabel}</div>` : ''}
     <div style="display:flex;gap:${E?'8':'5'}px;align-items:stretch" id="lp-timer-boxes">
       ${P.timerD > 0 ? `<div style="flex:1;text-align:center">
         <div id="lp-td" style="font-size:${E?'26':'18'}px;font-weight:800;color:${textMain};font-family:${tf};line-height:1;background:${card};border-radius:${E?'8':'6'}px;padding:${E?'8px 4px':'5px 2px'};border:1px solid ${border}">${String(P.timerD).padStart(2,'0')}</div>
@@ -613,6 +778,7 @@ function buildLP(s, d, isE) {
   </div>
   <script>
   (function(){
+    if(window.__lpTimerInterval)clearInterval(window.__lpTimerInterval);
     var d=${P.timerD},h=${P.timerH},m=${P.timerM},s=${P.timerS};
     var total=d*86400+h*3600+m*60+s;
     var deadline=Date.now()+total*1000;
@@ -621,14 +787,15 @@ function buildLP(s, d, isE) {
       var left=Math.max(0,Math.floor((deadline-Date.now())/1000));
       var dd=Math.floor(left/86400),hh=Math.floor((left%86400)/3600),mm=Math.floor((left%3600)/60),ss=left%60;
       var td=document.getElementById('lp-td'),th=document.getElementById('lp-th'),tm=document.getElementById('lp-tm'),ts=document.getElementById('lp-ts');
+      if(!ts){clearInterval(window.__lpTimerInterval);return;}
       if(td)td.textContent=pad(dd);
       if(th)th.textContent=pad(hh);
       if(tm)tm.textContent=pad(mm);
       if(ts)ts.textContent=pad(ss);
-      if(left>0)setTimeout(tick,1000);
-      else{var w=document.getElementById('lp-timer-wrap');if(w)w.style.opacity='.4';}
+      if(left<=0){clearInterval(window.__lpTimerInterval);var w=document.getElementById('lp-timer-wrap');if(w)w.style.opacity='.4';}
     }
     tick();
+    window.__lpTimerInterval=setInterval(tick,1000);
   })();
   <\/script>` : ''}
   <div style="display:flex;align-items:center;gap:${E?'10':'7'}px;margin-top:${E?'12':'8'}px;padding:${E?'10px 12px':'7px 9px'};background:${surface};border-radius:${E?'10':'7'}px;border:1px solid ${border}">
@@ -640,11 +807,11 @@ function buildLP(s, d, isE) {
           ${[1,2,3,4,5].map(i=>{
             const filled = i <= Math.floor(P.brandRating);
             const half   = !filled && (P.brandRating - Math.floor(P.brandRating)) >= 0.5 && i === Math.ceil(P.brandRating);
-            return `<span style="color:${filled||half ? ac : textMute};font-size:${E?'12':'10'}px">${filled ? '★' : half ? '⯨' : '☆'}</span>`;
+            return `<span style="color:${filled||half ? '#F59E0B' : '#D1D5DB'};font-size:${E?'13':'10'}px;line-height:1">${filled ? '★' : half ? '⯨' : '☆'}</span>`;
           }).join('')}
         </div>
-        <span style="font-size:${E?'11':'9'}px;font-weight:700;color:${ac};font-family:${bf}">${P.brandRating.toFixed(1)}</span>
-        ${P.brandReview ? `<span style="font-size:${E?'10':'8'}px;color:${textMute};font-family:${bf}">(${P.brandReview} ulasan)</span>` : ''}
+        <span style="font-size:${E?'12':'10'}px;font-weight:700;color:${isDark?'#e2e8f0':'#374151'};font-family:${bf}">${P.brandRating.toFixed(1)}</span>
+        ${P.brandReview ? `<span style="font-size:${E?'10':'8'}px;color:${isDark?'#6b7280':'#9CA3AF'};font-family:${bf}">· ${P.brandReview} terjual</span>` : ''}
       </div>
     </div>
     <div style="font-size:${E?'9':'8'}px;color:${ac};font-family:${bf};font-weight:600;background:${ac}15;padding:${E?'3px 8px':'2px 6px'};border-radius:20px;border:1px solid ${ac}33;white-space:nowrap;flex-shrink:0">Kunjungi →</div>
@@ -652,11 +819,7 @@ function buildLP(s, d, isE) {
 </div>`;
 
   // ── Urgency bar ──
-  const urgencyHtml = P.urgency ? `
-<div style="background:${ac};padding:${E?'8px 16px':'6px 14px'};display:flex;align-items:center;gap:8px">
-  <span style="font-size:${E?'16':'13'}px">⚡</span>
-  <span style="font-size:${E?'12':'10'}px;font-weight:700;color:${btnText};font-family:${bf};letter-spacing:.3px">${P.urgency}</span>
-</div>` : '';
+  // urgencyHtml sudah di-inline di return block
 
   // ── Fitur grid ──
   const featHtml = feats.length ? `
@@ -674,6 +837,16 @@ function buildLP(s, d, isE) {
 </div>` : '';
 
   // ── Foto detail + keunggulan per foto ──
+  // Cek apakah ada keunggulan (untuk tampilkan judul DETAIL PRODUK)
+  const hasAnyKeunggulan = fotoBlocks.some(fb => fb.keunggulan.some(k => k.teks.trim()));
+
+  // Judul DETAIL PRODUK — ditampilkan sekali di bawah featHtml
+  const detailProdukHtml = hasAnyKeunggulan ? `
+<div style="background:${card};padding:${E?'16px 16px 4px':'10px 14px 2px'};border-bottom:0px">
+  <div style="font-size:${E?'11':'9'}px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:${textMute};font-family:${bf}">DETAIL PRODUK</div>
+</div>` : '';
+
+  // Foto + keunggulan tetap di bawah foto masing-masing
   const fotoDetailHtml = fotoBlocks.map((fb, fi) => {
     if (!fb.url.trim()) return '';
     const kList = fb.keunggulan.filter(k => k.teks.trim());
@@ -683,21 +856,42 @@ function buildLP(s, d, isE) {
     <img src="${fb.url}" alt="foto ${fi+1}" style="width:100%;height:auto;display:block;object-fit:fill" onerror="this.style.display='none'">
   </div>
   ${kList.length ? `<div style="padding:${E?'14px 16px':'10px 14px'}">
-    <div style="font-size:${E?'11':'9'}px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:${ac};margin-bottom:${E?'10':'7'}px;font-family:${bf}">Detail Produk</div>
-    ${kList.map(k=>`<div style="display:flex;align-items:flex-start;gap:${E?'12':'8'}px;margin-bottom:${E?'10':'7'}px;padding-bottom:${E?'10':'7'}px;border-bottom:1px solid ${border}">
+    ${kList.map(k=>`<div style="display:flex;align-items:flex-start;gap:${E?'12':'8'}px;margin-bottom:${E?'12':'8'}px;padding-bottom:${E?'12':'8'}px;border-bottom:1px solid ${border}">
       <span style="font-size:${E?'20':'15'}px;flex-shrink:0;margin-top:1px">${k.icon}</span>
-      <span style="font-size:${E?'13':'11'}px;color:${textSub};line-height:1.6;font-family:${bf}">${k.teks}</span>
+      <span style="font-size:${E?'13':'11'}px;color:${textSub};line-height:1.65;font-family:${bf}">${k.teks}</span>
     </div>`).join('')}
   </div>` : ''}
 </div>`;
   }).join('');
 
   // ── Order section ──
+  // Preview: script tidak jalan di innerHTML, tampilkan indikator
+  // Export: embed code disisipkan langsung dan dieksekusi via reinjectScripts
+  // Buat srcdoc untuk iframe preview — iframe punya document sendiri, script bisa jalan
+  const makeIframeSrc = (code) => {
+    const html = `<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:sans-serif;background:#fff;padding:0}</style>
+</head><body>${code}</body></html>`;
+    return html;
+  };
+
+  // Preview: tampilkan iframe kosong (akan diisi oleh lu() setelah render)
+  // Export: placeholder div yang akan diganti setelah string selesai dibuat
+  const embedBlock = P.embedCode
+    ? (E
+        ? `<div id="oo-embed-placeholder"></div>` // placeholder — diganti setelah build
+        : `<div id="oo-iframe-wrap" style="width:100%;border-radius:8px;overflow:hidden;border:1px solid ${border}">
+            <iframe id="oo-embed-iframe" srcdoc="" style="width:100%;min-height:420px;border:none;display:block" scrolling="no"></iframe>
+          </div>`)
+    : `<div style="background:${card};border:1px dashed ${border};border-radius:${s.radius||'8px'};padding:${E?'20px':'14px'};text-align:center;color:${textMute};font-size:${E?'12':'10'}px;font-family:${bf}">Form order belum dikonfigurasi.</div>`;
+
   const orderHtml = `
 <div style="padding:${E?'16px':'12px'};background:${surface};border-bottom:1px solid ${border}">
   <div style="font-size:${E?'15':'12'}px;font-weight:700;color:${textMain};margin-bottom:${E?'4':'3'}px;font-family:${tf}">${P.orderTitle}</div>
   ${P.orderSub ? `<div style="font-size:${E?'12':'10'}px;color:${textMute};margin-bottom:${E?'14':'10'}px;font-family:${bf}">${P.orderSub}</div>` : `<div style="margin-bottom:${E?'14':'10'}px"></div>`}
-  ${P.embedCode || `<div style="background:${card};border:1px dashed ${border};border-radius:${s.radius||'8px'};padding:${E?'20px':'14px'};text-align:center;color:${textMute};font-size:${E?'12':'10'}px;font-family:${bf}">Form order belum dikonfigurasi.</div>`}
+  ${embedBlock}
 </div>`;
 
   // ── Sticky CTA (hanya export) ──
@@ -711,17 +905,20 @@ function buildLP(s, d, isE) {
 </div>` : '';
 
   // ── Footer ──
-  const footerHtml = `<div style="background:${s.footerBg||bg};color:${s.footerColor||textMute};padding:${E?'14px 16px':'10px 14px'};text-align:center;font-size:${E?'11':'9'}px;font-family:${bf};border-top:1px solid ${border}">${P.footer}</div>`;
+  let footerHtml = '';
+  if(P.footerOn === true){
+    footerHtml = '<div style="background:'+(s.footerBg||bg)+';color:'+(s.footerColor||textMute)+';padding:'+(E?'14px 16px':'10px 14px')+';text-align:center;font-size:'+(E?'11':'9')+'px;font-family:'+bf+';border-top:1px solid '+border+'">'+P.footer+'</div>';
+  }
 
   const varianHtml = buildVarianHtml(ac, bf, E);
 
   return `
-${carouselHtml}
+${carouselHtml}${buildUrgency(P,ac,bf,E)}
 ${infoHtml}
 ${hargaHtml}
 ${varianHtml}
-${urgencyHtml}
 ${featHtml}
+${detailProdukHtml}
 ${fotoDetailHtml}
 ${orderHtml}
 ${footerHtml}
@@ -813,18 +1010,21 @@ function getPageData(){
     badges:(gv('f-badges')||'').split(',').map(b=>b.trim()).filter(Boolean),
     harga:gv('f-harga'),
     hargaOld:gv('f-harga-old'),
-    urgency:gv('f-urgency'),
+    urgency:(document.getElementById('f-urgency-on')||{checked:true}).checked ? gv('f-urgency') : '',
     perks:(gv('f-perks')||'').split('\n').map(p=>p.trim()).filter(Boolean),
     footer:gv('f-footer')||'© 2025',
+    footerOn: (document.getElementById('f-footer-on')||{checked:true}).checked,
     orderTitle:gv('f-order-title')||'Pesan Sekarang',
     orderSub:gv('f-order-sub'),
     embedCode:gv('f-embed-code').trim(),
-    timerOn: gv('f-timer-on') !== '0',
+    timerOn: (document.getElementById('f-timer-on')||{checked:false}).checked,
+    timerLabelOn: (document.getElementById('f-timer-label-on')||{checked:true}).checked,
     timerLabel: gv('f-timer-label') || 'Promo Berakhir Dalam',
     timerD: parseInt(gv('f-timer-d')) || 0,
     timerH: parseInt(gv('f-timer-h')) || 0,
     timerM: parseInt(gv('f-timer-m')) || 0,
     timerS: parseInt(gv('f-timer-s')) || 0,
+    paketOn: varianState.paket,
   };
 }
 
@@ -879,116 +1079,162 @@ function updateColorThumb(i,url){
   colorSlots[i].img=url;lu();
 }
 function addColor(){colorSlots.push({name:'',hex:'#cccccc',img:''});renderColorSlots();lu();}
+
+function renderPaketSlots(){
+  const c=document.getElementById('paket-slots');if(!c)return;
+  c.innerHTML=paketSlots.map((p,i)=>`
+    <div style="background:#16213e;border:1px solid #2d3748;border-radius:8px;padding:10px;margin-bottom:7px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+        <span style="font-size:10px;font-weight:600;color:#a0aec0">Paket ${i+1}</span>
+        ${paketSlots.length>1?`<button onclick="removePaket(${i})" style="font-size:10px;padding:2px 7px;border:1px solid #2d3748;border-radius:4px;background:none;cursor:pointer;color:#718096;font-family:Inter,sans-serif">✕</button>`:''}
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+        <div class="fg" style="margin:0"><label>Nama Paket</label><input type="text" value="${p.nama}" placeholder="contoh: 1 pcs" oninput="paketSlots[${i}].nama=this.value;lu()" style="font-size:11px"></div>
+        <div class="fg" style="margin:0"><label>Harga (opsional)</label><input type="text" value="${p.harga}" placeholder="89.000" oninput="paketSlots[${i}].harga=this.value;lu()" style="font-size:11px"></div>
+      </div>
+      <div class="fg" style="margin:0"><label>Keterangan (opsional)</label><input type="text" value="${p.ket}" placeholder="Hemat 10%" oninput="paketSlots[${i}].ket=this.value;lu()" style="font-size:11px"></div>
+    </div>`).join('');
+  document.getElementById('btn-add-paket').style.display=paketSlots.length>=6?'none':'block';
+}
+function addPaket(){if(paketSlots.length<6){paketSlots.push({nama:'',harga:'',ket:''});renderPaketSlots();lu();}}
+function removePaket(i){if(paketSlots.length>1){paketSlots.splice(i,1);renderPaketSlots();lu();}}
 function removeColor(i){if(colorSlots.length>1){colorSlots.splice(i,1);renderColorSlots();lu();}}
 
-function buildVarianHtml(accent, bodyFont, isE){
-  const sizeLabel=gv('v-size-label')||'Ukuran';
-  const colorLabel=gv('v-color-label')||'Warna';
-  const validSizes=sizeSlots.filter(s=>s.val.trim());
-  const validColors=colorSlots.filter(c=>c.hex);
-  const sizeOn=(document.getElementById('v-size-on')||{checked:true}).checked;
-  const colorOn=(document.getElementById('v-color-on')||{checked:true}).checked;
-  const hasSize=sizeOn&&validSizes.length>0;
-  const hasColor=colorOn&&validColors.length>0;
-  if(!hasSize&&!hasColor) return '';
+function buildVarianHtml(accent,bodyFont,isE){
+  var E=isE;
+  var sizeLabel=gv('v-size-label')||'Ukuran';
+  var colorLabel=gv('v-color-label')||'Warna';
+  var validSizes=sizeSlots.filter(function(s){return s.val.trim();});
+  var validColors=colorSlots.filter(function(c){return c.hex;});
+  var sizeOn=varianState.size;
+  var colorOn=varianState.color;
+  var hasSize=sizeOn&&validSizes.length>0;
+  var hasColor=colorOn&&validColors.length>0;
+  var paketOn=varianState.paket;
+  var paketLabel=gv('v-paket-label')||'Pilih Paket';
+  var validPaket=paketSlots.filter(function(p){return p.nama.trim();});
+  var hasPaket=paketOn&&validPaket.length>0;
+  var hasAny=hasSize||hasColor||hasPaket;
+  if(!hasAny) return '';
 
-  const E=isE;
-  const divider=`<div style="height:1px;background:#f0f0f0;margin:${E?'16px 0':'10px 0'}"></div>`;
+  var ac=accent;
+  var bf=bodyFont;
+  var fs=E?'12px':'10px';
+  var fss=E?'11px':'9px';
+  var pad=E?'20px':'12px 14px';
+  var divider='<div style="height:1px;background:#f0f0f0;margin:'+(E?'16px 0':'10px 0')+'"></div>';
 
-  /* ── SIZE SECTION ── */
-  const sizeHtml=hasSize?`
-<div style="margin-bottom:${E?'0':'0'}px">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${E?'12':'7'}px">
-    <div style="font-size:${E?'12':'10'}px;font-weight:700;color:#1a1a1a;font-family:${bodyFont};letter-spacing:.3px">${sizeLabel}</div>
-    <div style="font-size:${E?'11':'9'}px;color:#999;font-family:${bodyFont}" id="sz-selected-label">— Pilih salah satu</div>
-  </div>
-  <div style="display:flex;flex-wrap:wrap;gap:${E?'8':'5'}px" id="sz-wrap">
-    ${validSizes.map((s,si)=>`<button
-      data-sz="${si}"
-      onclick="(function(el){
-        var wrap=el.closest('[id=sz-wrap]')||el.parentElement;
-        wrap.querySelectorAll('button').forEach(function(b){
-          b.style.background='#fff';
-          b.style.color='#444';
-          b.style.borderColor='#e0e0e0';
-          b.style.fontWeight='500';
-          b.style.transform='scale(1)';
-        });
-        el.style.background='${accent}';
-        el.style.color='#fff';
-        el.style.borderColor='${accent}';
-        el.style.fontWeight='700';
-        el.style.transform='scale(1.05)';
-        var lbl=document.getElementById('sz-selected-label');
-        if(lbl)lbl.textContent='✓ ${s.val}';
-      })(this)"
-      style="min-width:${E?'48':'36'}px;height:${E?'44':'32'}px;padding:0 ${E?'16':'10'}px;font-size:${E?'13':'10'}px;font-weight:500;color:#444;background:#fff;border:1.5px solid #e0e0e0;border-radius:${E?'8':'6'}px;cursor:pointer;font-family:${bodyFont};transition:all .2s;letter-spacing:.3px"
-    >${s.val}</button>`).join('')}
-  </div>
-</div>`:''
+  // ── SIZE ──
+  var sizeHtml='';
+  if(hasSize){
+    var szBtns='';
+    validSizes.forEach(function(s,si){
+      szBtns+='<button data-szv="'+s.val.replace(/"/g,'&quot;')+'"'
+        +' onclick="(function(el){var w=el.parentElement;w.querySelectorAll(\'button\').forEach(function(b){b.style.background=\'#fff\';b.style.color=\'#444\';b.style.borderColor=\'#e0e0e0\';b.style.fontWeight=\'500\';});el.style.background=\''+ac+'\';el.style.color=\'#fff\';el.style.borderColor=\''+ac+'\';el.style.fontWeight=\'700\';var lbl=document.getElementById(\'sz-sel\');if(lbl)lbl.textContent=\'\u2713 \'+el.getAttribute(\'data-szv\');})(this)"'
+        +' style="min-width:'+(E?'48px':'36px')+';height:'+(E?'44px':'32px')+';padding:0 '+(E?'16px':'10px')+';font-size:'+(E?'13px':'10px')+';font-weight:500;color:#444;background:#fff;border:1.5px solid #e0e0e0;border-radius:'+(E?'8px':'6px')+';cursor:pointer;font-family:'+bf+';transition:all .2s"'
+        +'>'+s.val+'</button>';
+    });
 
-  /* ── COLOR SECTION ── */
-  const colorHtml=hasColor?`
-<div>
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${E?'12':'7'}px">
-    <div style="font-size:${E?'12':'10'}px;font-weight:700;color:#1a1a1a;font-family:${bodyFont};letter-spacing:.3px">${colorLabel}</div>
-    <div style="font-size:${E?'11':'9'}px;color:#999;font-family:${bodyFont}" id="cl-selected-label">— Pilih salah satu</div>
-  </div>
-  <div style="display:flex;flex-wrap:wrap;gap:${E?'10':'7'}px;align-items:flex-start" id="cl-wrap">
-    ${validColors.map((c,ci)=>`<div
-      class="clcard"
-      data-ci="${ci}"
-      data-img="${c.img||''}"
-      onclick="(function(el){
-        document.querySelectorAll('.clcard').forEach(function(d){
-          d.style.outline='none';
-          d.style.transform='scale(1)';
-          var dot=d.querySelector('.cldot');
-          if(dot){dot.style.transform='scale(1)';dot.style.boxShadow='0 1px 4px rgba(0,0,0,.15)';}
-        });
-        el.style.outline='2.5px solid ${accent}';
-        el.style.outlineOffset='3px';
-        el.style.borderRadius='${E?'12':'8'}px';
-        var dot=el.querySelector('.cldot');
-        if(dot){dot.style.transform='scale(1.08)';dot.style.boxShadow='0 3px 12px ${accent}55';}
-        var lbl=document.getElementById('cl-selected-label');
-        if(lbl)lbl.textContent='✓ '+el.getAttribute('data-name');
-        var img=el.getAttribute('data-img');
-        if(img&&img.length>4){
-          var track=document.querySelector('[id$=-t]');
-          if(track){
-            var imgs=track.querySelectorAll('img');
-            if(imgs.length>0)imgs[0].src=img;
-            track.style.transform='translateX(0)';
-          }
-        }
-      })(this)"
-      data-name="${c.name}"
-      style="cursor:pointer;transition:all .2s;border-radius:${E?'12':'8'}px;padding:${E?'8px 12px':'5px 8px'};display:flex;align-items:center;gap:${E?'10':'6'}px;background:#fafafa;border:1.5px solid #f0f0f0"
-    >
-      <div class="cldot" style="position:relative;flex-shrink:0">
-        <div style="width:${E?'32':'22'}px;height:${E?'32':'22'}px;border-radius:50%;background:${c.hex};border:2px solid rgba(0,0,0,${c.hex==='#FFFFFF'||c.hex==='#ffffff'?'0.15':'0.08'});transition:all .2s;box-shadow:0 1px 4px rgba(0,0,0,.15)"></div>
-        ${c.img?`<div style="position:absolute;bottom:-3px;right:-3px;width:${E?'14':'10'}px;height:${E?'14':'10'}px;background:#22c55e;border-radius:50%;border:${E?'2':'1.5'}px solid #fff;display:flex;align-items:center;justify-content:center">
-          <svg width="${E?'8':'6'}" height="${E?'8':'6'}" viewBox="0 0 8 8" fill="none"><path d="M4 1.5A1.5 1.5 0 1 0 4 4.5 1.5 1.5 0 0 0 4 1.5zM1 6.5c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg>
-        </div>`:''}
-      </div>
-      ${c.img?`<div style="width:${E?'40':'28'}px;height:${E?'40':'28'}px;border-radius:${E?'6':'4'}px;overflow:hidden;flex-shrink:0;border:1px solid #e8e8e8;background:#fff">
-        <img src="${c.img}" alt="${c.name}" style="width:100%;height:100%;object-fit:contain;display:block">
-      </div>`:''}
-      <div style="min-width:0">
-        <div style="font-size:${E?'12':'10'}px;font-weight:600;color:#1a1a1a;font-family:${bodyFont};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:${E?'90':'70'}px">${c.name}</div>
-        ${c.img?`<div style="font-size:${E?'10':'8'}px;color:#22c55e;font-family:${bodyFont};margin-top:1px">Ada foto</div>`:''}
-      </div>
-    </div>`).join('')}
-  </div>
-</div>`:''
+    // Detail ukuran
+    var detHtml='';
+    var detOn=(document.getElementById('v-size-detail-on')||{checked:false}).checked;
+    var detTitle=gv('v-size-detail-title')||'Panduan Ukuran';
+    var detText=gv('v-size-detail-text')||'';
+    if(detOn&&detText.trim()){
+      var rows=detText.split('\n').filter(function(r){return r.trim();});
+      var trs='';
+      rows.forEach(function(row,ri){
+        var parts=row.split('=');
+        var lbl=parts[0]?parts[0].trim():'';
+        var val=parts.slice(1).join('=').trim();
+        trs+='<tr style="border-bottom:1px solid #f0f0f0">'
+          +'<td style="padding:'+(E?'7px 10px':'4px 7px')+';font-size:'+(E?'12px':'10px')+';font-weight:400;color:#1a1a1a;white-space:nowrap;width:1%;background:'+(ri%2===0?'#fff':'#fafafa')+'">'+lbl+'</td>'
+          +'<td style="padding:'+(E?'7px 10px':'4px 7px')+';font-size:'+(E?'12px':'10px')+';color:#555;background:'+(ri%2===0?'#fff':'#fafafa')+'">'+val+'</td>'
+          +'</tr>';
+      });
+      detHtml='<div style="margin-top:'+(E?'14px':'9px')+';background:#f9f9f9;border-radius:'+(E?'10px':'7px')+';padding:'+(E?'14px 16px':'9px 12px')+';border:1px solid #f0f0f0">'
+        +'<div style="font-size:'+(E?'11px':'9px')+';font-weight:500;color:#1a1a1a;margin-bottom:'+(E?'10px':'7px')+'">'+detTitle+'</div>'
+        +'<table style="width:100%;border-collapse:collapse">'+trs+'</table>'
+        +'</div>';
+    }
 
-  const both=hasSize&&hasColor;
-  return `<div style="padding:${E?'20px 20px 20px':'12px 14px 14px'};background:#fff;border-top:1px solid #f0f0f0">
-${sizeHtml}
-${both?divider:''}
-${colorHtml}
-</div>`;
+    sizeHtml='<div style="margin-bottom:0">'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(E?'12px':'7px')+'">'
+      +'<div style="font-size:'+fs+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">'+sizeLabel+'</div>'
+      +'<div style="font-size:'+fss+';color:#999;font-family:'+bf+'" id="sz-sel">\u2014 Pilih salah satu</div>'
+      +'</div>'
+      +'<div style="display:flex;flex-wrap:wrap;gap:'+(E?'8px':'5px')+'">'+szBtns+'</div>'
+      +detHtml
+      +'</div>';
+  }
+
+  // ── COLOR ──
+  var colorHtml='';
+  if(hasColor){
+    var clCards='';
+    validColors.forEach(function(c,ci){
+      var photoBtn='';
+      if(c.img){
+        photoBtn='<div style="width:'+(E?'40px':'28px')+';height:'+(E?'40px':'28px')+';border-radius:'+(E?'6px':'4px')+';overflow:hidden;flex-shrink:0;border:1px solid #e8e8e8;background:#fff">'
+          +'<img src="'+c.img+'" alt="'+c.name+'" style="width:100%;height:100%;object-fit:contain;display:block">'
+          +'</div>';
+      }
+      var imgChg=c.img?'var track=document.querySelector(\'[id$=-t]\');if(track){var imgs=track.querySelectorAll(\'img\');if(imgs.length>0)imgs[0].src=\''+c.img.replace(/'/g,"\\'")+'\';}':'';
+      clCards+='<div class="clcard" data-ci="'+ci+'" data-name="'+c.name.replace(/"/g,'&quot;')+'"'
+        +' style="cursor:pointer;transition:all .2s;border-radius:'+(E?'12px':'8px')+';padding:'+(E?'8px 12px':'5px 8px')+';display:flex;align-items:center;gap:'+(E?'10px':'6px')+';background:#fafafa;border:1.5px solid #f0f0f0"'
+        +' onclick="(function(el){document.querySelectorAll(\'.clcard\').forEach(function(d){d.style.outline=\'none\';var dt=d.querySelector(\'.cldot\');if(dt)dt.style.boxShadow=\'0 1px 4px rgba(0,0,0,.15)\';});el.style.outline=\'2.5px solid '+ac+'\';el.style.outlineOffset=\'3px\';var dot=el.querySelector(\'.cldot\');if(dot)dot.style.boxShadow=\'0 3px 12px '+ac+'55\';var lbl=document.getElementById(\'cl-sel\');if(lbl)lbl.textContent=\'\u2713 \'+el.getAttribute(\'data-name\');'+imgChg+'})(this)"'
+        +'>'
+        +'<div class="cldot" style="position:relative;flex-shrink:0">'
+        +'<div style="width:'+(E?'32px':'22px')+';height:'+(E?'32px':'22px')+';border-radius:50%;background:'+c.hex+';border:2px solid rgba(0,0,0,'+(c.hex==='#FFFFFF'||c.hex==='#ffffff'?'0.15':'0.08')+');box-shadow:0 1px 4px rgba(0,0,0,.15)"></div>'
+        +'</div>'
+        +photoBtn
+        +'<div style="min-width:0"><div style="font-size:'+fs+';font-weight:600;color:#1a1a1a;font-family:'+bf+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:'+(E?'90px':'70px')+'">'+c.name+'</div></div>'
+        +'</div>';
+    });
+    colorHtml='<div>'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(E?'12px':'7px')+'">'
+      +'<div style="font-size:'+fs+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">'+colorLabel+'</div>'
+      +'<div style="font-size:'+fss+';color:#999;font-family:'+bf+'" id="cl-sel">\u2014 Pilih salah satu</div>'
+      +'</div>'
+      +'<div style="display:flex;flex-wrap:wrap;gap:'+(E?'10px':'7px')+';align-items:flex-start">'+clCards+'</div>'
+      +'</div>';
+  }
+
+  // ── PAKET ──
+  var paketHtml='';
+  if(hasPaket){
+    var pkCards='';
+    validPaket.forEach(function(p,pi){
+      pkCards+='<div data-pk="'+pi+'" data-name="'+p.nama.replace(/"/g,'&quot;')+'"'
+        +' style="cursor:pointer;transition:all .2s;border-radius:'+(E?'10px':'7px')+';padding:'+(E?'12px 14px':'8px 10px')+';background:#fff;border:1.5px solid #e0e0e0;display:flex;align-items:center;justify-content:space-between"'
+        +' onclick="(function(el){document.querySelectorAll(\'[data-pk]\').forEach(function(d){d.style.border=\'1.5px solid #e0e0e0\';d.style.background=\'#fff\';});el.style.border=\'2px solid '+ac+'\';el.style.background=\''+ac+'08\';var lbl=document.getElementById(\'pk-sel\');if(lbl)lbl.textContent=\'\u2713 \'+el.getAttribute(\'data-name\');})(this)"'
+        +'>'
+        +'<div style="display:flex;align-items:center;gap:'+(E?'10px':'7px')+'">'
+        +'<div style="width:'+(E?'18px':'14px')+';height:'+(E?'18px':'14px')+';border-radius:50%;border:2px solid #ddd;flex-shrink:0"></div>'
+        +'<div>'
+        +'<div style="font-size:'+(E?'13px':'10px')+';font-weight:600;color:#1a1a1a;font-family:'+bf+'">'+p.nama+'</div>'
+        +(p.ket?'<div style="font-size:'+(E?'11px':'9px')+';color:'+ac+';font-family:'+bf+';margin-top:1px">'+p.ket+'</div>':'')
+        +'</div></div>'
+        +(p.harga?'<div style="font-size:'+(E?'13px':'10px')+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">Rp '+p.harga+'</div>':'')
+        +'</div>';
+    });
+    paketHtml='<div style="margin-bottom:'+(E?'16px':'10px')+'">'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(E?'12px':'7px')+'">'
+      +'<div style="font-size:'+fs+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">'+paketLabel+'</div>'
+      +'<div style="font-size:'+fss+';color:#999;font-family:'+bf+'" id="pk-sel">\u2014 Pilih salah satu</div>'
+      +'</div>'
+      +'<div style="display:flex;flex-direction:column;gap:'+(E?'8px':'5px')+'">'+pkCards+'</div>'
+      +'</div>';
+  }
+
+  var out='<div style="padding:'+pad+';background:#fff;border-top:1px solid #f0f0f0">';
+  if(hasPaket) out+=paketHtml;
+  if(hasPaket&&(hasSize||hasColor)) out+=divider;
+  if(hasSize) out+=sizeHtml;
+  if(hasSize&&hasColor) out+=divider;
+  if(hasColor) out+=colorHtml;
+  out+='</div>';
+  return out;
 }
 
 function sw(name,el){
@@ -1000,7 +1246,7 @@ function sw(name,el){
   if(name==='foto') renderFotoBlocks();
   if(name==='hero') renderHeroSlots();
   if(name==='style') renderStyleGrid();
-  if(name==='varian'){renderSizeSlots();renderColorSlots();}
+  if(name==='varian'){renderSizeSlots();renderColorSlots();renderPaketSlots();}
 }
 
 function setMode(mode,el){
@@ -1070,10 +1316,23 @@ function checkEmbed(){
   const code=gv('f-embed-code').trim();
   const st=document.getElementById('embed-status');
   st.style.display='block';
-  if(!code){st.className='embed-wait';st.textContent='Belum ada kode embed.';return;}
-  if(code.includes('orderonline')||code.includes('ooef')){st.className='embed-ok';st.textContent='✓ OrderOnline embed terdeteksi!';}
-  else if(code.includes('<form')||code.includes('<iframe')){st.className='embed-ok';st.textContent='✓ Form embed terdeteksi!';}
-  else{st.className='embed-wait';st.textContent='⚠ Pastikan salin semua kode embed.';}
+  if(!code){st.className='embed-wait';st.textContent='Belum ada kode embed.';lu();return;}
+  const isOO=code.includes('orderonline')||code.includes('ooef')||code.includes('ooe(');
+  const hasDiv=code.includes('class="ooef"')||code.includes("class='ooef'");
+  const hasScript=code.includes('<script')||code.includes('xEmbedInit');
+  if(isOO&&hasDiv&&hasScript){
+    st.className='embed-ok';
+    st.textContent='✓ OrderOnline embed lengkap (div + script) — siap!';
+  } else if(isOO){
+    st.className='embed-wait';
+    st.textContent='⚠ Terdeteksi OrderOnline tapi kode tidak lengkap. Salin SEMUA kode dari awal <!-- sampai akhir -->.';
+  } else if(code.includes('<form')||code.includes('<iframe')){
+    st.className='embed-ok';
+    st.textContent='✓ Form embed terdeteksi — siap!';
+  } else {
+    st.className='embed-wait';
+    st.textContent='⚠ Format tidak dikenali. Pastikan salin semua kode embed.';
+  }
   lu();
 }
 
@@ -1144,32 +1403,86 @@ function rmFeat(i){feats.splice(i,1);renderFeats();lu();}
 function lu(){
   const s=STYLES[curStyle];
   const d=getPageData();
-  document.getElementById('lp-preview').innerHTML=s.render(d,false);
+  const preview=document.getElementById('lp-preview');
+  preview.innerHTML=s.render(d,false);
+
+  // ── Re-inject script: carousel, timer aktif di preview ──
+  setTimeout(function(){
+    preview.querySelectorAll('script').forEach(function(oldSc){
+      try{
+        if(oldSc.src){
+          var newSc=document.createElement('script');
+          newSc.src=oldSc.src;newSc.async=true;
+          if(oldSc.parentNode) oldSc.parentNode.replaceChild(newSc,oldSc);
+        } else {
+          var code=oldSc.textContent.trim();
+          if(code) (function(){try{eval(code);}catch(e){console.warn('eval:',e);}})();
+        }
+      }catch(e){console.warn('reinject:',e);}
+    });
+
+    // 2. Inject embed OrderOnline ke iframe
+    if(d.embedCode){
+      var iframe=document.getElementById('oo-embed-iframe');
+      if(iframe){
+        var iDoc=iframe.contentDocument||iframe.contentWindow.document;
+        var iHtml='<!DOCTYPE html><html><head>'
+          +'<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">'
+          +'<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:sans-serif;background:#fff}'
+          +'.ooef,.orderonline-embed-form{width:100%!important}</style>'
+          +'</head><body>'+d.embedCode+'</body></html>';
+        iDoc.open();iDoc.write(iHtml);iDoc.close();
+        function rsz(){try{var h=iDoc.body.scrollHeight;if(h>50)iframe.style.height=(h+20)+'px';}catch(e){}}
+        setTimeout(rsz,1000);setTimeout(rsz,2500);setTimeout(rsz,5000);
+      }
+    }
+  },30);
 }
 
 function getExportHTML(){
-  const s=STYLES[curStyle];
-  const d=getPageData();
-  const body=s.render(d,true);
-  const bgColor=curStyle==='dark'||curStyle==='neon'||curStyle==='luxury'?'#0a0a0a':curStyle==='minimal'?'#f5f5f5':'#ede9e3';
-  const wrapBg=curStyle==='dark'||curStyle==='neon'||curStyle==='luxury'?'#0d0d0d':'#fff';
-  const fontLink=`<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">`;
-  return `<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>${d.brand} — ${d.produk}</title>
-${fontLink}
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;background:${bgColor};min-height:100vh;display:flex;justify-content:center;padding:24px 0}
-.wrap{width:100%;max-width:520px;background:${wrapBg}}
-@media(max-width:560px){body{padding:0}.wrap{max-width:100%}}
-</style>
-</head>
-<body><div class="wrap">${body}</div></body>
-</html>`;
+  var d = getPageData();
+  var bgColor = (curStyle==='dark'||curStyle==='neon'||curStyle==='luxury') ? '#0a0a0a' : (curStyle==='minimal' ? '#f5f5f5' : '#ede9e3');
+  var wrapBg  = (curStyle==='dark'||curStyle==='neon'||curStyle==='luxury') ? '#0d0d0d' : '#fff';
+  var fontLink = '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">';
+
+  // Ambil innerHTML dari preview — sudah benar dan tidak perlu render ulang
+  var previewEl = document.getElementById('lp-preview');
+  var body = previewEl ? previewEl.innerHTML : '';
+
+  // Ganti iframe embed preview dengan kode asli OrderOnline
+  if(d.embedCode){
+    var re1 = /<div id="oo-iframe-wrap"[^>]*>[\s\S]*?<\/div>\s*<\/div>/;
+    if(re1.test(body)){
+      body = body.replace(re1, d.embedCode);
+    } else {
+      body = body.replace('<div id="oo-embed-placeholder"></div>', d.embedCode);
+    }
+  }
+
+  // Reinject script agar carousel & timer jalan di export
+  var reinject = '<scr'+'ipt>(function(){'
+    + 'document.querySelectorAll(".wrap script").forEach(function(o){'
+    + 'var n=document.createElement("script");'
+    + 'Array.from(o.attributes).forEach(function(a){n.setAttribute(a.name,a.value);});'
+    + 'n.textContent=o.textContent;'
+    + 'if(o.parentNode)o.parentNode.replaceChild(n,o);'
+    + '});})();<\/scr'+'ipt>';
+
+  return '<!DOCTYPE html>'
+    + '<html lang="id"><head>'
+    + '<meta charset="UTF-8">'
+    + '<meta name="viewport" content="width=device-width,initial-scale=1.0">'
+    + '<title>' + (d.brand||'Toko') + ' — ' + (d.produk||'Produk') + '</title>'
+    + fontLink
+    + '<style>'
+    + '*{box-sizing:border-box;margin:0;padding:0}'
+    + 'body{font-family:Inter,sans-serif;background:' + bgColor + ';min-height:100vh;display:flex;justify-content:center;padding:24px 0}'
+    + '.wrap{width:100%;max-width:520px;background:' + wrapBg + '}'
+    + '@media(max-width:560px){body{padding:0}.wrap{max-width:100%}}'
+    + '</style></head><body>'
+    + '<div class="wrap">' + body + '</div>'
+    + reinject
+    + '</body></html>';
 }
 
 function doExport(){
@@ -1203,7 +1516,31 @@ function doReset(){
   const st=document.getElementById('embed-status');if(st)st.style.display='none';
   sizeSlots=[{val:'S'},{val:'M'},{val:'L'},{val:'XL'},{val:'XXL'}];
   colorSlots=[{name:'Hitam',hex:'#111111',img:''},{name:'Putih',hex:'#FFFFFF',img:''},{name:'Coklat',hex:'#8B6340',img:''}];
-  renderHeroSlots();renderFotoBlocks();renderFeats();renderStyleGrid();renderSizeSlots();renderColorSlots();lu();
+  paketSlots=[{nama:'1 pcs',harga:'',ket:''},{nama:'2 pcs',harga:'',ket:'Hemat 10%'},{nama:'3 pcs',harga:'',ket:'Hemat 20%'}];
+  varianState={size:true,color:true,paket:false};
+  var sdcb=document.getElementById('v-size-detail-on');var sdtrack=document.getElementById('v-size-detail-track');var sdknob=document.getElementById('v-size-detail-knob');var sdbody=document.getElementById('v-size-detail-body');
+  if(sdcb)sdcb.checked=false;if(sdtrack)sdtrack.style.background='#2d3748';if(sdknob)sdknob.style.transform='translateX(0)';if(sdbody){sdbody.style.opacity='0.4';sdbody.style.pointerEvents='none';}
+  var ttcb=document.getElementById('f-timer-on');var ttrack=document.getElementById('f-timer-track');var tknob=document.getElementById('f-timer-knob');var tbody=document.getElementById('f-timer-body');
+  if(ttcb)ttcb.checked=false;if(ttrack)ttrack.style.background='#2d3748';if(tknob)tknob.style.transform='translateX(0)';if(tbody){tbody.style.opacity='0.4';tbody.style.pointerEvents='none';}
+  var tlcb=document.getElementById('f-timer-label-on');var tltrack=document.getElementById('f-timer-label-track');var tlknob=document.getElementById('f-timer-label-knob');
+  if(tlcb)tlcb.checked=true;if(tltrack)tltrack.style.background='#e94560';if(tlknob)tlknob.style.transform='translateX(14px)';
+  var utrack=document.getElementById('f-urgency-track');var uknob=document.getElementById('f-urgency-knob');var ucb=document.getElementById('f-urgency-on');
+  if(ucb)ucb.checked=true;if(utrack)utrack.style.background='#e94560';if(uknob)uknob.style.transform='translateX(16px)';
+  var ftrack=document.getElementById('f-footer-track');var fknob=document.getElementById('f-footer-knob');var fcb=document.getElementById('f-footer-on');
+  if(fcb)fcb.checked=true;if(ftrack)ftrack.style.background='#e94560';if(fknob)fknob.style.transform='translateX(16px)';
+  renderHeroSlots();renderFotoBlocks();renderFeats();renderStyleGrid();renderSizeSlots();renderColorSlots();renderPaketSlots();
+  ['size','color','paket'].forEach(function(type){
+    var on=varianState[type];
+    var track=document.getElementById('v-'+type+'-track');
+    var knob=document.getElementById('v-'+type+'-knob');
+    var body=document.getElementById('v-'+type+'-body');
+    var cb=document.getElementById('v-'+type+'-on');
+    if(cb) cb.checked=on;
+    if(track) track.style.background=on?'#e94560':'#2d3748';
+    if(knob)  knob.style.transform=on?'translateX(16px)':'translateX(0)';
+    if(body){body.style.opacity=on?'1':'0.4';body.style.pointerEvents=on?'auto':'none';}
+  });
+  lu();
 }
 
 renderHeroSlots();
@@ -1212,6 +1549,19 @@ renderFeats();
 renderStyleGrid();
 renderSizeSlots();
 renderColorSlots();
+renderPaketSlots();
+// Sync visual toggle dengan varianState awal
+['size','color','paket'].forEach(function(type){
+  var on=varianState[type];
+  var track=document.getElementById('v-'+type+'-track');
+  var knob=document.getElementById('v-'+type+'-knob');
+  var body=document.getElementById('v-'+type+'-body');
+  var cb=document.getElementById('v-'+type+'-on');
+  if(cb) cb.checked=on;
+  if(track) track.style.background=on?'#e94560':'#2d3748';
+  if(knob)  knob.style.transform=on?'translateX(16px)':'translateX(0)';
+  if(body){body.style.opacity=on?'1':'0.4';body.style.pointerEvents=on?'auto':'none';}
+});
 lu();
 </script>
 </body>
