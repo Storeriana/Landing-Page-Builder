@@ -117,7 +117,30 @@ body{font-family:'Inter',sans-serif;background:#1a1a2e;min-height:100vh;color:#f
     <div class="fields">
 
       <div id="tab-produk" class="tab-content active">
-        <div class="fg"><label>Nama Brand / Toko</label><input id="f-brand" placeholder="Nama brand kamu" oninput="lu()"></div>
+        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:12px;margin-bottom:14px">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560;margin-bottom:10px">🏪 Identitas Toko / Brand</div>
+          <div class="fg"><label>Nama Brand / Toko</label><input id="f-brand" placeholder="contoh: WAC Hijab" oninput="lu()"></div>
+          <div class="fg" style="margin-bottom:9px">
+            <label>URL Foto Profil</label>
+            <div style="display:grid;grid-template-columns:1fr 32px;gap:5px;align-items:center">
+              <input id="f-brand-img" placeholder="https://cdn.orderonline.id/..." oninput="updateBrandThumb(this.value);lu()">
+              <div id="brand-thumb" class="img-empty">🏪</div>
+            </div>
+          </div>
+          <div id="brand-img-preview" style="display:none;margin-bottom:9px">
+            <img id="brand-img-tag" src="" alt="" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid #2d3748;display:block">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div class="fg" style="margin:0">
+              <label>Rating Toko (1–5)</label>
+              <input id="f-brand-rating" type="number" value="4.9" min="1" max="5" step="0.1" oninput="lu()" style="text-align:center">
+            </div>
+            <div class="fg" style="margin:0">
+              <label>Jumlah Ulasan</label>
+              <input id="f-brand-review" placeholder="2.4rb" oninput="lu()">
+            </div>
+          </div>
+        </div>
         <div class="fg"><label>Nama Produk</label><input id="f-produk" placeholder="Nama produk" oninput="lu()"></div>
         <div class="fg"><label>Sub Judul / Varian</label><input id="f-sub" placeholder="Varian atau sub judul" oninput="lu()"></div>
         <div class="fg"><label>Tagline / Deskripsi</label><textarea id="f-tagline" rows="3" placeholder="Deskripsi singkat produk..." oninput="lu()"></textarea></div>
@@ -349,6 +372,21 @@ const STYLES = {
 // Helper
 function gv(id){return(document.getElementById(id)||{}).value||'';}
 
+function updateBrandThumb(url){
+  const thumb=document.getElementById('brand-thumb');
+  const preview=document.getElementById('brand-img-preview');
+  const tag=document.getElementById('brand-img-tag');
+  if(!thumb) return;
+  if(url&&url.startsWith('http')){
+    thumb.className='img-ok';thumb.textContent='✓';
+    if(preview){preview.style.display='block';}
+    if(tag){tag.src=url;}
+  } else {
+    thumb.className='img-empty';thumb.textContent='🏪';
+    if(preview){preview.style.display='none';}
+  }
+}
+
 let curStyle = 'bold';
 
 let heroSlots = ['', ''];
@@ -383,10 +421,10 @@ function buildCarousel(heroSlots, accent, h, isE){
     return `<div style="height:${h};background:#1a1a1a;display:flex;align-items:center;justify-content:center;color:#555;font-size:13px">Belum ada foto hero</div>`;
   }
   const tot=valid.length;
-  const slides=valid.map(u=>`<div style="min-width:100%;height:100%;line-height:0;overflow:hidden"><img src="${u}" alt="" style="width:100%;height:100%;object-fit:cover;-webkit-user-drag:none;pointer-events:none;display:block" onerror="this.parentElement.style.background='#222'"></div>`).join('');
+  const slides=valid.map((u,si)=>`<div class="cs-item" style="min-width:100%;line-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#f8f8f8"><img src="${u}" alt="" style="width:100%;height:auto;display:block;-webkit-user-drag:none;pointer-events:none" onerror="this.parentElement.style.background='#eee'" onload="if(typeof resizeCarousel==='function')resizeCarousel()"></div>`).join('');
   const dots=valid.map((_,i)=>`<span class="csd-${uid}" style="display:inline-block;height:8px;border-radius:4px;cursor:pointer;transition:all .3s;background:rgba(255,255,255,.4);width:8px"></span>`).join('');
   return `<div style="position:relative;overflow:hidden;line-height:0">
-<div id="${uid}-t" style="display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1);height:${h};cursor:grab;user-select:none;will-change:transform">${slides}</div>
+<div id="${uid}-t" style="display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1);cursor:grab;user-select:none;will-change:transform;align-items:flex-start">${slides}</div>
 <button id="${uid}-p" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);color:#fff;border:none;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9;backdrop-filter:blur(4px)">&#8249;</button>
 <button id="${uid}-n" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);color:#fff;border:none;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9;backdrop-filter:blur(4px)">&#8250;</button>
 <div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:9">${dots}</div>
@@ -407,7 +445,14 @@ tk.addEventListener('touchend',function(){if(Math.abs(dx)>40)go(dx<0?c+1:c-1);dr
 tk.addEventListener('mousedown',function(e){sx=e.clientX;dr=true;e.preventDefault();});
 document.addEventListener('mousemove',function(e){if(dr)dx=e.clientX-sx;});
 document.addEventListener('mouseup',function(){if(dr&&Math.abs(dx)>40)go(dx<0?c+1:c-1);dr=false;dx=0;});
-go(0);})();
+go(0);
+// Auto height sesuai dimensi foto
+function syncH(){var items=tk.querySelectorAll('.cs-item');if(!items[c])return;var img=items[c].querySelector('img');if(img&&img.naturalHeight>0){var ratio=img.naturalHeight/img.naturalWidth;var w=tk.offsetWidth||items[c].offsetWidth;if(w>0){var h=w*ratio;tk.style.height=h+'px';items[c].style.height=h+'px';}}
+}
+tk.querySelectorAll('img').forEach(function(img){if(img.complete&&img.naturalWidth>0)syncH();else img.addEventListener('load',syncH);});
+window.addEventListener('resize',function(){syncH();});
+function resizeCarousel(){syncH();}
+})();
 <\/script>`;
 }
 
@@ -420,7 +465,7 @@ function buildFotoDetail(fotoBlocks, opts){
     if(!fb.url.trim()) return '';
     const kList=fb.keunggulan.filter(k=>k.teks.trim());
     return `<div style="${isE?'':''}">
-<div style="background:#f8f8f8;text-align:center;line-height:0"><img src="${fb.url}" alt="foto ${fi+1}" style="width:100%;display:block;height:auto;object-fit:contain" onerror="this.style.display='none'"></div>
+<div style="background:#f8f8f8;line-height:0"><img src="${fb.url}" alt="foto ${fi+1}" style="width:100%;height:auto;display:block;object-fit:fill" onerror="this.style.display='none'"></div>
 ${kList.length>0?`<div style="padding:${isE?'20px':'13px'};background:${keungBg};${keungBorder}">
 <div style="font-size:${isE?'10':'9'}px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:${keungAccent};margin-bottom:${isE?'14':'9'}px">✦ Keunggulan Produk</div>
 ${kList.map(k=>`<div style="display:flex;align-items:flex-start;gap:${isE?'13':'9'}px;margin-bottom:${isE?'13':'8'}px">
@@ -546,11 +591,23 @@ function buildLP(s, d, isE) {
     tick();
   })();
   <\/script>` : ''}
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-top:${E?'8':'5'}px">
-    <div style="font-size:${E?'11':'9'}px;color:${textMute};font-family:${bf}">${P.brand}</div>
-    <div style="display:flex;gap:3px">
-      ${[1,2,3,4,5].map(i=>`<span style="color:${ac};font-size:${E?'12':'10'}px">★</span>`).join('')}
+  <div style="display:flex;align-items:center;gap:${E?'10':'7'}px;margin-top:${E?'12':'8'}px;padding:${E?'10px 12px':'7px 9px'};background:${surface};border-radius:${E?'10':'7'}px;border:1px solid ${border}">
+    ${P.brandImg ? `<img src="${P.brandImg}" alt="${P.brand}" style="width:${E?'40':'30'}px;height:${E?'40':'30'}px;border-radius:50%;object-fit:cover;border:2px solid ${ac}44;flex-shrink:0" onerror="this.style.display='none'">` : `<div style="width:${E?'40':'30'}px;height:${E?'40':'30'}px;border-radius:50%;background:${ac}22;border:2px solid ${ac}44;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:${E?'16':'12'}px">🏪</div>`}
+    <div style="flex:1;min-width:0">
+      <div style="font-size:${E?'12':'10'}px;font-weight:700;color:${textMain};font-family:${bf};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${P.brand}</div>
+      <div style="display:flex;align-items:center;gap:${E?'5':'3'}px;margin-top:${E?'3':'2'}px;flex-wrap:wrap">
+        <div style="display:flex;gap:1px">
+          ${[1,2,3,4,5].map(i=>{
+            const filled = i <= Math.floor(P.brandRating);
+            const half   = !filled && (P.brandRating - Math.floor(P.brandRating)) >= 0.5 && i === Math.ceil(P.brandRating);
+            return `<span style="color:${filled||half ? ac : textMute};font-size:${E?'12':'10'}px">${filled ? '★' : half ? '⯨' : '☆'}</span>`;
+          }).join('')}
+        </div>
+        <span style="font-size:${E?'11':'9'}px;font-weight:700;color:${ac};font-family:${bf}">${P.brandRating.toFixed(1)}</span>
+        ${P.brandReview ? `<span style="font-size:${E?'10':'8'}px;color:${textMute};font-family:${bf}">(${P.brandReview} ulasan)</span>` : ''}
+      </div>
     </div>
+    <div style="font-size:${E?'9':'8'}px;color:${ac};font-family:${bf};font-weight:600;background:${ac}15;padding:${E?'3px 8px':'2px 6px'};border-radius:20px;border:1px solid ${ac}33;white-space:nowrap;flex-shrink:0">Kunjungi →</div>
   </div>
 </div>`;
 
@@ -583,8 +640,8 @@ function buildLP(s, d, isE) {
     const kList = fb.keunggulan.filter(k => k.teks.trim());
     return `
 <div style="background:${card};border-bottom:1px solid ${border}">
-  <div style="background:${surface};text-align:center;line-height:0">
-    <img src="${fb.url}" alt="foto ${fi+1}" style="width:100%;display:block;height:auto;object-fit:contain;max-height:${E?'520px':'320px'}" onerror="this.style.display='none'">
+  <div style="background:#f8f8f8;line-height:0;overflow:hidden">
+    <img src="${fb.url}" alt="foto ${fi+1}" style="width:100%;height:auto;display:block;object-fit:fill" onerror="this.style.display='none'">
   </div>
   ${kList.length ? `<div style="padding:${E?'14px 16px':'10px 14px'}">
     <div style="font-size:${E?'11':'9'}px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:${ac};margin-bottom:${E?'10':'7'}px;font-family:${bf}">Detail Produk</div>
@@ -706,6 +763,9 @@ function luxuryRender(s,d,isE){
 function getPageData(){
   return {
     brand:gv('f-brand')||'Nama Brand',
+    brandImg: gv('f-brand-img'),
+    brandRating: parseFloat(gv('f-brand-rating')) || 4.9,
+    brandReview: gv('f-brand-review') || '',
     produk:gv('f-produk')||'Nama Produk',
     sub:gv('f-sub'),
     tagline:gv('f-tagline'),
@@ -1091,7 +1151,7 @@ function doCopy(){
 
 function doReset(){
   if(!confirm('Reset semua data?')) return;
-  ['f-brand','f-produk','f-sub','f-tagline','f-badges','f-footer','f-harga','f-harga-old','f-urgency','f-perks','f-order-title','f-order-sub','f-embed-code','f-timer-label','f-timer-d','f-timer-h','f-timer-m','f-timer-s'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['f-brand','f-produk','f-sub','f-tagline','f-badges','f-footer','f-harga','f-harga-old','f-urgency','f-perks','f-order-title','f-order-sub','f-embed-code','f-timer-label','f-timer-d','f-timer-h','f-timer-m','f-timer-s','f-brand-img','f-brand-rating','f-brand-review'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('f-order-title').value='Pesan Sekarang';
   document.getElementById('f-order-sub').value='Isi form di bawah, kami proses dalam 1x24 jam';
   heroSlots=['',''];
