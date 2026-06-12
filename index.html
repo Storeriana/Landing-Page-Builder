@@ -217,31 +217,57 @@ body{font-family:'Inter',sans-serif;background:#1a1a2e;min-height:100vh;color:#f
       </div>
 
       <div id="tab-varian" class="tab-content">
-        <p style="font-size:11px;color:#718096;margin-bottom:12px;line-height:1.6">Tambahkan pilihan ukuran dan warna produk. Pembeli bisa memilih langsung di landing page.</p>
+        <p style="font-size:11px;color:#718096;margin-bottom:12px;line-height:1.6">Pilihan ukuran &amp; warna tampil di bawah harga. Aktifkan atau nonaktifkan sesuai kebutuhan.</p>
 
-        <div style="margin-bottom:16px">
-          <div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#e94560;margin-bottom:8px">Ukuran Produk</div>
-          <div class="fg" style="margin-bottom:8px">
-            <label>Label Ukuran</label>
-            <input id="v-size-label" value="Pilih Ukuran" oninput="lu()">
+        <!-- UKURAN -->
+        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:12px;margin-bottom:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">📐 Pilihan Ukuran</div>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+              <span style="font-size:10px;color:#718096">Aktif</span>
+              <div style="position:relative;width:36px;height:20px" onclick="toggleVarian('size')">
+                <input type="checkbox" id="v-size-on" checked style="opacity:0;width:0;height:0;position:absolute">
+                <div id="v-size-track" style="position:absolute;inset:0;border-radius:10px;background:#e94560;transition:background .2s;cursor:pointer"></div>
+                <div id="v-size-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(16px)"></div>
+              </div>
+            </label>
           </div>
-          <div id="size-slots"></div>
-          <button class="btn-add-main" onclick="addSize()" id="btn-add-size">+ Tambah Ukuran</button>
-          <div style="margin-top:8px">
-            <button onclick="addPresetSize('pakaian')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:Inter,sans-serif;margin-right:5px;margin-bottom:4px">S M L XL XXL</button>
-            <button onclick="addPresetSize('sepatu')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:Inter,sans-serif;margin-right:5px;margin-bottom:4px">36 37 38 39 40 41</button>
-            <button onclick="addPresetSize('universal')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:Inter,sans-serif;margin-bottom:4px">XS S M L XL</button>
+          <div id="v-size-body">
+            <div class="fg" style="margin-bottom:8px">
+              <label>Label</label>
+              <input id="v-size-label" value="Pilih Ukuran" oninput="lu()">
+            </div>
+            <div id="size-slots"></div>
+            <button class="btn-add-main" onclick="addSize()" id="btn-add-size">+ Tambah Ukuran</button>
+            <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px">
+              <button onclick="addPresetSize('pakaian')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:Inter,sans-serif">S M L XL XXL</button>
+              <button onclick="addPresetSize('sepatu')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:Inter,sans-serif">36 37 38 39 40</button>
+              <button onclick="addPresetSize('universal')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:Inter,sans-serif">XS S M L XL</button>
+            </div>
           </div>
         </div>
 
-        <div>
-          <div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#e94560;margin-bottom:8px">Warna Produk</div>
-          <div class="fg" style="margin-bottom:8px">
-            <label>Label Warna</label>
-            <input id="v-color-label" value="Pilih Warna" oninput="lu()">
+        <!-- WARNA -->
+        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">🎨 Pilihan Warna</div>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+              <span style="font-size:10px;color:#718096">Aktif</span>
+              <div style="position:relative;width:36px;height:20px" onclick="toggleVarian('color')">
+                <input type="checkbox" id="v-color-on" checked style="opacity:0;width:0;height:0;position:absolute">
+                <div id="v-color-track" style="position:absolute;inset:0;border-radius:10px;background:#e94560;transition:background .2s;cursor:pointer"></div>
+                <div id="v-color-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(16px)"></div>
+              </div>
+            </label>
           </div>
-          <div id="color-slots"></div>
-          <button class="btn-add-main" onclick="addColor()">+ Tambah Warna</button>
+          <div id="v-color-body">
+            <div class="fg" style="margin-bottom:8px">
+              <label>Label</label>
+              <input id="v-color-label" value="Pilih Warna" oninput="lu()">
+            </div>
+            <div id="color-slots"></div>
+            <button class="btn-add-main" onclick="addColor()">+ Tambah Warna</button>
+          </div>
         </div>
       </div>
 
@@ -372,6 +398,21 @@ const STYLES = {
 // Helper
 function gv(id){return(document.getElementById(id)||{}).value||'';}
 
+function toggleVarian(type){
+  const cb=document.getElementById('v-'+type+'-on');
+  const track=document.getElementById('v-'+type+'-track');
+  const knob=document.getElementById('v-'+type+'-knob');
+  const body=document.getElementById('v-'+type+'-body');
+  if(!cb) return;
+  cb.checked=!cb.checked;
+  const on=cb.checked;
+  if(track) track.style.background=on?'#e94560':'#2d3748';
+  if(knob)  knob.style.transform=on?'translateX(16px)':'translateX(0)';
+  if(body)  body.style.opacity=on?'1':'0.4';
+  if(body)  body.style.pointerEvents=on?'':'none';
+  lu();
+}
+
 function updateBrandThumb(url){
   const thumb=document.getElementById('brand-thumb');
   const preview=document.getElementById('brand-img-preview');
@@ -473,7 +514,6 @@ ${kList.map(k=>`<div style="display:flex;align-items:flex-start;gap:${isE?'13':'
 <span style="font-size:${isE?textSize||'13px':'11px'};color:${keungText};line-height:1.65;font-family:${bodyFont||"'Inter',sans-serif"}">${k.teks}</span>
 </div>`).join('')}
 </div>`:''}
-${fi===0&&varianHtml?varianHtml:''}
 </div>`;
   }).join('');
 }
@@ -634,7 +674,6 @@ function buildLP(s, d, isE) {
 </div>` : '';
 
   // ── Foto detail + keunggulan per foto ──
-  const varHtml = buildVarianHtml(ac, bf, E);
   const fotoDetailHtml = fotoBlocks.map((fb, fi) => {
     if (!fb.url.trim()) return '';
     const kList = fb.keunggulan.filter(k => k.teks.trim());
@@ -650,7 +689,6 @@ function buildLP(s, d, isE) {
       <span style="font-size:${E?'13':'11'}px;color:${textSub};line-height:1.6;font-family:${bf}">${k.teks}</span>
     </div>`).join('')}
   </div>` : ''}
-  ${fi === 0 && varHtml ? varHtml : ''}
 </div>`;
   }).join('');
 
@@ -675,10 +713,13 @@ function buildLP(s, d, isE) {
   // ── Footer ──
   const footerHtml = `<div style="background:${s.footerBg||bg};color:${s.footerColor||textMute};padding:${E?'14px 16px':'10px 14px'};text-align:center;font-size:${E?'11':'9'}px;font-family:${bf};border-top:1px solid ${border}">${P.footer}</div>`;
 
+  const varianHtml = buildVarianHtml(ac, bf, E);
+
   return `
 ${carouselHtml}
 ${infoHtml}
 ${hargaHtml}
+${varianHtml}
 ${urgencyHtml}
 ${featHtml}
 ${fotoDetailHtml}
@@ -845,8 +886,10 @@ function buildVarianHtml(accent, bodyFont, isE){
   const colorLabel=gv('v-color-label')||'Warna';
   const validSizes=sizeSlots.filter(s=>s.val.trim());
   const validColors=colorSlots.filter(c=>c.hex);
-  const hasSize=validSizes.length>0;
-  const hasColor=validColors.length>0;
+  const sizeOn=(document.getElementById('v-size-on')||{checked:true}).checked;
+  const colorOn=(document.getElementById('v-color-on')||{checked:true}).checked;
+  const hasSize=sizeOn&&validSizes.length>0;
+  const hasColor=colorOn&&validColors.length>0;
   if(!hasSize&&!hasColor) return '';
 
   const E=isE;
