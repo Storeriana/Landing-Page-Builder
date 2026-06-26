@@ -760,8 +760,9 @@ function buildLP(s, d, isE){
   var detailProdukHtml='';
   if(hasAnyKeung){
     // Spacer pemisah tebal antara KEUNGGULAN dan DETAIL PRODUK
-    var spacer='<div style="height:'+(E?'10px':'8px')+';background:'+surface+';border-top:1px solid '+border+';border-bottom:1px solid '+border+'"></div>';
-    detailProdukHtml=spacer+'<div style="background:'+card+';padding:'+(E?'18px 16px 4px':'14px 14px 2px')+'"><div style="font-size:'+(E?'13px':'11px')+';font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:'+textMute+';font-family:'+bf+'">DETAIL PRODUK</div></div>';
+    var spacerBg = isDark ? '#000' : '#eceef0';
+    var spacer='<div style="height:'+(E?'14px':'12px')+';background:'+spacerBg+'"></div>';
+    detailProdukHtml=spacer+'<div style="background:'+card+';padding:'+(E?'20px 16px 4px':'16px 14px 2px')+';border-top:1px solid '+border+'"><div style="font-size:'+(E?'13px':'11px')+';font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:'+textMute+';font-family:'+bf+'">DETAIL PRODUK</div></div>';
   }
 
   // FOTO DETAIL (foto + keunggulan masing-masing)
