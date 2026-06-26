@@ -755,9 +755,20 @@ function buildLP(s, d, isE){
     +'<div style="text-align:center;margin-bottom:'+(E?'14px':'10px')+'"><div style="font-size:'+(E?'18px':'15px')+';font-weight:800;color:'+textMain+';font-family:'+tf+'">'+(P.orderTitle||'Pesan Sekarang')+'</div>'
     +(P.orderSub?'<div style="font-size:'+(E?'14px':'12px')+';color:'+textMute+';margin-top:3px;font-family:'+bf+'">'+P.orderSub+'</div>':'')+'</div>';
   if(P.embedCode){
-    orderHtml += E ? '<div id="oo-embed-placeholder"></div>' : '<div id="oo-iframe-wrap" style="width:100%;border-radius:8px;overflow:hidden;border:1px solid '+border+'"><iframe id="oo-embed-iframe" srcdoc="" style="width:100%;min-height:420px;border:none;display:block" scrolling="no"></iframe></div>';
+    if(E){
+      // Export: embed asli OrderOnline (placeholder diganti setelah build)
+      orderHtml += '<div id="oo-embed-placeholder"></div>';
+    } else {
+      // Preview: tampilkan info card karena embed asli butuh domain hosting
+      orderHtml += '<div style="background:'+card+';border:2px solid '+ac+';border-radius:'+radius+';padding:'+(E?'24px':'18px')+';text-align:center">'
+        +'<div style="font-size:'+(E?'40px':'32px')+';margin-bottom:10px">📝</div>'
+        +'<div style="font-size:'+(E?'16px':'14px')+';font-weight:700;color:'+textMain+';font-family:'+bf+';margin-bottom:6px">Form Order OrderOnline</div>'
+        +'<div style="font-size:'+(E?'13px':'11px')+';color:'+textSub+';font-family:'+bf+';line-height:1.6;margin-bottom:12px">Form pemesanan akan tampil di sini saat halaman dibuka di browser / domain kamu.</div>'
+        +'<div style="display:inline-flex;align-items:center;gap:6px;background:'+ac+';color:'+btnText+';font-size:'+(E?'13px':'12px')+';font-weight:700;padding:'+(E?'10px 20px':'8px 16px')+';border-radius:'+radius+';font-family:'+bf+'">✓ Embed terpasang</div>'
+        +'</div>';
+    }
   } else {
-    orderHtml += '<div style="background:'+card+';border:1px dashed '+border+';border-radius:'+radius+';padding:'+(E?'20px':'14px')+';text-align:center;color:'+textMute+';font-size:'+(E?'14px':'12px')+';font-family:'+bf+'">Form order belum dikonfigurasi.</div>';
+    orderHtml += '<div style="background:'+card+';border:1px dashed '+border+';border-radius:'+radius+';padding:'+(E?'20px':'14px')+';text-align:center;color:'+textMute+';font-size:'+(E?'14px':'12px')+';font-family:'+bf+'">Form order belum dikonfigurasi. Tempel kode embed OrderOnline di tab Order.</div>';
   }
   orderHtml += '</div>';
 
@@ -1007,24 +1018,8 @@ function buildPreviewHTML(){
   var wrapBg=(curStyle==='dark'||curStyle==='neon'||curStyle==='luxury')?'#0d0d0d':'#fff';
   var fontLink='<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">';
   var body=s.render(d,false);
-
-  // Embed OrderOnline di-inject via srcdoc iframe (terisolasi penuh)
-  var embedScript='';
-  if(d.embedCode){
-    // Bersihkan placeholder export kalau ada
-    body=body.replace('<div id="oo-embed-placeholder"></div>','');
-    // srcdoc berisi embed OrderOnline lengkap, di-set via setAttribute (bukan doc.write)
-    var embedDoc='<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box}body{margin:0;padding:0;font-family:Inter,sans-serif;overflow-x:hidden}img{max-width:100%}</style></head><body>'+d.embedCode+'</body></html>';
-    embedScript='<scr'+'ipt>(function(){'
-      +'var f=document.getElementById("oo-embed-iframe");if(!f)return;'
-      +'f.setAttribute("srcdoc",'+JSON.stringify(embedDoc)+');'
-      +'function rz(){try{var h=f.contentWindow.document.body.scrollHeight;if(h>50)f.style.height=(h+30)+"px";}catch(e){}}'
-      +'f.onload=rz;setTimeout(rz,800);setTimeout(rz,2000);setTimeout(rz,4000);setTimeout(rz,6000);'
-      +'})();<'+'/scr'+'ipt>';
-  }
-
   return '<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">'+fontLink
-    +'<style>*{box-sizing:border-box;margin:0;padding:0}html,body{width:100%;overflow-x:hidden}body{font-family:Inter,sans-serif;background:'+bgColor+';display:flex;justify-content:center}.wrap{width:100%;max-width:520px;background:'+wrapBg+';overflow-x:hidden}img{max-width:100%}</style></head><body><div class="wrap">'+body+'</div>'+embedScript+'</body></html>';
+    +'<style>*{box-sizing:border-box;margin:0;padding:0}html,body{width:100%;overflow-x:hidden}body{font-family:Inter,sans-serif;background:'+bgColor+';display:flex;justify-content:center}.wrap{width:100%;max-width:520px;background:'+wrapBg+';overflow-x:hidden}img{max-width:100%}</style></head><body><div class="wrap">'+body+'</div></body></html>';
 }
 
 function lu(){
