@@ -7,101 +7,80 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;background:#1a1a2e;min-height:100vh;color:#fff}
-.app{display:grid;grid-template-columns:380px 1fr;min-height:100vh}
-@media(max-width:900px){.app{grid-template-columns:1fr}}
-
-/* EDITOR */
-.editor{background:#16213e;border-right:1px solid #0f3460;display:flex;flex-direction:column;overflow:hidden;max-height:100vh;position:sticky;top:0}
-.editor-header{padding:14px 16px;border-bottom:1px solid #0f3460;background:#0f3460;display:flex;align-items:center;gap:10px}
-.editor-logo{width:32px;height:32px;background:linear-gradient(135deg,#e94560,#0f3460);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.editor-title{font-size:13px;font-weight:700;color:#fff;letter-spacing:.5px}
-.editor-sub{font-size:10px;color:#a0aec0;margin-top:1px}
-.tabs{display:flex;border-bottom:1px solid #0f3460;background:#16213e;overflow-x:auto}
-.tab{flex:1;padding:10px 2px;font-size:10px;font-weight:600;text-align:center;cursor:pointer;color:#718096;border:none;background:none;border-bottom:2px solid transparent;white-space:nowrap;min-width:40px;letter-spacing:.5px;text-transform:uppercase;transition:all .15s}
-.tab.active{color:#e94560;border-bottom-color:#e94560}
-.tab:hover{color:#e2e8f0}
-.fields{flex:1;overflow-y:auto;padding:14px}
-.fields::-webkit-scrollbar{width:4px}.fields::-webkit-scrollbar-track{background:#16213e}.fields::-webkit-scrollbar-thumb{background:#0f3460;border-radius:2px}
-.fg{margin-bottom:13px}
-.fg label{display:block;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#718096;margin-bottom:4px}
-.fg input,.fg textarea,.fg select{width:100%;padding:8px 10px;font-size:12px;border:1px solid #2d3748;border-radius:7px;background:#0f3460;color:#e2e8f0;font-family:'Inter',sans-serif;outline:none;transition:border .15s}
-.fg textarea{resize:vertical;line-height:1.5}
-.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:#e94560}
-.fg select option{background:#16213e;color:#e2e8f0}
-.slot-card{background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:11px;margin-bottom:9px}
-.slot-header{display:flex;align-items:center;gap:7px;margin-bottom:8px}
-.slot-num{background:#e94560;color:#fff;font-size:10px;font-weight:700;width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.slot-num-b{background:#4a5568}
-.url-row{display:grid;grid-template-columns:1fr 28px;gap:5px;align-items:center;margin-bottom:6px}
-.img-ok{width:24px;height:24px;border-radius:4px;background:#1a6645;border:1px solid #2f855a;display:flex;align-items:center;justify-content:center;font-size:9px;color:#9ae6b4;font-weight:700;flex-shrink:0}
-.img-empty{width:24px;height:24px;border-radius:4px;background:#2d3748;border:1px dashed #4a5568;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
-.k-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#e94560;margin-bottom:5px}
-.k-row{display:grid;grid-template-columns:28px 1fr auto;gap:4px;align-items:center;margin-bottom:4px}
-.btn-add-k{width:100%;padding:5px;font-size:10px;border:1px dashed #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:'Inter',sans-serif;margin-top:3px;transition:all .15s}
-.btn-add-k:hover{border-color:#e94560;color:#e94560}
-.feat-row{display:grid;grid-template-columns:34px 1fr;gap:5px;align-items:start;margin-bottom:8px}
-.feat-sub{display:grid;gap:3px}
-.btn-add{width:100%;padding:7px;font-size:11px;border:1px dashed #4a5568;border-radius:7px;background:none;color:#718096;cursor:pointer;font-family:'Inter',sans-serif;margin-top:3px;transition:all .15s}
-.btn-add:hover{border-color:#e94560;color:#e94560}
-.btn-add-main{width:100%;padding:9px;font-size:11px;border:1px dashed #e94560;border-radius:8px;background:none;color:#e94560;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;margin-top:4px;transition:all .15s}
-.btn-add-main:hover{background:rgba(233,69,96,.1)}
-
-/* Style cards */
-.style-grid{display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:4px}
-.style-card{border:1px solid #1e2d45;border-radius:14px;cursor:pointer;transition:all .22s;background:#0a1929;position:relative;overflow:hidden;display:grid;grid-template-columns:90px 1fr;min-height:72px}
-.style-card:hover{border-color:#2d4a6e;transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
-.style-card.active{border-color:var(--accent-color,#e94560);box-shadow:0 0 0 1px var(--accent-color,#e94560),0 4px 20px rgba(233,69,96,.2)}
-.sc-preview{width:90px;min-height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;overflow:hidden;flex-shrink:0}
-.sc-preview-mock{width:56px;border-radius:4px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.4);flex-shrink:0}
-.sc-preview-mock-bar{height:5px;width:100%}
-.sc-preview-mock-img{height:18px;width:100%}
-.sc-preview-mock-line{height:3px;margin:2px 4px;border-radius:1px}
-.sc-preview-mock-btn{height:7px;margin:3px 4px 4px;border-radius:2px}
-.sc-body{padding:10px 12px 10px 10px;display:flex;flex-direction:column;justify-content:center;min-width:0}
-.sc-name{font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:3px;letter-spacing:.2px}
-.sc-tag{font-size:10px;color:#4a6080;line-height:1.4}
-.sc-pills{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
-.sc-pill{font-size:8px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:2px 6px;border-radius:3px}
-.sc-check{position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:50%;background:var(--accent-color,#e94560);display:none;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.3)}
-.style-card.active .sc-check{display:flex}
-
-/* gen bar */
-.gen-bar{padding:12px 14px;border-top:1px solid #0f3460;background:#0f3460;display:flex;gap:7px}
-.btn-dl{flex:1;background:linear-gradient(135deg,#e94560,#c62a47);color:#fff;border:none;border-radius:8px;padding:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.5px}
-.btn-dl:hover{opacity:.9}
-.btn-cp{background:#16213e;color:#e2e8f0;border:1px solid #2d3748;border-radius:8px;padding:10px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
-.btn-cp:hover{border-color:#e94560;color:#e94560}
-.btn-cp.done{background:#1a6645;border-color:#2f855a;color:#9ae6b4}
-.btn-rs{background:none;border:1px solid #2d3748;border-radius:8px;padding:10px;font-size:14px;cursor:pointer;color:#718096;transition:all .15s}
-.btn-rs:hover{border-color:#4a5568;color:#e2e8f0}
-.tab-content{display:none}.tab-content.active{display:block}
-.hint{font-size:10px;color:#718096;margin-top:5px;line-height:1.5;padding:7px 9px;background:#0d1b2a;border-radius:6px;border-left:2px solid #e94560}
-.embed-ok{background:#1a3a2a;color:#9ae6b4;border:1px solid #2f855a;font-size:11px;padding:6px 9px;border-radius:6px;margin-top:5px}
-.embed-wait{background:#2d3748;color:#718096;border:1px dashed #4a5568;font-size:11px;padding:6px 9px;border-radius:6px;margin-top:5px}
-
-/* PREVIEW */
-.preview-panel{overflow-y:auto;background:#1a1a2e;display:flex;flex-direction:column;align-items:center}
-.preview-panel::-webkit-scrollbar{width:5px}.preview-panel::-webkit-scrollbar-track{background:#1a1a2e}.preview-panel::-webkit-scrollbar-thumb{background:#0f3460;border-radius:2px}
-.preview-top{padding:14px 16px 8px;width:100%;max-width:580px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.preview-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#4a5568}
-.mode-btns{display:flex;gap:5px;background:#0f3460;padding:3px;border-radius:8px}
-.mode-btn{padding:5px 12px;font-size:10px;font-weight:600;border:none;border-radius:6px;background:none;cursor:pointer;font-family:'Inter',sans-serif;color:#718096;letter-spacing:.5px;transition:all .15s}
+body{font-family:Inter,sans-serif;background:#0a0e27;color:#e2e8f0;height:100vh;overflow:hidden}
+.app{display:flex;height:100vh}
+.editor{width:380px;background:#16213e;border-right:1px solid #2d3748;display:flex;flex-direction:column;flex-shrink:0}
+.editor-head{padding:16px;border-bottom:1px solid #2d3748;display:flex;align-items:center;gap:12px}
+.logo{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#e94560,#ff6b81);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.logo-text h1{font-size:15px;font-weight:800;color:#fff}
+.logo-text p{font-size:11px;color:#718096}
+.tabs{display:flex;flex-wrap:wrap;gap:2px;padding:8px 10px;border-bottom:1px solid #2d3748}
+.tab{background:none;border:none;color:#718096;font-size:11px;font-weight:600;padding:6px 9px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .2s}
+.tab:hover{color:#a0aec0;background:#0f3460}
+.tab.active{color:#e94560;background:#0f3460}
+.tab-wrap{flex:1;overflow-y:auto;padding:14px}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.fg{margin-bottom:12px}
+.fg label{display:block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#718096;margin-bottom:5px}
+.fg input,.fg textarea,.fg select{width:100%;background:#0f3460;border:1px solid #2d3748;border-radius:7px;padding:9px 11px;color:#e2e8f0;font-size:13px;font-family:inherit;transition:border .2s}
+.fg input:focus,.fg textarea:focus,.fg select:focus{outline:none;border-color:#e94560}
+.fg input::placeholder,.fg textarea::placeholder{color:#4a5568}
+.fg textarea{resize:vertical;min-height:60px}
+.editor-foot{padding:12px;border-top:1px solid #2d3748;display:flex;gap:8px}
+.btn-main{flex:1;background:linear-gradient(135deg,#e94560,#ff6b81);color:#fff;border:none;border-radius:8px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .2s}
+.btn-main:hover{opacity:.9}
+.btn-sec{background:#0f3460;color:#e2e8f0;border:1px solid #2d3748;border-radius:8px;padding:12px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:all .2s}
+.btn-sec:hover{border-color:#e94560}
+.btn-sec.done{background:#166534;border-color:#166534;color:#86efac}
+.btn-icon{background:#0f3460;color:#718096;border:1px solid #2d3748;border-radius:8px;width:44px;cursor:pointer;font-size:16px;transition:all .2s}
+.btn-icon:hover{border-color:#e94560;color:#e94560}
+.preview-pane{flex:1;display:flex;flex-direction:column;background:#0d1117;overflow:hidden}
+.preview-head{padding:12px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1a1f2e}
+.preview-head .pv-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#4a5568}
+.mode-switch{display:flex;gap:4px;background:#16213e;padding:3px;border-radius:8px}
+.mode-btn{background:none;border:none;color:#718096;font-size:11px;font-weight:600;padding:6px 12px;border-radius:6px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;transition:all .2s}
 .mode-btn.active{background:#e94560;color:#fff}
-.preview-frame{padding:0 16px 24px;width:100%;display:flex;justify-content:center}
-#lp-preview{width:100%;max-width:420px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);font-family:'Inter',sans-serif;transition:max-width .3s}
-#lp-preview.desktop-mode{max-width:100%;border-radius:0}
+.preview-scroll{flex:1;overflow-y:auto;padding:24px;display:flex;justify-content:center;align-items:flex-start}
+#lp-preview{width:100%;max-width:420px;border:none;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.4);background:#fff;min-height:400px;display:block;transition:max-width .3s}
+.slot{background:#0f3460;border:1px solid #2d3748;border-radius:8px;padding:10px;margin-bottom:8px}
+.slot-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.slot-num{width:22px;height:22px;border-radius:6px;background:#e94560;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.slot-title{font-size:12px;font-weight:600;color:#a0aec0;flex:1;margin-left:8px}
+.btn-x{background:#1a2744;border:1px solid #2d3748;color:#718096;width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .2s}
+.btn-x:hover{border-color:#e94560;color:#e94560}
+.btn-add{width:100%;background:none;border:1px dashed #e94560;border-radius:7px;padding:8px;color:#e94560;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;margin-top:4px}
+.btn-add:hover{background:rgba(233,69,96,.1)}
+.row{display:flex;gap:6px;align-items:center;margin-bottom:6px}
+.box{background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:12px;margin-bottom:12px}
+.box-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.toggle-wrap{position:relative;width:36px;height:20px;cursor:pointer;flex-shrink:0}
+.toggle-track{position:absolute;inset:0;border-radius:10px;background:#2d3748;transition:background .2s}
+.toggle-knob{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s}
+.style-grid{display:flex;flex-direction:column;gap:8px}
+.style-card{background:#0f3460;border:2px solid #2d3748;border-radius:10px;padding:10px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;position:relative}
+.style-card:hover{border-color:#4a5568}
+.style-card.active{border-color:var(--accent-color)}
+.sc-check{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:var(--accent-color);color:#fff;font-size:11px;display:none;align-items:center;justify-content:center}
+.style-card.active .sc-check{display:flex}
+.sc-preview{width:60px;height:70px;border-radius:6px;overflow:hidden;flex-shrink:0}
+.sc-info{flex:1;min-width:0}
+.sc-name{font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:2px}
+.sc-desc{font-size:10px;color:#718096}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:#0d1117}
+::-webkit-scrollbar-thumb{background:#2d3748;border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:#4a5568}
 </style>
 </head>
 <body>
 <div class="app">
-
   <div class="editor">
-    <div class="editor-header">
-      <div class="editor-logo">⚡</div>
-      <div>
-        <div class="editor-title">Landing Page Builder Pro</div>
-        <div class="editor-sub">10 Style Profesional</div>
+    <div class="editor-head">
+      <div class="logo">⚡</div>
+      <div class="logo-text">
+        <h1>Landing Page Builder Pro</h1>
+        <p>10 Style Profesional</p>
       </div>
     </div>
     <div class="tabs">
@@ -110,30 +89,44 @@ body{font-family:'Inter',sans-serif;background:#1a1a2e;min-height:100vh;color:#f
       <button class="tab" onclick="sw('foto',this)">Foto</button>
       <button class="tab" onclick="sw('harga',this)">Harga</button>
       <button class="tab" onclick="sw('fitur',this)">Fitur</button>
-      <button class="tab" onclick="sw('order',this)">Order</button>
       <button class="tab" onclick="sw('varian',this)">Varian</button>
       <button class="tab" onclick="sw('style',this)">Style</button>
+      <button class="tab" onclick="sw('order',this)">Order</button>
     </div>
-    <div class="fields">
+    <div class="tab-wrap">
 
+      <!-- PRODUK -->
       <div id="tab-produk" class="tab-content active">
-        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:12px;margin-bottom:14px">
-          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560;margin-bottom:10px">🏪 Identitas Toko / Brand</div>
-          <div class="fg"><label>Nama Brand / Toko</label><input id="f-brand" placeholder="contoh: WAC Hijab" oninput="lu()"></div>
-          <div class="fg" style="margin-bottom:9px">
-            <label>URL Foto Profil</label>
-            <div style="display:grid;grid-template-columns:1fr 32px;gap:5px;align-items:center">
-              <input id="f-brand-img" placeholder="https://cdn.orderonline.id/..." oninput="updateBrandThumb(this.value);lu()">
-              <div id="brand-thumb" class="img-empty">🏪</div>
-            </div>
+        <div class="box">
+          <div class="box-title">🤖 Auto Isi dengan AI (Gemini)</div>
+          <div class="fg" style="margin-bottom:8px">
+            <label>Gemini API Key</label>
+            <input id="f-gemini-key" type="password" placeholder="Tempel API key Gemini..." oninput="saveGeminiKey()">
           </div>
-          <div id="brand-img-preview" style="display:none;margin-bottom:9px">
-            <img id="brand-img-tag" src="" alt="" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid #2d3748;display:block">
+          <div style="font-size:10px;color:#718096;margin-bottom:8px;line-height:1.5">
+            Key gratis di <span style="color:#e94560">aistudio.google.com/apikey</span> · disimpan di browser, dipakai untuk auto-isi konten
+          </div>
+          <button id="btn-auto" onclick="autoGenerate()" style="width:100%;background:linear-gradient(135deg,#7C3AED,#EC4899);color:#fff;border:none;border-radius:8px;padding:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s">✨ Auto Isi Konten dari Nama Produk</button>
+          <div id="auto-status" style="display:none;font-size:11px;padding:7px 9px;border-radius:6px;margin-top:8px"></div>
+        </div>
+
+        <div class="box">
+          <div class="box-title">🏪 Identitas Toko / Brand</div>
+          <div class="fg" style="margin-bottom:8px">
+            <label>Nama Brand / Toko</label>
+            <input id="f-brand" placeholder="contoh: WAC Hijab" oninput="lu()">
+          </div>
+          <div class="fg" style="margin-bottom:8px">
+            <label>URL Foto Profil</label>
+            <div style="display:flex;gap:6px;align-items:center">
+              <input id="f-brand-img" placeholder="https://cdn.orderonline.id/..." oninput="updateBrandThumb();lu()">
+              <div id="brand-thumb" style="width:38px;height:38px;border-radius:8px;background:#1a2744;border:1px solid #2d3748;flex-shrink:0;background-size:cover;background-position:center"></div>
+            </div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
             <div class="fg" style="margin:0">
-              <label>Rating Toko (1–5)</label>
-              <input id="f-brand-rating" type="number" value="4.9" min="1" max="5" step="0.1" oninput="lu()" style="text-align:center">
+              <label>Rating Toko (1-5)</label>
+              <input id="f-brand-rating" type="number" step="0.1" min="1" max="5" value="4.9" oninput="lu()">
             </div>
             <div class="fg" style="margin:0">
               <label>Terjual</label>
@@ -141,86 +134,80 @@ body{font-family:'Inter',sans-serif;background:#1a1a2e;min-height:100vh;color:#f
             </div>
           </div>
         </div>
-        <div class="fg"><label>Nama Produk</label><input id="f-produk" placeholder="Nama produk" oninput="lu()"></div>
+
+        <div class="fg"><label>Nama Produk</label><input id="f-produk" placeholder="contoh: Mukena Khadijah Micro Cotton" oninput="lu()"></div>
         <div class="fg"><label>Sub Judul / Varian</label><input id="f-sub" placeholder="Varian atau sub judul" oninput="lu()"></div>
         <div class="fg"><label>Tagline / Deskripsi</label><textarea id="f-tagline" rows="3" placeholder="Deskripsi singkat produk..." oninput="lu()"></textarea></div>
         <div class="fg"><label>Badge (pisah koma)</label><input id="f-badges" placeholder="Premium, Terlaris, Diskon" oninput="lu()"></div>
-        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:8px;padding:10px;margin-top:4px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">Footer</div>
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-              <span style="font-size:10px;color:#718096">Tampil</span>
-              <div style="position:relative;width:36px;height:20px" onclick="toggleFooter()">
-                <input type="checkbox" id="f-footer-on" checked style="opacity:0;width:0;height:0;position:absolute">
-                <div id="f-footer-track" style="position:absolute;inset:0;border-radius:10px;background:#e94560;transition:background .2s;cursor:pointer"></div>
-                <div id="f-footer-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(16px)"></div>
-              </div>
+
+        <div class="box">
+          <div class="box-title">
+            <span>Footer</span>
+            <label class="toggle-wrap" style="margin-left:auto" onclick="toggleFooter()">
+              <input type="checkbox" id="f-footer-on" checked style="opacity:0;width:0;height:0;position:absolute">
+              <div id="f-footer-track" class="toggle-track" style="background:#e94560"></div>
+              <div id="f-footer-knob" class="toggle-knob" style="transform:translateX(16px)"></div>
             </label>
           </div>
           <div class="fg" style="margin:0"><label>Teks Footer</label><input id="f-footer" placeholder="© 2025 Nama Toko" oninput="lu()"></div>
         </div>
       </div>
 
+      <!-- HERO -->
       <div id="tab-hero" class="tab-content">
-        <p style="font-size:11px;color:#718096;margin-bottom:12px;line-height:1.6">Foto besar paling atas yang bisa di-slide kiri/kanan. Isi 1–6 foto.</p>
+        <div style="font-size:11px;color:#718096;margin-bottom:12px;line-height:1.5">Foto utama produk (carousel). Bisa 1-6 foto, geser untuk lihat semua.</div>
         <div id="hero-slots"></div>
-        <button class="btn-add-main" onclick="addHero()" id="btn-add-hero">+ Tambah Foto Hero</button>
+        <button class="btn-add" onclick="addHero()" id="btn-add-hero">+ Tambah Foto Hero</button>
       </div>
 
+      <!-- FOTO -->
       <div id="tab-foto" class="tab-content">
-        <p style="font-size:11px;color:#718096;margin-bottom:12px;line-height:1.6">Foto tampil atas ke bawah. Tiap foto punya keunggulan sendiri di bawahnya.</p>
+        <div style="font-size:11px;color:#718096;margin-bottom:12px;line-height:1.5">Foto detail produk tampil atas ke bawah. Tiap foto punya keunggulan sendiri di bawahnya.</div>
         <div id="foto-blocks"></div>
-        <button class="btn-add-main" onclick="addFoto()" id="btn-add-foto">+ Tambah Foto</button>
+        <button class="btn-add" onclick="addFoto()" id="btn-add-foto">+ Tambah Foto</button>
       </div>
 
+      <!-- HARGA -->
       <div id="tab-harga" class="tab-content">
         <div class="fg"><label>Harga Jual</label><input id="f-harga" placeholder="89.000" oninput="lu()"></div>
-        <div class="fg"><label>Harga Coret</label><input id="f-harga-old" placeholder="130.000" oninput="lu()"></div>
-        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:8px;padding:10px;margin-bottom:2px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">⚡ Teks Urgency</div>
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-              <span style="font-size:10px;color:#718096">Tampil</span>
-              <div style="position:relative;width:36px;height:20px" onclick="toggleUrgency()">
-                <input type="checkbox" id="f-urgency-on" checked style="opacity:0;width:0;height:0;position:absolute">
-                <div id="f-urgency-track" style="position:absolute;inset:0;border-radius:10px;background:#e94560;transition:background .2s;cursor:pointer"></div>
-                <div id="f-urgency-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(16px)"></div>
-              </div>
+        <div class="fg"><label>Harga Coret (opsional)</label><input id="f-harga-old" placeholder="150.000" oninput="lu()"></div>
+
+        <div class="box">
+          <div class="box-title">
+            <span>⚡ Teks Urgency</span>
+            <label class="toggle-wrap" style="margin-left:auto" onclick="toggleUrgency()">
+              <input type="checkbox" id="f-urgency-on" checked style="opacity:0;width:0;height:0;position:absolute">
+              <div id="f-urgency-track" class="toggle-track" style="background:#e94560"></div>
+              <div id="f-urgency-knob" class="toggle-knob" style="transform:translateX(16px)"></div>
             </label>
           </div>
           <div class="fg" style="margin:0"><label>Teks</label><input id="f-urgency" placeholder="Stok terbatas — tersisa 17 pcs" oninput="lu()"></div>
         </div>
-        <div class="fg"><label>Keuntungan (1 per baris)</label><textarea id="f-perks" rows="3" placeholder="Free ongkir se-Indonesia&#10;Garansi produk asli&#10;Ready stok" oninput="lu()"></textarea></div>
-        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:12px;margin-top:4px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">⏱ Promo Countdown Timer</div>
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-              <span style="font-size:10px;color:#718096">Tampil</span>
-              <div style="position:relative;width:36px;height:20px" onclick="toggleTimer()">
-                <input type="checkbox" id="f-timer-on" style="opacity:0;width:0;height:0;position:absolute">
-                <div id="f-timer-track" style="position:absolute;inset:0;border-radius:10px;background:#2d3748;transition:background .2s;cursor:pointer"></div>
-                <div id="f-timer-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(0)"></div>
-              </div>
+
+        <div class="fg"><label>Perks / Benefit (1 per baris)</label><textarea id="f-perks" rows="3" placeholder="Gratis Ongkir&#10;Garansi 30 Hari&#10;COD Tersedia" oninput="lu()"></textarea></div>
+
+        <div class="box">
+          <div class="box-title">
+            <span>⏱ Promo Countdown Timer</span>
+            <label class="toggle-wrap" style="margin-left:auto" onclick="toggleTimer()">
+              <input type="checkbox" id="f-timer-on" style="opacity:0;width:0;height:0;position:absolute">
+              <div id="f-timer-track" class="toggle-track"></div>
+              <div id="f-timer-knob" class="toggle-knob"></div>
             </label>
           </div>
           <div id="f-timer-body" style="opacity:0.4;pointer-events:none">
             <div style="background:#16213e;border:1px solid #2d3748;border-radius:8px;padding:9px;margin-bottom:8px">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
                 <div style="font-size:10px;font-weight:600;color:#a0aec0">Label Timer</div>
-                <label style="display:flex;align-items:center;gap:5px;cursor:pointer">
-                  <span style="font-size:10px;color:#718096">Tampil</span>
-                  <div style="position:relative;width:32px;height:18px" onclick="toggleTimerLabel()">
-                    <input type="checkbox" id="f-timer-label-on" checked style="opacity:0;width:0;height:0;position:absolute">
-                    <div id="f-timer-label-track" style="position:absolute;inset:0;border-radius:9px;background:#e94560;transition:background .2s;cursor:pointer"></div>
-                    <div id="f-timer-label-knob" style="position:absolute;top:1px;left:1px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(14px)"></div>
-                  </div>
+                <label class="toggle-wrap" style="width:32px;height:18px" onclick="toggleTimerLabel()">
+                  <input type="checkbox" id="f-timer-label-on" checked style="opacity:0;width:0;height:0;position:absolute">
+                  <div id="f-timer-label-track" class="toggle-track" style="background:#e94560"></div>
+                  <div id="f-timer-label-knob" class="toggle-knob" style="transform:translateX(14px)"></div>
                 </label>
               </div>
-              <div class="fg" style="margin:0">
-                <input id="f-timer-label" value="Promo Berakhir Dalam" oninput="lu()" placeholder="Promo Berakhir Dalam">
-              </div>
+              <div class="fg" style="margin:0"><input id="f-timer-label" value="Promo Berakhir Dalam" oninput="lu()"></div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:0">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px">
               <div class="fg" style="margin:0"><label>Hari</label><input id="f-timer-d" type="number" value="0" min="0" max="99" oninput="lu()" style="text-align:center"></div>
               <div class="fg" style="margin:0"><label>Jam</label><input id="f-timer-h" type="number" value="12" min="0" max="23" oninput="lu()" style="text-align:center"></div>
               <div class="fg" style="margin:0"><label>Menit</label><input id="f-timer-m" type="number" value="30" min="0" max="59" oninput="lu()" style="text-align:center"></div>
@@ -230,1301 +217,883 @@ body{font-family:'Inter',sans-serif;background:#1a1a2e;min-height:100vh;color:#f
         </div>
       </div>
 
+      <!-- FITUR -->
       <div id="tab-fitur" class="tab-content">
-        <p style="font-size:11px;color:#718096;margin-bottom:10px">Grid keunggulan ringkas yang tampil di bawah info produk.</p>
-        <div id="feats-container"></div>
-        <button class="btn-add" onclick="addFeat()">+ Tambah Fitur</button>
+        <div style="font-size:11px;color:#718096;margin-bottom:12px;line-height:1.5">Fitur unggulan tampil sebagai grid icon.</div>
+        <div id="feats-list"></div>
+        <button class="btn-add" onclick="addFeat()" id="btn-add-feat">+ Tambah Fitur</button>
       </div>
 
-      <div id="tab-order" class="tab-content">
-        <div class="fg"><label>Judul Order</label><input id="f-order-title" value="Pesan Sekarang" oninput="lu()"></div>
-        <div class="fg"><label>Sub Teks</label><input id="f-order-sub" value="Isi form di bawah, kami proses dalam 1x24 jam" oninput="lu()"></div>
-        <div class="fg">
-          <label>Kode Embed Form</label>
-          <textarea id="f-embed-code" rows="6" oninput="checkEmbed()" style="font-size:10px;font-family:monospace" placeholder="Paste kode embed OrderOnline / Google Form / Tally..."></textarea>
-          <div id="embed-status" style="display:none"></div>
-          <div class="hint">OrderOnline: Produk → Bagikan → Embed → salin semua kode HTML+Script</div>
-        </div>
-      </div>
-
+      <!-- VARIAN -->
       <div id="tab-varian" class="tab-content">
-        <p style="font-size:11px;color:#718096;margin-bottom:12px;line-height:1.6">Pilihan ukuran &amp; warna tampil di bawah harga. Aktifkan atau nonaktifkan sesuai kebutuhan.</p>
-
         <!-- UKURAN -->
-        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:12px;margin-bottom:12px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">📐 Pilihan Ukuran</div>
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-              <span style="font-size:10px;color:#718096">Aktif</span>
-              <div style="position:relative;width:36px;height:20px" onclick="toggleVarian('size')">
-                <input type="checkbox" id="v-size-on" checked style="opacity:0;width:0;height:0;position:absolute">
-                <div id="v-size-track" style="position:absolute;inset:0;border-radius:10px;background:#e94560;transition:background .2s;cursor:pointer"></div>
-                <div id="v-size-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(16px)"></div>
-              </div>
+        <div class="box">
+          <div class="box-title">
+            <span>📏 Pilihan Ukuran</span>
+            <label class="toggle-wrap" style="margin-left:auto" onclick="toggleVarian('size')">
+              <input type="checkbox" id="v-size-on" checked style="opacity:0;width:0;height:0;position:absolute">
+              <div id="v-size-track" class="toggle-track" style="background:#e94560"></div>
+              <div id="v-size-knob" class="toggle-knob" style="transform:translateX(16px)"></div>
             </label>
           </div>
           <div id="v-size-body">
-            <div class="fg" style="margin-bottom:8px">
-              <label>Label</label>
-              <input id="v-size-label" value="Pilih Ukuran" oninput="lu()">
-            </div>
+            <div class="fg"><label>Label</label><input id="v-size-label" value="Pilih Ukuran" oninput="lu()"></div>
             <div id="size-slots"></div>
-            <button class="btn-add-main" onclick="addSize()" id="btn-add-size">+ Tambah Ukuran</button>
+            <button class="btn-add" onclick="addSize()" id="btn-add-size">+ Tambah Ukuran</button>
             <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px">
-              <button onclick="addPresetSize('pakaian')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:Inter,sans-serif">S M L XL XXL</button>
-              <button onclick="addPresetSize('sepatu')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:Inter,sans-serif">36 37 38 39 40</button>
-              <button onclick="addPresetSize('universal')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:Inter,sans-serif">XS S M L XL</button>
+              <button onclick="addPresetSize('pakaian')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:inherit">S M L XL XXL</button>
+              <button onclick="addPresetSize('sepatu')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:inherit">36-40</button>
+              <button onclick="addPresetSize('universal')" style="font-size:10px;padding:4px 9px;border:1px solid #4a5568;border-radius:5px;background:none;color:#718096;cursor:pointer;font-family:inherit">All Size</button>
             </div>
-
-            <!-- Detail Ukuran -->
             <div style="margin-top:10px;background:#16213e;border:1px solid #2d3748;border-radius:8px;padding:10px">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-                <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#a0aec0">📏 Detail / Panduan Ukuran</div>
-                <label style="display:flex;align-items:center;gap:5px;cursor:pointer">
-                  <span style="font-size:10px;color:#718096">Tampil</span>
-                  <div style="position:relative;width:32px;height:18px" onclick="toggleSizeDetail()">
-                    <input type="checkbox" id="v-size-detail-on" style="opacity:0;width:0;height:0;position:absolute">
-                    <div id="v-size-detail-track" style="position:absolute;inset:0;border-radius:9px;background:#2d3748;transition:background .2s;cursor:pointer"></div>
-                    <div id="v-size-detail-knob" style="position:absolute;top:1px;left:1px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(0)"></div>
-                  </div>
+                <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#a0aec0">Detail / Panduan Ukuran</div>
+                <label class="toggle-wrap" style="width:32px;height:18px" onclick="toggleSizeDetail()">
+                  <input type="checkbox" id="v-size-detail-on" style="opacity:0;width:0;height:0;position:absolute">
+                  <div id="v-size-detail-track" class="toggle-track"></div>
+                  <div id="v-size-detail-knob" class="toggle-knob"></div>
                 </label>
               </div>
               <div id="v-size-detail-body" style="opacity:0.4;pointer-events:none">
-                <div class="fg" style="margin-bottom:7px">
-                  <label>Judul Panduan</label>
-                  <input id="v-size-detail-title" placeholder="contoh: Panduan Ukuran" value="Panduan Ukuran" oninput="lu()">
-                </div>
-                <div class="fg" style="margin:0">
-                  <label>Isi Detail Ukuran</label>
-                  <textarea id="v-size-detail-text" rows="5" oninput="lu()" placeholder="contoh:&#10;S = Lingkar dada 80-85cm&#10;M = Lingkar dada 86-90cm&#10;L = Lingkar dada 91-96cm&#10;XL = Lingkar dada 97-102cm&#10;XXL = Lingkar dada 103-108cm"></textarea>
-                </div>
+                <div class="fg" style="margin-bottom:7px"><label>Judul Panduan</label><input id="v-size-detail-title" value="Panduan Ukuran" oninput="lu()"></div>
+                <div class="fg" style="margin:0"><label>Isi (1 baris = 1 ukuran, pakai =)</label><textarea id="v-size-detail-text" rows="5" oninput="lu()" placeholder="S = LD 80-85cm&#10;M = LD 86-90cm&#10;L = LD 91-96cm"></textarea></div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- WARNA -->
-        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:12px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">🎨 Pilihan Warna</div>
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-              <span style="font-size:10px;color:#718096">Aktif</span>
-              <div style="position:relative;width:36px;height:20px" onclick="toggleVarian('color')">
-                <input type="checkbox" id="v-color-on" checked style="opacity:0;width:0;height:0;position:absolute">
-                <div id="v-color-track" style="position:absolute;inset:0;border-radius:10px;background:#e94560;transition:background .2s;cursor:pointer"></div>
-                <div id="v-color-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(16px)"></div>
-              </div>
+        <div class="box">
+          <div class="box-title">
+            <span>🎨 Pilihan Warna</span>
+            <label class="toggle-wrap" style="margin-left:auto" onclick="toggleVarian('color')">
+              <input type="checkbox" id="v-color-on" checked style="opacity:0;width:0;height:0;position:absolute">
+              <div id="v-color-track" class="toggle-track" style="background:#e94560"></div>
+              <div id="v-color-knob" class="toggle-knob" style="transform:translateX(16px)"></div>
             </label>
           </div>
           <div id="v-color-body">
-            <div class="fg" style="margin-bottom:8px">
-              <label>Label</label>
-              <input id="v-color-label" value="Pilih Warna" oninput="lu()">
-            </div>
+            <div class="fg"><label>Label</label><input id="v-color-label" value="Pilih Warna" oninput="lu()"></div>
             <div id="color-slots"></div>
-            <button class="btn-add-main" onclick="addColor()">+ Tambah Warna</button>
+            <button class="btn-add" onclick="addColor()" id="btn-add-color">+ Tambah Warna</button>
           </div>
         </div>
 
         <!-- PAKET -->
-        <div style="background:#0f3460;border:1px solid #2d3748;border-radius:10px;padding:12px;margin-top:12px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e94560">📦 Pilihan Paket</div>
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-              <span style="font-size:10px;color:#718096">Aktif</span>
-              <div style="position:relative;width:36px;height:20px" onclick="toggleVarian('paket')">
-                <input type="checkbox" id="v-paket-on" style="opacity:0;width:0;height:0;position:absolute">
-                <div id="v-paket-track" style="position:absolute;inset:0;border-radius:10px;background:#2d3748;transition:background .2s;cursor:pointer"></div>
-                <div id="v-paket-knob" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;transform:translateX(0)"></div>
-              </div>
+        <div class="box">
+          <div class="box-title">
+            <span>📦 Pilihan Paket</span>
+            <label class="toggle-wrap" style="margin-left:auto" onclick="toggleVarian('paket')">
+              <input type="checkbox" id="v-paket-on" style="opacity:0;width:0;height:0;position:absolute">
+              <div id="v-paket-track" class="toggle-track"></div>
+              <div id="v-paket-knob" class="toggle-knob"></div>
             </label>
           </div>
           <div id="v-paket-body" style="opacity:0.4;pointer-events:none">
-            <div class="fg" style="margin-bottom:8px">
-              <label>Label Paket</label>
-              <input id="v-paket-label" value="Pilih Paket" oninput="lu()">
-            </div>
+            <div class="fg"><label>Label</label><input id="v-paket-label" value="Pilih Paket" oninput="lu()"></div>
             <div id="paket-slots"></div>
-            <button class="btn-add-main" onclick="addPaket()" id="btn-add-paket">+ Tambah Paket</button>
+            <button class="btn-add" onclick="addPaket()" id="btn-add-paket">+ Tambah Paket</button>
           </div>
         </div>
       </div>
 
-
+      <!-- STYLE -->
       <div id="tab-style" class="tab-content">
-        <p style="font-size:11px;color:#718096;margin-bottom:12px;line-height:1.6">Pilih style. Setiap style punya karakter layout, tipografi, dan visual yang berbeda.</p>
-        <div class="style-grid" id="style-grid"></div>
-        <div id="custom-wrap" style="display:none;margin-top:10px">
-          <p style="font-size:11px;font-weight:600;color:#a0aec0;margin-bottom:8px">Atur Warna Custom:</p>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
-            <div class="fg" style="margin:0"><label>Utama</label><input type="color" id="c-primary" value="#e94560" oninput="lu()" style="height:34px;padding:3px;cursor:pointer"></div>
-            <div class="fg" style="margin:0"><label>Aksen</label><input type="color" id="c-accent" value="#e94560" oninput="lu()" style="height:34px;padding:3px;cursor:pointer"></div>
-            <div class="fg" style="margin:0"><label>Background</label><input type="color" id="c-bg" value="#f9f5f0" oninput="lu()" style="height:34px;padding:3px;cursor:pointer"></div>
-            <div class="fg" style="margin:0"><label>Teks Aksen</label><input type="color" id="c-text" value="#8B6340" oninput="lu()" style="height:34px;padding:3px;cursor:pointer"></div>
-          </div>
-        </div>
+        <div style="font-size:11px;color:#718096;margin-bottom:12px;line-height:1.5">Pilih tampilan landing page.</div>
+        <div id="style-grid" class="style-grid"></div>
+      </div>
+
+      <!-- ORDER -->
+      <div id="tab-order" class="tab-content">
+        <div class="fg"><label>Judul Section Order</label><input id="f-order-title" value="Pesan Sekarang" oninput="lu()"></div>
+        <div class="fg"><label>Sub Judul Order</label><input id="f-order-sub" value="Isi form di bawah, kami proses dalam 1x24 jam" oninput="lu()"></div>
+        <div class="fg"><label>Kode Embed OrderOnline</label><textarea id="f-embed-code" rows="6" placeholder="Tempel kode embed dari OrderOnline..." oninput="checkEmbed();lu()"></textarea></div>
+        <div id="embed-status" style="display:none;font-size:11px;padding:8px 10px;border-radius:6px"></div>
       </div>
 
     </div>
-    <div class="gen-bar">
-      <button class="btn-dl" onclick="doExport()">⬇ Unduh HTML</button>
-      <button class="btn-cp" id="btn-cp" onclick="doCopy()">⎘ Copy Kode</button>
-      <button class="btn-rs" onclick="doReset()">↺</button>
+    <div class="editor-foot">
+      <button class="btn-main" onclick="doExport()">⬇ Unduh HTML</button>
+      <button class="btn-sec" id="btn-cp" onclick="doCopy()">⎘ Copy Kode</button>
+      <button class="btn-icon" onclick="doReset()" title="Reset">↺</button>
     </div>
   </div>
 
-  <div class="preview-panel">
-    <div class="preview-top">
-      <span class="preview-label">Live Preview</span>
-      <div class="mode-btns">
+  <div class="preview-pane">
+    <div class="preview-head">
+      <span class="pv-label">Live Preview</span>
+      <div class="mode-switch">
         <button class="mode-btn active" onclick="setMode('mobile',this)">📱 Mobile</button>
         <button class="mode-btn" onclick="setMode('desktop',this)">🖥 Desktop</button>
       </div>
     </div>
-    <div class="preview-frame">
-      <iframe id="lp-preview" style="width:100%;border:none;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.14);background:#fff;min-height:400px;display:block" scrolling="no"></iframe>
+    <div class="preview-scroll">
+      <iframe id="lp-preview" scrolling="no"></iframe>
     </div>
   </div>
-
 </div>
+
 <script>
-// ═══════════════════════════════════════════════════════
-// STYLE DEFINITIONS — 10 style unik berbeda karakter
-// ═══════════════════════════════════════════════════════
-const STYLES = {
+// ═══════════════ HELPER ═══════════════
+function gv(id){var el=document.getElementById(id);return el?el.value:'';}
 
-  bold: {
-    name:'Bold Impact', tag:'Tegas · Besar · Berani',
-    accent:'#F4052B', previewBg:'linear-gradient(135deg,#F4052B,#ff6b35)',
-    fonts:{title:"'Poppins',sans-serif",body:"'Poppins',sans-serif"},
-    render(d,isE){ return boldRender(this,d,isE); }
-  },
-
-  fresh: {
-    name:'Fresh & Clean', tag:'Segar · Ringan · Modern',
-    accent:'#00C851', previewBg:'linear-gradient(135deg,#00C851,#00a844)',
-    fonts:{title:"'Space Grotesk',sans-serif",body:"'Inter',sans-serif"},
-    render(d,isE){ return freshRender(this,d,isE); }
-  },
-
-  dark: {
-    name:'Dark Premium', tag:'Gelap · Mewah · Eksklusif',
-    accent:'#FFD700', previewBg:'linear-gradient(135deg,#1a1a1a,#333)',
-    fonts:{title:"'Space Grotesk',sans-serif",body:"'Inter',sans-serif"},
-    render(d,isE){ return darkRender(this,d,isE); }
-  },
-
-  elegant: {
-    name:'Elegant Serif', tag:'Klasik · Elegan · Premium',
-    accent:'#B8860B', previewBg:'linear-gradient(135deg,#2c1810,#6b4226)',
-    fonts:{title:"'Playfair Display',serif",body:"'Crimson Text',serif"},
-    render(d,isE){ return elegantRender(this,d,isE); }
-  },
-
-  neon: {
-    name:'Neon Glow', tag:'Futuristik · Cerah · Dinamis',
-    accent:'#00F5FF', previewBg:'linear-gradient(135deg,#0d001a,#1a0033)',
-    fonts:{title:"'Space Grotesk',sans-serif",body:"'Inter',sans-serif"},
-    render(d,isE){ return neonRender(this,d,isE); }
-  },
-
-  pastel: {
-    name:'Soft Pastel', tag:'Lembut · Feminin · Hangat',
-    accent:'#FF6B9D', previewBg:'linear-gradient(135deg,#FFB3C6,#FFC8DD)',
-    fonts:{title:"'Poppins',sans-serif",body:"'Poppins',sans-serif"},
-    render(d,isE){ return pastelRender(this,d,isE); }
-  },
-
-  minimal: {
-    name:'Ultra Minimal', tag:'Bersih · Luas · Tipis',
-    accent:'#000', previewBg:'linear-gradient(135deg,#fff,#f0f0f0)',
-    fonts:{title:"'Inter',sans-serif",body:"'Inter',sans-serif"},
-    render(d,isE){ return minimalRender(this,d,isE); }
-  },
-
-  gradient: {
-    name:'Gradient Pop', tag:'Colorful · Energik · Muda',
-    accent:'#7C3AED', previewBg:'linear-gradient(135deg,#7C3AED,#EC4899)',
-    fonts:{title:"'Poppins',sans-serif",body:"'Poppins',sans-serif"},
-    render(d,isE){ return gradientRender(this,d,isE); }
-  },
-
-  nature: {
-    name:'Nature Organic', tag:'Natural · Earthy · Organik',
-    accent:'#2D6A4F', previewBg:'linear-gradient(135deg,#2D6A4F,#52B788)',
-    fonts:{title:"'Playfair Display',serif",body:"'Inter',sans-serif"},
-    render(d,isE){ return natureRender(this,d,isE); }
-  },
-
-  luxury: {
-    name:'Luxury Gold', tag:'Mewah · Gold · Prestige',
-    accent:'#C9A84C', previewBg:'linear-gradient(135deg,#0a0a0a,#1a1200)',
-    fonts:{title:"'Playfair Display',serif",body:"'Crimson Text',serif"},
-    render(d,isE){ return luxuryRender(this,d,isE); }
-  },
-
-  custom: {
-    name:'Custom', tag:'Atur sendiri',
-    accent:'#e94560', previewBg:'linear-gradient(135deg,#e94560,#0f3460)',
-    fonts:{title:"'Inter',sans-serif",body:"'Inter',sans-serif"},
-    render(d,isE){ return boldRender(Object.assign({},this,{accent:gv('c-primary')||this.accent}),d,isE); }
-  }
-};
-
-// ═══════════════════════════════════
-// STATE — semua variabel global
-// ═══════════════════════════════════
-// Helper
-function gv(id){return(document.getElementById(id)||{}).value||'';}
-
-function toggleTimer(){
-  var cb=document.getElementById('f-timer-on');
-  var track=document.getElementById('f-timer-track');
-  var knob=document.getElementById('f-timer-knob');
-  var body=document.getElementById('f-timer-body');
-  if(!cb) return;
-  cb.checked=!cb.checked;
-  var on=cb.checked;
-  if(track) track.style.background=on?'#e94560':'#2d3748';
-  if(knob)  knob.style.transform=on?'translateX(16px)':'translateX(0)';
-  if(body){body.style.opacity=on?'1':'0.4';body.style.pointerEvents=on?'auto':'none';}
-  lu();
-}
-
-function toggleTimerLabel(){
-  var cb=document.getElementById('f-timer-label-on');
-  var track=document.getElementById('f-timer-label-track');
-  var knob=document.getElementById('f-timer-label-knob');
-  if(!cb) return;
-  cb.checked=!cb.checked;
-  var on=cb.checked;
-  if(track) track.style.background=on?'#e94560':'#2d3748';
-  if(knob)  knob.style.transform=on?'translateX(14px)':'translateX(0)';
-  lu();
-}
-
-function toggleUrgency(){
-  var cb=document.getElementById('f-urgency-on');
-  var track=document.getElementById('f-urgency-track');
-  var knob=document.getElementById('f-urgency-knob');
-  if(!cb) return;
-  cb.checked=!cb.checked;
-  var on=cb.checked;
-  if(track) track.style.background=on?'#e94560':'#2d3748';
-  if(knob)  knob.style.transform=on?'translateX(16px)':'translateX(0)';
-  lu();
-}
-
-function toggleFooter(){
-  var cb=document.getElementById('f-footer-on');
-  var track=document.getElementById('f-footer-track');
-  var knob=document.getElementById('f-footer-knob');
-  if(!cb) return;
-  cb.checked = !cb.checked;
-  var on = cb.checked;
-  if(track) track.style.background = on ? '#e94560' : '#2d3748';
-  if(knob)  knob.style.transform   = on ? 'translateX(16px)' : 'translateX(0)';
-  lu();
-}
-
-function toggleSizeDetail(){
-  var cb=document.getElementById('v-size-detail-on');
-  var track=document.getElementById('v-size-detail-track');
-  var knob=document.getElementById('v-size-detail-knob');
-  var body=document.getElementById('v-size-detail-body');
-  if(!cb) return;
-  cb.checked=!cb.checked;
-  var on=cb.checked;
-  if(track) track.style.background=on?'#e94560':'#2d3748';
-  if(knob)  knob.style.transform=on?'translateX(14px)':'translateX(0)';
-  if(body){body.style.opacity=on?'1':'0.4';body.style.pointerEvents=on?'auto':'none';}
-  lu();
-}
-
-function toggleVarian(type){
-  const cb=document.getElementById('v-'+type+'-on');
-  const track=document.getElementById('v-'+type+'-track');
-  const knob=document.getElementById('v-'+type+'-knob');
-  const body=document.getElementById('v-'+type+'-body');
-  if(!cb) return;
-  cb.checked=!cb.checked;
-  const on=cb.checked;
-  // Simpan ke state variabel — aman dipanggil dari mana saja
-  varianState[type]=on;
-  if(track) track.style.background=on?'#e94560':'#2d3748';
-  if(knob)  knob.style.transform=on?'translateX(16px)':'translateX(0)';
-  if(body)  body.style.opacity=on?'1':'0.4';
-  if(body)  body.style.pointerEvents=on?'auto':'none';
-  lu();
-}
-
-function updateBrandThumb(url){
-  const thumb=document.getElementById('brand-thumb');
-  const preview=document.getElementById('brand-img-preview');
-  const tag=document.getElementById('brand-img-tag');
-  if(!thumb) return;
-  if(url&&url.startsWith('http')){
-    thumb.className='img-ok';thumb.textContent='✓';
-    if(preview){preview.style.display='block';}
-    if(tag){tag.src=url;}
-  } else {
-    thumb.className='img-empty';thumb.textContent='🏪';
-    if(preview){preview.style.display='none';}
-  }
-}
-
+// ═══════════════ STATE ═══════════════
 let curStyle = 'bold';
-
 let heroSlots = ['', ''];
-
 let fotoBlocks = [
   {url:'', keunggulan:[{icon:'✨',teks:''},{icon:'🌿',teks:''}]},
   {url:'', keunggulan:[{icon:'✅',teks:''},{icon:'⏱️',teks:''}]},
+  {url:'', keunggulan:[{icon:'💎',teks:''},{icon:'🛡️',teks:''}]},
+  {url:'', keunggulan:[{icon:'🔥',teks:''},{icon:'⭐',teks:''}]},
 ];
-
 let feats = [
   {icon:'🌿', label:'Bahan Premium',   sub:'Kualitas terjamin'},
   {icon:'🤍', label:'Lembut & Nyaman', sub:'Cocok dipakai lama'},
   {icon:'✅', label:'Berkualitas',      sub:'Pilihan terbaik'},
   {icon:'⏱️', label:'Praktis',          sub:'Hemat waktu'},
 ];
-
 let sizeSlots  = [{val:'S'},{val:'M'},{val:'L'},{val:'XL'},{val:'XXL'}];
+let colorSlots = [{name:'Hitam',hex:'#111111',img:''},{name:'Putih',hex:'#FFFFFF',img:''},{name:'Coklat',hex:'#8B6340',img:''}];
 let paketSlots = [{nama:'1 pcs',harga:'',ket:''},{nama:'2 pcs',harga:'',ket:'Hemat 10%'},{nama:'3 pcs',harga:'',ket:'Hemat 20%'}];
+let varianState = {size:true, color:true, paket:false};
 
-// State toggle varian — tidak baca DOM agar aman saat dipanggil dari string builder
-let varianState = {size: true, color: true, paket: false};
-let colorSlots = [
-  {name:'Hitam', hex:'#111111', img:''},
-  {name:'Putih', hex:'#FFFFFF', img:''},
-  {name:'Coklat',hex:'#8B6340', img:''},
-];
+// ═══════════════ GEMINI API KEY ═══════════════
+function saveGeminiKey(){
+  try{ sessionStorage.setItem('lpb_gemini_key', gv('f-gemini-key')); }catch(e){}
+}
+function loadGeminiKey(){
+  try{
+    var k = sessionStorage.getItem('lpb_gemini_key');
+    if(k){ var el=document.getElementById('f-gemini-key'); if(el) el.value=k; }
+  }catch(e){}
+}
 
-// ═══════════════════════════════════
-// CAROUSEL BUILDER
-// ═══════════════════════════════════
-let _uid=0;
-function buildCarousel(heroSlots, accent, h, isE){
-  const valid=heroSlots.filter(u=>u.trim());
-  _uid++;const uid='c'+_uid;
-  if(valid.length===0){
-    return `<div style="height:${h};background:#1a1a1a;display:flex;align-items:center;justify-content:center;color:#555;font-size:13px">Belum ada foto hero</div>`;
+// ═══════════════ AI AUTO GENERATE (Gemini) ═══════════════
+async function autoGenerate(){
+  var produk = gv('f-produk').trim();
+  var apiKey = gv('f-gemini-key').trim();
+  var btn = document.getElementById('btn-auto');
+  var status = document.getElementById('auto-status');
+
+  function showStatus(bg,color,border,text){
+    status.style.display='block';
+    status.style.background=bg;status.style.color=color;status.style.border='1px solid '+border;
+    status.textContent=text;
   }
-  const tot=valid.length;
-  const slides=valid.map((u,si)=>`<div class="cs-item" style="min-width:100%;line-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#f8f8f8"><img src="${u}" alt="" style="width:100%;height:auto;display:block;-webkit-user-drag:none;pointer-events:none" onerror="this.parentElement.style.background='#eee'" onload="if(typeof resizeCarousel==='function')resizeCarousel()"></div>`).join('');
-  const dots=valid.map((_,i)=>`<span class="csd-${uid}" style="display:inline-block;height:8px;border-radius:4px;cursor:pointer;transition:all .3s;background:rgba(255,255,255,.4);width:8px"></span>`).join('');
-  return `<div style="position:relative;overflow:hidden;line-height:0">
-<div id="${uid}-t" style="display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1);cursor:grab;user-select:none;will-change:transform;align-items:flex-start">${slides}</div>
-<button id="${uid}-p" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);color:#fff;border:none;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9;backdrop-filter:blur(4px)">&#8249;</button>
-<button id="${uid}-n" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);color:#fff;border:none;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9;backdrop-filter:blur(4px)">&#8250;</button>
-<div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:9;line-height:0">${dots}</div>
-${tot>1?`<div id="${uid}-c" style="position:absolute;bottom:8px;right:12px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:3px 9px;border-radius:10px;font-family:Inter,sans-serif;line-height:1.4">1/${tot}</div>`:''}
-</div>
+
+  if(!apiKey){
+    showStatus('#2d1b1b','#f87171','#7f1d1d','⚠ Tempel Gemini API key dulu. Gratis di aistudio.google.com/apikey');
+    return;
+  }
+  if(!produk){
+    showStatus('#2d1b1b','#f87171','#7f1d1d','⚠ Isi Nama Produk terlebih dahulu.');
+    return;
+  }
+
+  btn.style.opacity='0.6';
+  btn.textContent='⏳ Sedang membuat konten...';
+  showStatus('#1a2744','#93c5fd','#1e3a8a','🤖 AI sedang menulis konten marketing...');
+
+  var jmlFoto = fotoBlocks.length;
+  var jmlKeung = Math.max(8, jmlFoto * 2);
+
+  var prompt = 'Kamu copywriter marketing produk Indonesia yang ahli. Buatkan konten landing page untuk produk: "' + produk + '". '
+    + 'Berikan output HANYA JSON valid tanpa markdown, dengan struktur: '
+    + '{"sub":"sub judul singkat 3-6 kata menarik","tagline":"deskripsi marketing 1-2 kalimat persuasif","badges":["badge1","badge2","badge3"],'
+    + '"fitur":[{"icon":"emoji","label":"nama fitur singkat","sub":"penjelasan singkat"}],'
+    + '"keunggulan":[{"icon":"emoji","teks":"kalimat keunggulan detail menjual"}]}. '
+    + 'Buat TEPAT 4 fitur dan TEPAT ' + jmlKeung + ' keunggulan berbeda (produk punya ' + jmlFoto + ' foto, tiap foto 2 keunggulan). '
+    + 'Semua keunggulan harus ada teksnya, jangan kosong. Badge kata pendek: Premium, Terlaris, Original, dll. '
+    + 'Bahasa Indonesia natural dan menjual. Emoji relevan dengan produk.';
+
+  try{
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(apiKey);
+    var response = await fetch(url, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        contents:[{parts:[{text:prompt}]}],
+        generationConfig:{responseMimeType:'application/json', maxOutputTokens:2500, temperature:0.9}
+      })
+    });
+    var data = await response.json();
+
+    if(data.error){
+      var em = data.error.message||'';
+      if(em.indexOf('API_KEY_INVALID')>=0 || em.indexOf('API key not valid')>=0){
+        throw new Error('API key tidak valid. Cek lagi di aistudio.google.com/apikey');
+      }
+      if(em.indexOf('RESOURCE_EXHAUSTED')>=0 || em.indexOf('quota')>=0){
+        throw new Error('Kuota habis. Tunggu beberapa saat atau pakai key lain.');
+      }
+      throw new Error(em);
+    }
+
+    var text = '';
+    if(data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts){
+      data.candidates[0].content.parts.forEach(function(p){ if(p.text) text += p.text; });
+    }
+    text = text.replace(/```json/g,'').replace(/```/g,'').trim();
+    var result = JSON.parse(text);
+
+    if(result.sub) document.getElementById('f-sub').value = result.sub;
+    if(result.tagline) document.getElementById('f-tagline').value = result.tagline;
+    if(result.badges && result.badges.length) document.getElementById('f-badges').value = result.badges.join(', ');
+
+    if(result.fitur && result.fitur.length){
+      feats = result.fitur.map(function(f){ return {icon:f.icon||'⭐', label:f.label||'Fitur', sub:f.sub||''}; });
+      renderFeats();
+    }
+
+    if(result.keunggulan && result.keunggulan.length){
+      var keung = result.keunggulan.map(function(k){ return {icon:k.icon||'✨', teks:k.teks||''}; })
+                    .filter(function(k){ return k.teks.trim(); });
+      var nFoto = fotoBlocks.length;
+      if(nFoto>0 && keung.length>0){
+        var perFoto = Math.max(1, Math.ceil(keung.length/nFoto));
+        fotoBlocks.forEach(function(fb){ fb.keunggulan=[]; });
+        var ki=0;
+        for(var fi=0; fi<nFoto; fi++){
+          for(var j=0; j<perFoto && ki<keung.length; j++){ fotoBlocks[fi].keunggulan.push(keung[ki]); ki++; }
+        }
+        while(ki<keung.length){ fotoBlocks[ki%nFoto].keunggulan.push(keung[ki]); ki++; }
+        fotoBlocks.forEach(function(fb){ if(fb.keunggulan.length===0) fb.keunggulan=[{icon:'✨',teks:''}]; });
+        renderFotoBlocks();
+      }
+    }
+
+    lu();
+    btn.style.opacity='1';
+    btn.textContent='✨ Auto Isi Konten dari Nama Produk';
+    showStatus('#1a3a2a','#86efac','#166534','✓ Konten berhasil dibuat! Sub judul, tagline, badge, fitur & keunggulan terisi.');
+    setTimeout(function(){status.style.display='none';}, 6000);
+  }catch(e){
+    btn.style.opacity='1';
+    btn.textContent='✨ Auto Isi Konten dari Nama Produk';
+    showStatus('#2d1b1b','#f87171','#7f1d1d','⚠ '+(e.message||'Gagal membuat konten. Coba lagi.'));
+    console.error('autoGenerate error:', e);
+  }
+}
+</script>
+
 <script>
-(function(){var c=0,t=${tot},sx=0,dx=0,dr=false;
-var tk=document.getElementById('${uid}-t');
-var ds=document.querySelectorAll('.csd-${uid}');
-var ct=document.getElementById('${uid}-c');
-function go(n){c=(n+t)%t;tk.style.transform='translateX(-'+(c*100)+'%)';ds.forEach(function(d,i){d.style.background=i===c?'${accent}':'rgba(255,255,255,.4)';d.style.width=i===c?'22px':'8px';});if(ct)ct.textContent=(c+1)+'/'+t;}
-document.getElementById('${uid}-p').onclick=function(){go(c-1);};
-document.getElementById('${uid}-n').onclick=function(){go(c+1);};
-ds.forEach(function(d,i){d.onclick=function(){go(i);};});
-tk.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;dr=true;},{passive:true});
-tk.addEventListener('touchmove',function(e){if(dr)dx=e.touches[0].clientX-sx;},{passive:true});
-tk.addEventListener('touchend',function(){if(Math.abs(dx)>40)go(dx<0?c+1:c-1);dr=false;dx=0;});
-tk.addEventListener('mousedown',function(e){sx=e.clientX;dr=true;e.preventDefault();});
-document.addEventListener('mousemove',function(e){if(dr)dx=e.clientX-sx;});
-document.addEventListener('mouseup',function(){if(dr&&Math.abs(dx)>40)go(dx<0?c+1:c-1);dr=false;dx=0;});
-go(0);
-// Auto height sesuai dimensi foto
-function syncH(){var items=tk.querySelectorAll('.cs-item');if(!items[c])return;var img=items[c].querySelector('img');if(img&&img.naturalHeight>0){var ratio=img.naturalHeight/img.naturalWidth;var w=tk.offsetWidth||items[c].offsetWidth;if(w>0){var h=w*ratio;tk.style.height=h+'px';items[c].style.height=h+'px';}}
-}
-tk.querySelectorAll('img').forEach(function(img){if(img.complete&&img.naturalWidth>0)syncH();else img.addEventListener('load',syncH);});
-window.addEventListener('resize',function(){syncH();});
-function resizeCarousel(){syncH();}
-})();
-<\/script>`;
-}
-
-// ═══════════════════════════════════
-// FOTO DETAIL BUILDER
-// ═══════════════════════════════════
-function buildFotoDetail(fotoBlocks, opts){
-  const{keungBg,keungText,keungAccent,keungBorder,iconSize,textSize,isE,bodyFont}=opts;
-  return fotoBlocks.map((fb,fi)=>{
-    if(!fb.url.trim()) return '';
-    const kList=fb.keunggulan.filter(k=>k.teks.trim());
-    return `<div style="${isE?'':''}">
-<div style="background:#f8f8f8;line-height:0"><img src="${fb.url}" alt="foto ${fi+1}" style="width:100%;height:auto;display:block;object-fit:fill" onerror="this.style.display='none'"></div>
-${kList.length>0?`<div style="padding:${isE?'20px':'13px'};background:${keungBg};${keungBorder}">
-<div style="font-size:${isE?'10':'9'}px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:${keungAccent};margin-bottom:${isE?'14':'9'}px">✦ Keunggulan Produk</div>
-${kList.map(k=>`<div style="display:flex;align-items:flex-start;gap:${isE?'13':'9'}px;margin-bottom:${isE?'13':'8'}px">
-<span style="font-size:${isE?iconSize||'22px':'16px'};line-height:1;flex-shrink:0">${k.icon}</span>
-<span style="font-size:${isE?textSize||'13px':'11px'};color:${keungText};line-height:1.65;font-family:${bodyFont||"'Inter',sans-serif"}">${k.teks}</span>
-</div>`).join('')}
-</div>`:''}
-</div>`;
+// ═══════════════ CAROUSEL BUILDER ═══════════════
+function buildCarousel(slots, accent, isE){
+  var valid = slots.filter(function(u){return u.trim();});
+  if(valid.length===0){
+    return '<div style="height:'+(isE?'380px':'300px')+';background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:14px">Belum ada foto hero</div>';
+  }
+  var uid = 'cr'+Math.random().toString(36).substr(2,6);
+  var tot = valid.length;
+  var slides = valid.map(function(u){
+    return '<div style="min-width:100%;flex-shrink:0"><img src="'+u+'" style="width:100%;height:auto;display:block" onerror="this.style.display=\'none\'"></div>';
   }).join('');
+  var dots = '';
+  for(var i=0;i<tot;i++){
+    dots += '<div data-dot="'+i+'" style="width:'+(i===0?'18px':'6px')+';height:6px;border-radius:3px;background:'+(i===0?'#fff':'rgba(255,255,255,.5)')+';transition:all .3s"></div>';
+  }
+  var nav = tot>1 ? '<button id="'+uid+'-p" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);color:#fff;border:none;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer;z-index:9">&#8249;</button>'
+    + '<button id="'+uid+'-n" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);color:#fff;border:none;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer;z-index:9">&#8250;</button>' : '';
+
+  var script = '<scr'+'ipt>(function(){'
+    + 'var t=document.getElementById("'+uid+'-t");if(!t)return;'
+    + 'var cur=0,tot='+tot+';'
+    + 'function go(i){cur=(i+tot)%tot;t.style.transform="translateX("+(-cur*100)+"%)";'
+    + 'document.querySelectorAll("[data-dot]").forEach(function(d,di){d.style.width=di===cur?"18px":"6px";d.style.background=di===cur?"#fff":"rgba(255,255,255,.5)";});}'
+    + 'var p=document.getElementById("'+uid+'-p"),n=document.getElementById("'+uid+'-n");'
+    + 'if(p)p.onclick=function(){go(cur-1);};if(n)n.onclick=function(){go(cur+1);};'
+    + 'var sx=0;t.addEventListener("touchstart",function(e){sx=e.touches[0].clientX;});'
+    + 't.addEventListener("touchend",function(e){var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40){go(dx<0?cur+1:cur-1);}});'
+    + '})();<'+'/scr'+'ipt>';
+
+  return '<div style="position:relative;overflow:hidden;line-height:0;font-size:0">'
+    + '<div id="'+uid+'-t" style="display:flex;transition:transform .4s ease;cursor:grab">'+slides+'</div>'
+    + nav
+    + '<div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:9">'+dots+'</div>'
+    + script
+    + '</div>';
 }
 
-// ═══════════════════════════════════
-// STYLE RENDERERS
-// ═══════════════════════════════════
-
-
-// ════════════════════════════════════════════════════════════════
-// SHARED LAYOUT ENGINE — struktur profesional seperti marketplace
-// Setiap style hanya ganti tema visual (warna, font, radius, dll)
-// ════════════════════════════════════════════════════════════════
-
+// ═══════════════ URGENCY BUILDER (string concat — aman) ═══════════════
 function buildUrgency(P, ac, bf, E){
   if(!P.urgency) return '';
-  var fs = E ? '12px' : '10px';
-  var ifs = E ? '14px' : '12px';
-  var pad = E ? '8px 0' : '5px 0';
+  var fs = E?'14px':'12px';
+  var ifs = E?'16px':'14px';
+  var pad = E?'9px 0':'6px 0';
   var txt = P.urgency.replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  var item = '<span style="display:inline-flex;align-items:center;gap:8px;padding:0 28px;font-size:'+fs+';font-weight:700;color:#fff;font-family:'+bf+';letter-spacing:.3px;line-height:1.6">'
-           + '<span style="font-size:'+ifs+'">⚡</span>'+txt+'</span>';
+  var item = '<span style="display:inline-flex;align-items:center;gap:8px;padding:0 28px;font-size:'+fs+';font-weight:700;color:#fff;font-family:'+bf+';letter-spacing:.3px;line-height:1.6"><span style="font-size:'+ifs+'">⚡</span>'+txt+'</span>';
   return '<div style="background:'+ac+';padding:'+pad+';overflow:hidden;margin:0;display:block">'
-       + '<div id="lp-uq-wrap" style="display:flex;white-space:nowrap;animation:lpUQ 6s linear infinite">'
-       + item+item+item+item
-       + '</div>'
-       + '<style id="lp-uq-style">@keyframes lpUQ{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}#lp-uq-wrap{display:flex;white-space:nowrap;animation:lpUQ 6s linear infinite;}</style>'
-       + '</div>';
+    + '<div style="display:flex;white-space:nowrap;animation:lpUQ 6s linear infinite">'+item+item+item+item+'</div>'
+    + '<style>@keyframes lpUQ{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}</style>'
+    + '</div>';
 }
 
-function buildLP(s, d, isE) {
-  const E = isE, P = d;
-  const tf = s.fonts.title, bf = s.fonts.body;
-  const ac = s.accent;
-  const isDark = s.dark || false;
-
-  // ── Warna dasar per tema ──
-  const bg       = s.pageBg    || (isDark ? '#0d0d0d' : '#fff');
-  const surface  = s.surface   || (isDark ? '#1a1a1a' : '#f7f7f7');
-  const card     = s.card      || (isDark ? '#222'    : '#fff');
-  const border   = s.borderCol || (isDark ? '#2a2a2a' : '#f0f0f0');
-  const textMain = s.textMain  || (isDark ? '#f0f0f0' : '#111');
-  const textSub  = s.textSub   || (isDark ? '#a0aec0' : '#555');
-  const textMute = s.textMute  || (isDark ? '#666'    : '#aaa');
-  const btnText  = s.btnText   || '#fff';
-
-  // ── Discount % ──
-  let discPct = '';
-  if (P.harga && P.hargaOld) {
-    const a = parseInt(P.harga.replace(/\D/g,''));
-    const b = parseInt(P.hargaOld.replace(/\D/g,''));
-    if (b > a) discPct = Math.round((1 - a/b)*100) + '%';
-  }
-
-  // ── Carousel ──
-  const carouselHtml = buildCarousel(heroSlots, ac, E ? '420px' : '200px', E);
-
-  // ── Badges ──
-  const badgesHtml = P.badges.map(b =>
-    `<span style="background:${ac};color:${btnText};font-size:${E?'11':'10'}px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:${E?'3px 10px':'2px 7px'};border-radius:${s.radius||'4px'};display:inline-block">${b}</span>`
-  ).join(' ');
-
-  // ── Harga section ──
-  const hargaHtml = P.harga ? `
-<div style="padding:${E?'14px 16px':'10px 14px'};background:${card};border-bottom:1px solid ${border}">
-  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px">
-    <div>
-      <div style="display:flex;align-items:baseline;gap:${E?'10':'7'}px;flex-wrap:wrap;margin-bottom:4px">
-        <div style="font-size:${E?'32':'24'}px;font-weight:800;color:${ac};font-family:${tf};line-height:1">Rp ${P.harga}</div>
-        ${P.hargaOld ? `<div style="font-size:${E?'16':'13'}px;color:${textMute};text-decoration:line-through;font-family:${bf}">Rp ${P.hargaOld}</div>` : ''}
-        ${discPct ? `<div style="background:${ac};color:${btnText};font-size:${E?'14':'12'}px;font-weight:800;padding:${E?'2px 7px':'2px 5px'};border-radius:3px">-${discPct}</div>` : ''}
-      </div>
-      ${P.perks.length ? `<div style="display:flex;flex-direction:column;gap:${E?'5':'3'}px;margin-top:6px">
-        ${P.perks.map(p=>`<div style="display:flex;align-items:center;gap:7px;font-family:${bf}">
-          <span style="color:${ac};font-size:${E?'15':'13'}px;font-weight:700;flex-shrink:0">✓</span>
-          <span style="font-size:${E?'14':'12'}px;color:${textSub}">${p}</span>
-        </div>`).join('')}
-      </div>` : ''}
-    </div>
-    ${discPct ? `<div style="text-align:right"><div style="font-size:${E?'11':'10'}px;color:${textMute};font-family:${bf}">Hemat</div><div style="font-size:${E?'16':'13'}px;font-weight:800;color:${ac};font-family:${tf}">${discPct}</div></div>` : ''}
-  </div>
-</div>` : '';
-
-  // ── Info produk ──
-  const infoHtml = `
-<div style="padding:${E?'14px 16px 10px':'10px 14px 8px'};background:${card};border-bottom:1px solid ${border}">
-  ${badgesHtml ? `<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:${E?'8':'5'}px">${badgesHtml}</div>` : ''}
-  <div style="font-family:${tf};font-size:${E?'22':'18'}px;font-weight:700;color:${textMain};line-height:1.35;margin-bottom:${E?'5':'3'}px">${P.produk}</div>
-  ${P.sub ? `<div style="font-size:${E?'15':'13'}px;color:${ac};font-family:${bf};font-weight:600;margin-bottom:4px">${P.sub}</div>` : ''}
-  ${P.tagline ? `<div style="font-size:${E?'14':'12'}px;color:${textSub};line-height:1.6;font-family:${bf}">${P.tagline}</div>` : ''}
-  ${P.timerOn ? `<div id="lp-timer-wrap" style="background:linear-gradient(135deg,${ac}18,${ac}0c);border:1px solid ${ac}33;border-radius:${E?'14':'12'}px;padding:${E?'10px 14px':'7px 10px'};margin-top:${E?'10':'7'}px;margin-bottom:${E?'2':'1'}px">
-    ${P.timerLabelOn !== false ? `<div style="font-size:${E?'14':'12'}px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:${ac};margin-bottom:${E?'8':'5'}px;font-family:${bf};opacity:.9">${P.timerLabel}</div>` : ''}
-    <div style="display:flex;gap:${E?'8':'5'}px;align-items:stretch" id="lp-timer-boxes">
-      ${P.timerD > 0 ? `<div style="flex:1;text-align:center">
-        <div id="lp-td" style="font-size:${E?'30':'22'}px;font-weight:800;color:${textMain};font-family:${tf};line-height:1;background:${card};border-radius:${E?'8':'6'}px;padding:${E?'8px 4px':'5px 2px'};border:1px solid ${border}">${String(P.timerD).padStart(2,'0')}</div>
-        <div style="font-size:${E?'11':'9'}px;color:${textMute};margin-top:${E?'4':'3'}px;font-family:${bf};font-weight:600;letter-spacing:1px;text-transform:uppercase">Hari</div>
-      </div>` : ''}
-      <div style="flex:1;text-align:center">
-        <div id="lp-th" style="font-size:${E?'30':'22'}px;font-weight:800;color:${textMain};font-family:${tf};line-height:1;background:${card};border-radius:${E?'8':'6'}px;padding:${E?'8px 4px':'5px 2px'};border:1px solid ${border}">${String(P.timerH).padStart(2,'0')}</div>
-        <div style="font-size:${E?'11':'9'}px;color:${textMute};margin-top:${E?'4':'3'}px;font-family:${bf};font-weight:600;letter-spacing:1px;text-transform:uppercase">Jam</div>
-      </div>
-      <div style="display:flex;align-items:center;font-size:${E?'20':'14'}px;font-weight:800;color:${ac};padding-bottom:${E?'14':'10'}px">:</div>
-      <div style="flex:1;text-align:center">
-        <div id="lp-tm" style="font-size:${E?'30':'22'}px;font-weight:800;color:${textMain};font-family:${tf};line-height:1;background:${card};border-radius:${E?'8':'6'}px;padding:${E?'8px 4px':'5px 2px'};border:1px solid ${border}">${String(P.timerM).padStart(2,'0')}</div>
-        <div style="font-size:${E?'11':'9'}px;color:${textMute};margin-top:${E?'4':'3'}px;font-family:${bf};font-weight:600;letter-spacing:1px;text-transform:uppercase">Menit</div>
-      </div>
-      <div style="display:flex;align-items:center;font-size:${E?'20':'14'}px;font-weight:800;color:${ac};padding-bottom:${E?'14':'10'}px">:</div>
-      <div style="flex:1;text-align:center">
-        <div id="lp-ts" style="font-size:${E?'30':'22'}px;font-weight:800;color:${textMain};font-family:${tf};line-height:1;background:${card};border-radius:${E?'8':'6'}px;padding:${E?'8px 4px':'5px 2px'};border:1px solid ${border}">${String(P.timerS).padStart(2,'0')}</div>
-        <div style="font-size:${E?'11':'9'}px;color:${textMute};margin-top:${E?'4':'3'}px;font-family:${bf};font-weight:600;letter-spacing:1px;text-transform:uppercase">Detik</div>
-      </div>
-    </div>
-  </div>
-  <script>
-  (function(){
-    if(window.__lpTimerInterval)clearInterval(window.__lpTimerInterval);
-    var d=${P.timerD},h=${P.timerH},m=${P.timerM},s=${P.timerS};
-    var total=d*86400+h*3600+m*60+s;
-    var deadline=Date.now()+total*1000;
-    function pad(n){return String(n).padStart(2,'0');}
-    function tick(){
-      var left=Math.max(0,Math.floor((deadline-Date.now())/1000));
-      var dd=Math.floor(left/86400),hh=Math.floor((left%86400)/3600),mm=Math.floor((left%3600)/60),ss=left%60;
-      var td=document.getElementById('lp-td'),th=document.getElementById('lp-th'),tm=document.getElementById('lp-tm'),ts=document.getElementById('lp-ts');
-      if(!ts){clearInterval(window.__lpTimerInterval);return;}
-      if(td)td.textContent=pad(dd);
-      if(th)th.textContent=pad(hh);
-      if(tm)tm.textContent=pad(mm);
-      if(ts)ts.textContent=pad(ss);
-      if(left<=0){clearInterval(window.__lpTimerInterval);var w=document.getElementById('lp-timer-wrap');if(w)w.style.opacity='.4';}
-    }
-    tick();
-    window.__lpTimerInterval=setInterval(tick,1000);
-  })();
-  <\/script>` : ''}
-  <div style="display:flex;align-items:center;gap:${E?'10':'7'}px;margin-top:${E?'12':'8'}px;padding:${E?'10px 12px':'7px 9px'};background:${surface};border-radius:${E?'10':'7'}px;border:1px solid ${border}">
-    ${P.brandImg ? `<img src="${P.brandImg}" alt="${P.brand}" style="width:${E?'40':'30'}px;height:${E?'40':'30'}px;border-radius:50%;object-fit:cover;border:2px solid ${ac}44;flex-shrink:0" onerror="this.style.display='none'">` : `<div style="width:${E?'40':'30'}px;height:${E?'40':'30'}px;border-radius:50%;background:${ac}22;border:2px solid ${ac}44;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:${E?'16':'12'}px">🏪</div>`}
-    <div style="flex:1;min-width:0">
-      <div style="font-size:${E?'14':'12'}px;font-weight:700;color:${textMain};font-family:${bf};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${P.brand}</div>
-      <div style="display:flex;align-items:center;gap:${E?'5':'3'}px;margin-top:${E?'3':'2'}px;flex-wrap:wrap">
-        <div style="display:flex;gap:1px">
-          ${[1,2,3,4,5].map(i=>{
-            const filled = i <= Math.floor(P.brandRating);
-            const half   = !filled && (P.brandRating - Math.floor(P.brandRating)) >= 0.5 && i === Math.ceil(P.brandRating);
-            return `<span style="color:${filled||half ? '#F59E0B' : '#D1D5DB'};font-size:${E?'13':'10'}px;line-height:1">${filled ? '★' : half ? '⯨' : '☆'}</span>`;
-          }).join('')}
-        </div>
-        <span style="font-size:${E?'14':'12'}px;font-weight:700;color:${isDark?'#e2e8f0':'#374151'};font-family:${bf}">${P.brandRating.toFixed(1)}</span>
-        ${P.brandReview ? `<span style="font-size:${E?'14':'12'}px;color:${isDark?'#6b7280':'#9CA3AF'};font-family:${bf}">· ${P.brandReview} terjual</span>` : ''}
-      </div>
-    </div>
-    <div style="font-size:${E?'11':'10'}px;color:${ac};font-family:${bf};font-weight:600;background:${ac}15;padding:${E?'3px 8px':'2px 6px'};border-radius:20px;border:1px solid ${ac}33;white-space:nowrap;flex-shrink:0">Kunjungi →</div>
-  </div>
-</div>`;
-
-  // ── Urgency bar ──
-  // urgencyHtml sudah di-inline di return block
-
-  // ── Fitur grid ──
-  const featHtml = feats.length ? `
-<div style="padding:${E?'14px 16px':'10px 14px'};background:${surface};border-bottom:1px solid ${border}">
-  <div style="font-size:${E?'15':'13'}px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:${textMute};margin-bottom:${E?'10':'7'}px;font-family:${bf}">Keunggulan</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:${E?'8':'5'}px">
-    ${feats.map(f=>`<div style="background:${card};border-radius:${s.radius||'8px'};padding:${E?'12px':'8px'};display:flex;align-items:center;gap:${E?'10':'7'}px;border:1px solid ${border}">
-      <div style="font-size:${E?'22':'16'}px;flex-shrink:0">${f.icon}</div>
-      <div>
-        <div style="font-size:${E?'15':'13'}px;font-weight:700;color:${textMain};font-family:${bf};line-height:1.3">${f.label}</div>
-        <div style="font-size:${E?'14':'12'}px;color:${textMute};font-family:${bf};margin-top:1px">${f.sub}</div>
-      </div>
-    </div>`).join('')}
-  </div>
-</div>` : '';
-
-  // ── Foto detail + keunggulan per foto ──
-  // Cek apakah ada keunggulan (untuk tampilkan judul DETAIL PRODUK)
-  const hasAnyKeunggulan = fotoBlocks.some(fb => fb.keunggulan.some(k => k.teks.trim()));
-
-  // Judul DETAIL PRODUK — ditampilkan sekali di bawah featHtml
-  const detailProdukHtml = hasAnyKeunggulan ? `
-<div style="background:${card};padding:${E?'16px 16px 4px':'10px 14px 2px'};border-bottom:0px">
-  <div style="font-size:${E?'15':'13'}px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:${textMute};font-family:${bf}">DETAIL PRODUK</div>
-</div>` : '';
-
-  // Foto + keunggulan tetap di bawah foto masing-masing
-  const fotoDetailHtml = fotoBlocks.map((fb, fi) => {
-    if (!fb.url.trim()) return '';
-    const kList = fb.keunggulan.filter(k => k.teks.trim());
-    return `
-<div style="background:${card};border-bottom:1px solid ${border}">
-  <div style="background:#f8f8f8;line-height:0;overflow:hidden">
-    <img src="${fb.url}" alt="foto ${fi+1}" style="width:100%;height:auto;display:block;object-fit:fill" onerror="this.style.display='none'">
-  </div>
-  ${kList.length ? `<div style="padding:${E?'14px 16px':'10px 14px'}">
-    ${kList.map(k=>`<div style="display:flex;align-items:flex-start;gap:${E?'12':'8'}px;margin-bottom:${E?'12':'8'}px;padding-bottom:${E?'12':'8'}px;border-bottom:1px solid ${border}">
-      <span style="font-size:${E?'20':'15'}px;flex-shrink:0;margin-top:1px">${k.icon}</span>
-      <span style="font-size:${E?'15':'13'}px;color:${textSub};line-height:1.65;font-family:${bf}">${k.teks}</span>
-    </div>`).join('')}
-  </div>` : ''}
-</div>`;
-  }).join('');
-
-  // ── Order section ──
-  // Preview: script tidak jalan di innerHTML, tampilkan indikator
-  // Export: embed code disisipkan langsung dan dieksekusi via reinjectScripts
-  // Buat srcdoc untuk iframe preview — iframe punya document sendiri, script bisa jalan
-  const makeIframeSrc = (code) => {
-    const html = `<!DOCTYPE html><html><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:sans-serif;background:#fff;padding:0}</style>
-</head><body>${code}</body></html>`;
-    return html;
-  };
-
-  // Preview: tampilkan iframe kosong (akan diisi oleh lu() setelah render)
-  // Export: placeholder div yang akan diganti setelah string selesai dibuat
-  const embedBlock = P.embedCode
-    ? (E
-        ? `<div id="oo-embed-placeholder"></div>` // placeholder — diganti setelah build
-        : `<div id="oo-iframe-wrap" style="width:100%;border-radius:8px;overflow:hidden;border:1px solid ${border}">
-            <iframe id="oo-embed-iframe" srcdoc="" style="width:100%;min-height:420px;border:none;display:block" scrolling="no"></iframe>
-          </div>`)
-    : `<div style="background:${card};border:1px dashed ${border};border-radius:${s.radius||'8px'};padding:${E?'20px':'14px'};text-align:center;color:${textMute};font-size:${E?'14':'12'}px;font-family:${bf}">Form order belum dikonfigurasi.</div>`;
-
-  const orderHtml = `
-<div style="padding:${E?'16px':'12px'};background:${surface};border-bottom:1px solid ${border}">
-  <div style="font-size:${E?'18':'15'}px;font-weight:700;color:${textMain};margin-bottom:${E?'4':'3'}px;font-family:${tf}">${P.orderTitle}</div>
-  ${P.orderSub ? `<div style="font-size:${E?'14':'12'}px;color:${textMute};margin-bottom:${E?'14':'10'}px;font-family:${bf}">${P.orderSub}</div>` : `<div style="margin-bottom:${E?'14':'10'}px"></div>`}
-  ${embedBlock}
-</div>`;
-
-  // ── Sticky CTA (hanya export) ──
-  const stickyHtml = E && P.harga ? `
-<div style="position:sticky;bottom:0;z-index:99;background:${card};border-top:1px solid ${border};padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 -4px 20px rgba(0,0,0,${isDark?'.4':'.1'})">
-  <div style="flex:1;min-width:0">
-    <div style="font-size:10px;color:${textMute};font-family:${bf}">Harga</div>
-    <div style="font-size:20px;font-weight:800;color:${ac};font-family:${tf};line-height:1">Rp ${P.harga}</div>
-  </div>
-  <button onclick="document.querySelector('[id*=embed],[class*=oo]') ? document.querySelector('[id*=embed],[class*=oo]').scrollIntoView({behavior:'smooth'}) : window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" style="background:${ac};color:${btnText};border:none;border-radius:${s.radius||'8px'};padding:12px 24px;font-size:16px;font-weight:700;cursor:pointer;font-family:${bf};white-space:nowrap;flex-shrink:0">Beli Sekarang</button>
-</div>` : '';
-
-  // ── Footer ──
-  let footerHtml = '';
-  if(P.footerOn === true){
-    footerHtml = '<div style="background:'+(s.footerBg||bg)+';color:'+(s.footerColor||textMute)+';padding:'+(E?'14px 16px':'10px 14px')+';text-align:center;font-size:'+(E?'15':'13')+'px;font-family:'+bf+';border-top:1px solid '+border+'">'+P.footer+'</div>';
-  }
-
-  const varianHtml = buildVarianHtml(ac, bf, E);
-
-  return `
-${carouselHtml}${buildUrgency(P,ac,bf,E)}
-${infoHtml}
-${hargaHtml}
-${varianHtml}
-${featHtml}
-${detailProdukHtml}
-${fotoDetailHtml}
-${orderHtml}
-${footerHtml}
-${stickyHtml}`;
-}
-
-// ── Setiap style hanya jadi thin wrapper ──
-function boldRender(s,d,isE){
-  return buildLP(Object.assign({},s,{
-    pageBg:'#fff', surface:'#fafafa', card:'#fff', borderCol:'#f0f0f0',
-    textMain:'#111', textSub:'#555', textMute:'#aaa', btnText:'#fff',
-    radius:'6px', footerBg:s.accent, footerColor:'#fff'
-  }),d,isE);
-}
-function freshRender(s,d,isE){
-  return buildLP(Object.assign({},s,{
-    pageBg:'#fff', surface:'#f4fff6', card:'#fff', borderCol:'#e8f5e9',
-    textMain:'#1a1a1a', textSub:'#555', textMute:'#999', btnText:'#fff',
-    radius:'10px', footerBg:s.accent, footerColor:'#fff'
-  }),d,isE);
-}
-function darkRender(s,d,isE){
-  return buildLP(Object.assign({},s,{
-    dark:true, pageBg:'#0a0a0a', surface:'#111', card:'#1a1a1a', borderCol:'#222',
-    textMain:'#f0f0f0', textSub:'#a0aec0', textMute:'#555', btnText:'#000',
-    radius:'6px', footerBg:'#000', footerColor:'#444'
-  }),d,isE);
-}
-function elegantRender(s,d,isE){
-  return buildLP(Object.assign({},s,{
-    pageBg:'#FDF6E9', surface:'#FDF6E9', card:'#fff', borderCol:'#e8dcc8',
-    textMain:'#2C1810', textSub:'#5a3e28', textMute:'#B8860B', btnText:'#FDF6E9',
-    radius:'2px', footerBg:'#2C1810', footerColor:'#FDF6E9'
-  }),d,isE);
-}
-function neonRender(s,d,isE){
-  return buildLP(Object.assign({},s,{
-    dark:true, pageBg:'#050011', surface:'#0d0025', card:'#0d0025', borderCol:'#1a0044',
-    textMain:'#fff', textSub:'#a0aec0', textMute:'#4a4a6a', btnText:'#000',
-    radius:'4px', footerBg:'#000', footerColor:'#333'
-  }),d,isE);
-}
-function pastelRender(s,d,isE){
-  return buildLP(Object.assign({},s,{
-    pageBg:'#FFF0F5', surface:'#FFF0F5', card:'#fff', borderCol:'#FFD6E7',
-    textMain:'#3d1a2e', textSub:'#7a3d5c', textMute:'#c48aaa', btnText:'#fff',
-    radius:'20px', footerBg:'#FFB3C6', footerColor:'#fff'
-  }),d,isE);
-}
-function minimalRender(s,d,isE){
-  return buildLP(Object.assign({},s,{
-    pageBg:'#fff', surface:'#fafafa', card:'#fff', borderCol:'#f0f0f0',
-    textMain:'#111', textSub:'#666', textMute:'#ccc', btnText:'#fff',
-    radius:'0px', footerBg:'#f5f5f5', footerColor:'#bbb'
-  }),d,isE);
-}
-function gradientRender(s,d,isE){
-  return buildLP(Object.assign({},s,{
-    pageBg:'#fff', surface:'#f9f5ff', card:'#fff', borderCol:'#ede4ff',
-    textMain:'#1a0a2e', textSub:'#555', textMute:'#aaa', btnText:'#fff',
-    radius:'12px', footerBg:'#7C3AED', footerColor:'rgba(255,255,255,.7)'
-  }),d,isE);
-}
-function natureRender(s,d,isE){
-  return buildLP(Object.assign({},s,{
-    pageBg:'#F8FFF4', surface:'#F0FAF0', card:'#fff', borderCol:'#d4edda',
-    textMain:'#1B4332', textSub:'#2D6A4F', textMute:'#74b492', btnText:'#fff',
-    radius:'8px', footerBg:'#1B4332', footerColor:'rgba(255,255,255,.6)'
-  }),d,isE);
-}
-function luxuryRender(s,d,isE){
-  return buildLP(Object.assign({},s,{
-    dark:true, pageBg:'#0a0800', surface:'#0f0c00', card:'#0f0c00', borderCol:'#1a1500',
-    textMain:'#F5ECD7', textSub:'#a0916d', textMute:'#4a3d1a', btnText:'#0a0800',
-    radius:'0px', footerBg:'#000', footerColor:'#C9A84C44'
-  }),d,isE);
-}
-
-
-function getPageData(){
-  return {
-    brand:gv('f-brand')||'Nama Brand',
-    brandImg: gv('f-brand-img'),
-    brandRating: parseFloat(gv('f-brand-rating')) || 4.9,
-    brandReview: gv('f-brand-review') || '',
-    produk:gv('f-produk')||'Nama Produk',
-    sub:gv('f-sub'),
-    tagline:gv('f-tagline'),
-    badges:(gv('f-badges')||'').split(',').map(b=>b.trim()).filter(Boolean),
-    harga:gv('f-harga'),
-    hargaOld:gv('f-harga-old'),
-    urgency:(document.getElementById('f-urgency-on')||{checked:true}).checked ? gv('f-urgency') : '',
-    perks:(gv('f-perks')||'').split('\n').map(p=>p.trim()).filter(Boolean),
-    footer:gv('f-footer')||'© 2025',
-    footerOn: (document.getElementById('f-footer-on')||{checked:true}).checked,
-    orderTitle:gv('f-order-title')||'Pesan Sekarang',
-    orderSub:gv('f-order-sub'),
-    embedCode:gv('f-embed-code').trim(),
-    timerOn: (document.getElementById('f-timer-on')||{checked:false}).checked,
-    timerLabelOn: (document.getElementById('f-timer-label-on')||{checked:true}).checked,
-    timerLabel: gv('f-timer-label') || 'Promo Berakhir Dalam',
-    timerD: parseInt(gv('f-timer-d')) || 0,
-    timerH: parseInt(gv('f-timer-h')) || 0,
-    timerM: parseInt(gv('f-timer-m')) || 0,
-    timerS: parseInt(gv('f-timer-s')) || 0,
-    paketOn: varianState.paket,
-  };
-}
-
-function renderSizeSlots(){
-  const c=document.getElementById('size-slots');if(!c)return;
-  c.innerHTML=sizeSlots.map((s,i)=>`
-    <div style="display:grid;grid-template-columns:1fr auto;gap:5px;align-items:center;margin-bottom:5px">
-      <input type="text" value="${s.val}" placeholder="contoh: M / 38 / Free Size" oninput="sizeSlots[${i}].val=this.value;lu()" style="font-size:12px;padding:6px 9px;border:1px solid #2d3748;border-radius:6px;background:#0f3460;color:#e2e8f0;font-family:Inter,sans-serif;outline:none">
-      ${sizeSlots.length>1?`<button onclick="removeSize(${i})" style="font-size:10px;padding:3px 8px;border:1px solid #2d3748;border-radius:5px;background:none;cursor:pointer;color:#718096;font-family:Inter,sans-serif">✕</button>`:'<span></span>'}
-    </div>`).join('');
-  document.getElementById('btn-add-size').style.display=sizeSlots.length>=12?'none':'block';
-}
-function addSize(){if(sizeSlots.length<12){sizeSlots.push({val:''});renderSizeSlots();lu();}}
-function removeSize(i){if(sizeSlots.length>1){sizeSlots.splice(i,1);renderSizeSlots();lu();}}
-function addPresetSize(type){
-  const p={pakaian:['S','M','L','XL','XXL'],sepatu:['36','37','38','39','40','41'],universal:['XS','S','M','L','XL']};
-  sizeSlots=p[type].map(v=>({val:v}));renderSizeSlots();lu();
-}
-
-function renderColorSlots(){
-  const c=document.getElementById('color-slots');if(!c)return;
-  c.innerHTML=colorSlots.map((cl,i)=>`
-    <div style="background:#0a1929;border:1px solid #2d3748;border-radius:9px;padding:10px;margin-bottom:9px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div style="display:flex;align-items:center;gap:7px">
-          <div style="width:18px;height:18px;border-radius:50%;background:${cl.hex};border:1px solid rgba(255,255,255,.2);flex-shrink:0"></div>
-          <span style="font-size:11px;font-weight:600;color:#a0aec0">${cl.name||'Warna '+(i+1)}</span>
-        </div>
-        ${colorSlots.length>1?`<button onclick="removeColor(${i})" style="font-size:10px;padding:2px 8px;border:1px solid #2d3748;border-radius:4px;background:none;cursor:pointer;color:#718096;font-family:Inter,sans-serif">✕</button>`:''}
-      </div>
-      <div style="display:grid;grid-template-columns:42px 1fr;gap:7px;align-items:center;margin-bottom:7px">
-        <div>
-          <div style="font-size:9px;color:#718096;margin-bottom:3px;letter-spacing:.5px">WARNA</div>
-          <input type="color" value="${cl.hex}" oninput="colorSlots[${i}].hex=this.value;renderColorSlots();lu()" style="width:38px;height:36px;border:1px solid #2d3748;border-radius:6px;padding:2px;cursor:pointer;background:#0f3460;display:block">
-        </div>
-        <div>
-          <div style="font-size:9px;color:#718096;margin-bottom:3px;letter-spacing:.5px">NAMA WARNA</div>
-          <input type="text" value="${cl.name}" placeholder="contoh: Hitam, Navy Blue..." oninput="colorSlots[${i}].name=this.value;lu()" style="width:100%;font-size:11px;padding:6px 9px;border:1px solid #2d3748;border-radius:6px;background:#0f3460;color:#e2e8f0;font-family:Inter,sans-serif;outline:none">
-        </div>
-      </div>
-      <div style="font-size:9px;color:#718096;margin-bottom:3px;letter-spacing:.5px">URL FOTO PRODUK (opsional — klik warna ganti foto)</div>
-      <div style="display:grid;grid-template-columns:1fr 28px;gap:5px;align-items:center">
-        <input type="text" value="${cl.img||''}" placeholder="https://cdn.orderonline.id/..." oninput="colorSlots[${i}].img=this.value;updateColorThumb(${i},this.value)" style="font-size:11px;padding:6px 9px;border:1px solid #2d3748;border-radius:6px;background:#0f3460;color:#e2e8f0;font-family:Inter,sans-serif;outline:none;width:100%">
-        <div id="ct-${i}" class="${cl.img?'img-ok':'img-empty'}">${cl.img?'✓':'🖼'}</div>
-      </div>
-      ${cl.img?`<img src="${cl.img}" alt="" style="width:100%;height:60px;object-fit:contain;background:#1a2744;border-radius:5px;margin-top:6px;display:block" onerror="this.style.display='none'">`:``}
-    </div>`).join('');
-}
-function updateColorThumb(i,url){
-  const b=document.getElementById('ct-'+i);
-  if(b){b.className=url&&url.startsWith('http')?'img-ok':'img-empty';b.textContent=url&&url.startsWith('http')?'✓':'🖼';}
-  colorSlots[i].img=url;lu();
-}
-function addColor(){colorSlots.push({name:'',hex:'#cccccc',img:''});renderColorSlots();lu();}
-
-function renderPaketSlots(){
-  const c=document.getElementById('paket-slots');if(!c)return;
-  c.innerHTML=paketSlots.map((p,i)=>`
-    <div style="background:#16213e;border:1px solid #2d3748;border-radius:8px;padding:10px;margin-bottom:7px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
-        <span style="font-size:10px;font-weight:600;color:#a0aec0">Paket ${i+1}</span>
-        ${paketSlots.length>1?`<button onclick="removePaket(${i})" style="font-size:10px;padding:2px 7px;border:1px solid #2d3748;border-radius:4px;background:none;cursor:pointer;color:#718096;font-family:Inter,sans-serif">✕</button>`:''}
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
-        <div class="fg" style="margin:0"><label>Nama Paket</label><input type="text" value="${p.nama}" placeholder="contoh: 1 pcs" oninput="paketSlots[${i}].nama=this.value;lu()" style="font-size:11px"></div>
-        <div class="fg" style="margin:0"><label>Harga (opsional)</label><input type="text" value="${p.harga}" placeholder="89.000" oninput="paketSlots[${i}].harga=this.value;lu()" style="font-size:11px"></div>
-      </div>
-      <div class="fg" style="margin:0"><label>Keterangan (opsional)</label><input type="text" value="${p.ket}" placeholder="Hemat 10%" oninput="paketSlots[${i}].ket=this.value;lu()" style="font-size:11px"></div>
-    </div>`).join('');
-  document.getElementById('btn-add-paket').style.display=paketSlots.length>=6?'none':'block';
-}
-function addPaket(){if(paketSlots.length<6){paketSlots.push({nama:'',harga:'',ket:''});renderPaketSlots();lu();}}
-function removePaket(i){if(paketSlots.length>1){paketSlots.splice(i,1);renderPaketSlots();lu();}}
-function removeColor(i){if(colorSlots.length>1){colorSlots.splice(i,1);renderColorSlots();lu();}}
-
-function buildVarianHtml(accent,bodyFont,isE){
-  var E=isE;
+// ═══════════════ VARIAN BUILDER (string concat murni — aman dari embed) ═══════════════
+function buildVarianHtml(accent, bodyFont, isE){
+  var E=isE, ac=accent, bf=bodyFont;
   var sizeLabel=gv('v-size-label')||'Ukuran';
   var colorLabel=gv('v-color-label')||'Warna';
+  var paketLabel=gv('v-paket-label')||'Pilih Paket';
   var validSizes=sizeSlots.filter(function(s){return s.val.trim();});
   var validColors=colorSlots.filter(function(c){return c.hex;});
-  var sizeOn=varianState.size;
-  var colorOn=varianState.color;
-  var hasSize=sizeOn&&validSizes.length>0;
-  var hasColor=colorOn&&validColors.length>0;
-  var paketOn=varianState.paket;
-  var paketLabel=gv('v-paket-label')||'Pilih Paket';
   var validPaket=paketSlots.filter(function(p){return p.nama.trim();});
-  var hasPaket=paketOn&&validPaket.length>0;
-  var hasAny=hasSize||hasColor||hasPaket;
-  if(!hasAny) return '';
+  var hasSize=varianState.size && validSizes.length>0;
+  var hasColor=varianState.color && validColors.length>0;
+  var hasPaket=varianState.paket && validPaket.length>0;
+  if(!hasSize && !hasColor && !hasPaket) return '';
 
-  var ac=accent;
-  var bf=bodyFont;
-  var fs=E?'14px':'12px';
-  var fss=E?'15px':'11px';
-  var pad=E?'20px':'12px 14px';
+  var fs=E?'14px':'12px', fss=E?'11px':'9px';
   var divider='<div style="height:1px;background:#f0f0f0;margin:'+(E?'16px 0':'10px 0')+'"></div>';
 
-  // ── SIZE ──
+  // SIZE
   var sizeHtml='';
   if(hasSize){
     var szBtns='';
-    validSizes.forEach(function(s,si){
+    validSizes.forEach(function(s){
       szBtns+='<button data-szv="'+s.val.replace(/"/g,'&quot;')+'"'
-        +' onclick="(function(el){var w=el.parentElement;w.querySelectorAll(\'button\').forEach(function(b){b.style.background=\'#fff\';b.style.color=\'#444\';b.style.borderColor=\'#e0e0e0\';b.style.fontWeight=\'500\';});el.style.background=\''+ac+'\';el.style.color=\'#fff\';el.style.borderColor=\''+ac+'\';el.style.fontWeight=\'700\';var lbl=document.getElementById(\'sz-sel\');if(lbl)lbl.textContent=\'\u2713 \'+el.getAttribute(\'data-szv\');})(this)"'
-        +' style="min-width:'+(E?'52px':'40px')+';height:'+(E?'52px':'40px')+';padding:0 '+(E?'16px':'12px')+';font-size:'+(E?'15px':'12px')+';font-weight:500;color:#444;background:#fff;border:1.5px solid #e0e0e0;border-radius:'+(E?'8px':'6px')+';cursor:pointer;font-family:'+bf+';transition:all .2s"'
-        +'>'+s.val+'</button>';
+        +' onclick="(function(el){var w=el.parentElement;w.querySelectorAll(\'button\').forEach(function(b){b.style.background=\'#fff\';b.style.color=\'#444\';b.style.borderColor=\'#e0e0e0\';b.style.fontWeight=\'500\';});el.style.background=\''+ac+'\';el.style.color=\'#fff\';el.style.borderColor=\''+ac+'\';el.style.fontWeight=\'700\';var l=document.getElementById(\'sz-sel\');if(l)l.textContent=\'\u2713 \'+el.getAttribute(\'data-szv\');})(this)"'
+        +' style="min-width:'+(E?'52px':'40px')+';height:'+(E?'48px':'36px')+';padding:0 '+(E?'16px':'10px')+';font-size:'+(E?'15px':'12px')+';font-weight:500;color:#444;background:#fff;border:1.5px solid #e0e0e0;border-radius:'+(E?'8px':'6px')+';cursor:pointer;font-family:'+bf+';transition:all .2s">'+s.val+'</button>';
     });
-
-    // Detail ukuran
     var detHtml='';
     var detOn=(document.getElementById('v-size-detail-on')||{checked:false}).checked;
-    var detTitle=gv('v-size-detail-title')||'Panduan Ukuran';
-    var detText=gv('v-size-detail-text')||'';
-    if(detOn&&detText.trim()){
-      var rows=detText.split('\n').filter(function(r){return r.trim();});
+    if(detOn && (gv('v-size-detail-text')||'').trim()){
+      var detTitle=gv('v-size-detail-title')||'Panduan Ukuran';
+      var rows=gv('v-size-detail-text').split('\n').filter(function(r){return r.trim();});
       var trs='';
       rows.forEach(function(row,ri){
         var parts=row.split('=');
         var lbl=parts[0]?parts[0].trim():'';
         var val=parts.slice(1).join('=').trim();
-        trs+='<tr style="border-bottom:1px solid #f0f0f0">'
-          +'<td style="padding:'+(E?'7px 10px':'4px 7px')+';font-size:'+(E?'14px':'12px')+';font-weight:400;color:#1a1a1a;white-space:nowrap;width:1%;background:'+(ri%2===0?'#fff':'#fafafa')+'">'+lbl+'</td>'
-          +'<td style="padding:'+(E?'7px 10px':'4px 7px')+';font-size:'+(E?'14px':'12px')+';color:#555;background:'+(ri%2===0?'#fff':'#fafafa')+'">'+val+'</td>'
-          +'</tr>';
+        trs+='<tr style="border-bottom:1px solid #f0f0f0"><td style="padding:'+(E?'7px 10px':'4px 7px')+';font-size:'+(E?'12px':'10px')+';font-weight:400;color:#1a1a1a;white-space:nowrap;width:1%;background:'+(ri%2===0?'#fff':'#fafafa')+'">'+lbl+'</td><td style="padding:'+(E?'7px 10px':'4px 7px')+';font-size:'+(E?'12px':'10px')+';color:#555;background:'+(ri%2===0?'#fff':'#fafafa')+'">'+val+'</td></tr>';
       });
-      detHtml='<div style="margin-top:'+(E?'14px':'11px')+';background:#f9f9f9;border-radius:'+(E?'12px':'7px')+';padding:'+(E?'14px 16px':'9px 12px')+';border:1px solid #f0f0f0">'
-        +'<div style="font-size:'+(E?'15px':'11px')+';font-weight:500;color:#1a1a1a;margin-bottom:'+(E?'12px':'7px')+'">'+detTitle+'</div>'
-        +'<table style="width:100%;border-collapse:collapse">'+trs+'</table>'
-        +'</div>';
+      detHtml='<div style="margin-top:'+(E?'14px':'9px')+';background:#f9f9f9;border-radius:'+(E?'10px':'7px')+';padding:'+(E?'14px 16px':'9px 12px')+';border:1px solid #f0f0f0"><div style="font-size:'+(E?'11px':'9px')+';font-weight:500;color:#1a1a1a;margin-bottom:'+(E?'10px':'7px')+'">'+detTitle+'</div><table style="width:100%;border-collapse:collapse">'+trs+'</table></div>';
     }
-
-    sizeHtml='<div style="margin-bottom:0">'
-      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(E?'14px':'7px')+'">'
-      +'<div style="font-size:'+fs+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">'+sizeLabel+'</div>'
-      +'<div style="font-size:'+fss+';color:#999;font-family:'+bf+'" id="sz-sel">\u2014 Pilih salah satu</div>'
-      +'</div>'
-      +'<div style="display:flex;flex-wrap:wrap;gap:'+(E?'8px':'5px')+'">'+szBtns+'</div>'
-      +detHtml
-      +'</div>';
+    sizeHtml='<div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(E?'12px':'7px')+'"><div style="font-size:'+fs+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">'+sizeLabel+'</div><div style="font-size:'+fss+';color:#999;font-family:'+bf+'" id="sz-sel">\u2014 Pilih salah satu</div></div><div style="display:flex;flex-wrap:wrap;gap:'+(E?'8px':'5px')+'">'+szBtns+'</div>'+detHtml+'</div>';
   }
 
-  // ── COLOR ──
+  // COLOR
   var colorHtml='';
   if(hasColor){
     var clCards='';
-    validColors.forEach(function(c,ci){
+    validColors.forEach(function(c){
       var photoBtn='';
       if(c.img){
-        photoBtn='<div style="width:'+(E?'40px':'28px')+';height:'+(E?'40px':'28px')+';border-radius:'+(E?'6px':'4px')+';overflow:hidden;flex-shrink:0;border:1px solid #e8e8e8;background:#fff">'
-          +'<img src="'+c.img+'" alt="'+c.name+'" style="width:100%;height:100%;object-fit:contain;display:block">'
-          +'</div>';
+        photoBtn='<div style="width:'+(E?'40px':'28px')+';height:'+(E?'40px':'28px')+';border-radius:'+(E?'6px':'4px')+';overflow:hidden;flex-shrink:0;border:1px solid #e8e8e8;background:#fff"><img src="'+c.img+'" style="width:100%;height:100%;object-fit:contain;display:block"></div>';
       }
-      var imgChg=c.img?'var track=document.querySelector(\'[id$=-t]\');if(track){var imgs=track.querySelectorAll(\'img\');if(imgs.length>0)imgs[0].src=\''+c.img.replace(/'/g,"\\'")+'\';}':'';
-      clCards+='<div class="clcard" data-ci="'+ci+'" data-name="'+c.name.replace(/"/g,'&quot;')+'"'
-        +' style="cursor:pointer;transition:all .2s;border-radius:'+(E?'14px':'8px')+';padding:'+(E?'8px 12px':'5px 8px')+';display:flex;align-items:center;gap:'+(E?'12px':'6px')+';background:#fafafa;border:1.5px solid #f0f0f0"'
-        +' onclick="(function(el){document.querySelectorAll(\'.clcard\').forEach(function(d){d.style.outline=\'none\';var dt=d.querySelector(\'.cldot\');if(dt)dt.style.boxShadow=\'0 1px 4px rgba(0,0,0,.15)\';});el.style.outline=\'2.5px solid '+ac+'\';el.style.outlineOffset=\'3px\';var dot=el.querySelector(\'.cldot\');if(dot)dot.style.boxShadow=\'0 3px 12px '+ac+'55\';var lbl=document.getElementById(\'cl-sel\');if(lbl)lbl.textContent=\'\u2713 \'+el.getAttribute(\'data-name\');'+imgChg+'})(this)"'
-        +'>'
-        +'<div class="cldot" style="position:relative;flex-shrink:0">'
-        +'<div style="width:'+(E?'40px':'22px')+';height:'+(E?'40px':'22px')+';border-radius:50%;background:'+c.hex+';border:2px solid rgba(0,0,0,'+(c.hex==='#FFFFFF'||c.hex==='#ffffff'?'0.15':'0.08')+');box-shadow:0 1px 4px rgba(0,0,0,.15)"></div>'
-        +'</div>'
+      var imgChg=c.img?'var tk=document.querySelector(\'[id$=-t]\');if(tk){var im=tk.querySelectorAll(\'img\');if(im.length>0)im[0].src=\''+c.img.replace(/'/g,"\\'")+'\';}':'';
+      var darkBorder=(c.hex==='#FFFFFF'||c.hex==='#ffffff')?'0.15':'0.08';
+      clCards+='<div class="clcard" data-name="'+c.name.replace(/"/g,'&quot;')+'"'
+        +' style="cursor:pointer;transition:all .2s;border-radius:'+(E?'12px':'8px')+';padding:'+(E?'8px 12px':'5px 8px')+';display:flex;align-items:center;gap:'+(E?'10px':'6px')+';background:#fafafa;border:1.5px solid #f0f0f0"'
+        +' onclick="(function(el){document.querySelectorAll(\'.clcard\').forEach(function(d){d.style.outline=\'none\';});el.style.outline=\'2.5px solid '+ac+'\';el.style.outlineOffset=\'3px\';var l=document.getElementById(\'cl-sel\');if(l)l.textContent=\'\u2713 \'+el.getAttribute(\'data-name\');'+imgChg+'})(this)">'
+        +'<div style="width:'+(E?'32px':'22px')+';height:'+(E?'32px':'22px')+';border-radius:50%;background:'+c.hex+';border:2px solid rgba(0,0,0,'+darkBorder+');box-shadow:0 1px 4px rgba(0,0,0,.15);flex-shrink:0"></div>'
         +photoBtn
-        +'<div style="min-width:0"><div style="font-size:'+fs+';font-weight:600;color:#1a1a1a;font-family:'+bf+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:'+(E?'90px':'70px')+'">'+c.name+'</div></div>'
-        +'</div>';
+        +'<div style="font-size:'+fs+';font-weight:600;color:#1a1a1a;font-family:'+bf+';white-space:nowrap">'+c.name+'</div></div>';
     });
-    colorHtml='<div>'
-      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(E?'14px':'7px')+'">'
-      +'<div style="font-size:'+fs+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">'+colorLabel+'</div>'
-      +'<div style="font-size:'+fss+';color:#999;font-family:'+bf+'" id="cl-sel">\u2014 Pilih salah satu</div>'
-      +'</div>'
-      +'<div style="display:flex;flex-wrap:wrap;gap:'+(E?'12px':'7px')+';align-items:flex-start">'+clCards+'</div>'
-      +'</div>';
+    colorHtml='<div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(E?'12px':'7px')+'"><div style="font-size:'+fs+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">'+colorLabel+'</div><div style="font-size:'+fss+';color:#999;font-family:'+bf+'" id="cl-sel">\u2014 Pilih salah satu</div></div><div style="display:flex;flex-wrap:wrap;gap:'+(E?'10px':'7px')+';align-items:flex-start">'+clCards+'</div></div>';
   }
 
-  // ── PAKET ──
+  // PAKET
   var paketHtml='';
   if(hasPaket){
     var pkCards='';
-    validPaket.forEach(function(p,pi){
-      pkCards+='<div data-pk="'+pi+'" data-name="'+p.nama.replace(/"/g,'&quot;')+'"'
-        +' style="cursor:pointer;transition:all .2s;border-radius:'+(E?'12px':'7px')+';padding:'+(E?'12px 14px':'8px 10px')+';background:#fff;border:1.5px solid #e0e0e0;display:flex;align-items:center;justify-content:space-between"'
-        +' onclick="(function(el){document.querySelectorAll(\'[data-pk]\').forEach(function(d){d.style.border=\'1.5px solid #e0e0e0\';d.style.background=\'#fff\';});el.style.border=\'2px solid '+ac+'\';el.style.background=\''+ac+'08\';var lbl=document.getElementById(\'pk-sel\');if(lbl)lbl.textContent=\'\u2713 \'+el.getAttribute(\'data-name\');})(this)"'
-        +'>'
-        +'<div style="display:flex;align-items:center;gap:'+(E?'12px':'7px')+'">'
-        +'<div style="width:'+(E?'18px':'14px')+';height:'+(E?'18px':'14px')+';border-radius:50%;border:2px solid #ddd;flex-shrink:0"></div>'
-        +'<div>'
-        +'<div style="font-size:'+(E?'15px':'12px')+';font-weight:600;color:#1a1a1a;font-family:'+bf+'">'+p.nama+'</div>'
-        +(p.ket?'<div style="font-size:'+(E?'15px':'11px')+';color:'+ac+';font-family:'+bf+';margin-top:1px">'+p.ket+'</div>':'')
-        +'</div></div>'
-        +(p.harga?'<div style="font-size:'+(E?'15px':'12px')+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">Rp '+p.harga+'</div>':'')
-        +'</div>';
+    validPaket.forEach(function(p){
+      pkCards+='<div data-name="'+p.nama.replace(/"/g,'&quot;')+'"'
+        +' style="cursor:pointer;transition:all .2s;border-radius:'+(E?'10px':'7px')+';padding:'+(E?'12px 14px':'8px 10px')+';background:#fff;border:1.5px solid #e0e0e0;display:flex;align-items:center;justify-content:space-between"'
+        +' onclick="(function(el){document.querySelectorAll(\'[data-name]\').forEach(function(d){if(d.getAttribute(\'data-pkt\')){d.style.border=\'1.5px solid #e0e0e0\';d.style.background=\'#fff\';}});el.style.border=\'2px solid '+ac+'\';el.style.background=\''+ac+'08\';var l=document.getElementById(\'pk-sel\');if(l)l.textContent=\'\u2713 \'+el.getAttribute(\'data-name\');})(this)" data-pkt="1">'
+        +'<div style="display:flex;align-items:center;gap:'+(E?'10px':'7px')+'"><div style="width:'+(E?'18px':'14px')+';height:'+(E?'18px':'14px')+';border-radius:50%;border:2px solid #ddd;flex-shrink:0"></div><div><div style="font-size:'+(E?'13px':'10px')+';font-weight:600;color:#1a1a1a;font-family:'+bf+'">'+p.nama+'</div>'+(p.ket?'<div style="font-size:'+(E?'11px':'9px')+';color:'+ac+';font-family:'+bf+';margin-top:1px">'+p.ket+'</div>':'')+'</div></div>'
+        +(p.harga?'<div style="font-size:'+(E?'13px':'10px')+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">Rp '+p.harga+'</div>':'')+'</div>';
     });
-    paketHtml='<div style="margin-bottom:'+(E?'16px':'12px')+'">'
-      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(E?'14px':'7px')+'">'
-      +'<div style="font-size:'+fs+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">'+paketLabel+'</div>'
-      +'<div style="font-size:'+fss+';color:#999;font-family:'+bf+'" id="pk-sel">\u2014 Pilih salah satu</div>'
-      +'</div>'
-      +'<div style="display:flex;flex-direction:column;gap:'+(E?'8px':'5px')+'">'+pkCards+'</div>'
-      +'</div>';
+    paketHtml='<div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(E?'12px':'7px')+'"><div style="font-size:'+fs+';font-weight:700;color:#1a1a1a;font-family:'+bf+'">'+paketLabel+'</div><div style="font-size:'+fss+';color:#999;font-family:'+bf+'" id="pk-sel">\u2014 Pilih salah satu</div></div><div style="display:flex;flex-direction:column;gap:'+(E?'8px':'5px')+'">'+pkCards+'</div></div>';
   }
 
-  var out='<div style="padding:'+pad+';background:#fff;border-top:1px solid #f0f0f0">';
+  var out='<div style="padding:'+(E?'20px':'12px 14px')+';background:#fff;border-top:1px solid #f0f0f0">';
   if(hasPaket) out+=paketHtml;
-  if(hasPaket&&(hasSize||hasColor)) out+=divider;
+  if(hasPaket && (hasSize||hasColor)) out+=divider;
   if(hasSize) out+=sizeHtml;
-  if(hasSize&&hasColor) out+=divider;
+  if(hasSize && hasColor) out+=divider;
   if(hasColor) out+=colorHtml;
   out+='</div>';
   return out;
 }
+</script>
 
-function sw(name,el){
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+<script>
+// ═══════════════ BUILD LP — ENGINE RENDER ═══════════════
+function buildLP(s, d, isE){
+  var E=isE, P=d;
+  var tf=s.fonts.title, bf=s.fonts.body, ac=s.accent;
+  var isDark=s.dark||false;
+  var bg=s.pageBg||(isDark?'#0d0d0d':'#fff');
+  var surface=s.surface||(isDark?'#1a1a1a':'#f7f7f7');
+  var card=s.card||(isDark?'#222':'#fff');
+  var border=s.borderCol||(isDark?'#2a2a2a':'#f0f0f0');
+  var textMain=s.textMain||(isDark?'#f0f0f0':'#111');
+  var textSub=s.textSub||(isDark?'#aaa':'#555');
+  var textMute=s.textMute||(isDark?'#666':'#aaa');
+  var btnText=s.btnText||'#fff';
+  var radius=s.radius||'8px';
+
+  // CAROUSEL
+  var carouselHtml = buildCarousel(heroSlots, ac, E);
+
+  // INFO
+  var badgesHtml='';
+  if(P.badges.length){
+    badgesHtml='<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:'+(E?'10px':'7px')+'">'
+      + P.badges.map(function(b){return '<span style="background:'+ac+';color:'+btnText+';font-size:'+(E?'11px':'10px')+';font-weight:700;padding:'+(E?'3px 10px':'2px 8px')+';border-radius:20px;font-family:'+bf+'">'+b+'</span>';}).join('')
+      + '</div>';
+  }
+
+  // TIMER
+  var timerHtml='';
+  if(P.timerOn){
+    var labelHtml = (P.timerLabelOn!==false) ? '<div style="font-size:'+(E?'12px':'10px')+';font-weight:600;letter-spacing:1px;text-transform:uppercase;color:'+ac+';margin-bottom:'+(E?'8px':'5px')+';font-family:'+bf+';opacity:.9">'+P.timerLabel+'</div>' : '';
+    var cell=function(id,lbl){return '<div style="text-align:center"><div id="'+id+'" style="font-size:'+(E?'30px':'22px')+';font-weight:800;color:'+textMain+';font-family:'+tf+';background:'+surface+';border-radius:8px;padding:'+(E?'8px 12px':'6px 9px')+';min-width:'+(E?'52px':'40px')+'">00</div><div style="font-size:'+(E?'9px':'8px')+';color:'+textMute+';margin-top:4px;font-family:'+bf+';text-transform:uppercase;letter-spacing:.5px">'+lbl+'</div></div>';};
+    timerHtml='<div id="lp-timer-wrap" style="margin-top:'+(E?'14px':'10px')+'">'+labelHtml
+      +'<div style="display:flex;gap:'+(E?'8px':'5px')+';align-items:center">'
+      +cell('lp-td','Hari')+'<span style="color:'+textMute+';font-weight:700">:</span>'
+      +cell('lp-th','Jam')+'<span style="color:'+textMute+';font-weight:700">:</span>'
+      +cell('lp-tm','Menit')+'<span style="color:'+textMute+';font-weight:700">:</span>'
+      +cell('lp-ts','Detik')+'</div></div>'
+      +'<scr'+'ipt>(function(){'
+      +'if(window.__lpTimer)clearInterval(window.__lpTimer);'
+      +'var tot='+P.timerD+'*86400+'+P.timerH+'*3600+'+P.timerM+'*60+'+P.timerS+';'
+      +'var dl=Date.now()+tot*1000;'
+      +'function pad(n){return String(n).padStart(2,"0");}'
+      +'function tick(){var lf=Math.max(0,Math.floor((dl-Date.now())/1000));'
+      +'var dd=Math.floor(lf/86400),hh=Math.floor((lf%86400)/3600),mm=Math.floor((lf%3600)/60),ss=lf%60;'
+      +'var a=document.getElementById("lp-td"),b=document.getElementById("lp-th"),c=document.getElementById("lp-tm"),e=document.getElementById("lp-ts");'
+      +'if(!e){clearInterval(window.__lpTimer);return;}'
+      +'if(a)a.textContent=pad(dd);if(b)b.textContent=pad(hh);if(c)c.textContent=pad(mm);if(e)e.textContent=pad(ss);'
+      +'if(lf<=0){clearInterval(window.__lpTimer);var w=document.getElementById("lp-timer-wrap");if(w)w.style.opacity="0.4";}}'
+      +'tick();window.__lpTimer=setInterval(tick,1000);'
+      +'})();<'+'/scr'+'ipt>';
+  }
+
+  // BRAND CARD
+  var brandHtml='';
+  if(P.brand){
+    var stars='';
+    for(var i=1;i<=5;i++){
+      var filled=i<=Math.floor(P.brandRating);
+      var half=!filled && (P.brandRating-Math.floor(P.brandRating))>=0.5 && i===Math.ceil(P.brandRating);
+      stars+='<span style="color:'+(filled||half?'#F59E0B':'#D1D5DB')+';font-size:'+(E?'14px':'12px')+';line-height:1">'+(filled?'★':half?'⯨':'☆')+'</span>';
+    }
+    var brandImg = P.brandImg ? '<div style="width:'+(E?'40px':'32px')+';height:'+(E?'40px':'32px')+';border-radius:50%;background:#eee;background-image:url('+P.brandImg+');background-size:cover;background-position:center;flex-shrink:0"></div>' : '<div style="width:'+(E?'40px':'32px')+';height:'+(E?'40px':'32px')+';border-radius:50%;background:'+ac+';display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:'+(E?'16px':'13px')+';flex-shrink:0">'+(P.brand[0]||'T')+'</div>';
+    var reviewTxt = P.brandReview ? '<span style="font-size:'+(E?'12px':'10px')+';color:'+(isDark?'#6b7280':'#9CA3AF')+';font-family:'+bf+'">· '+P.brandReview+' terjual</span>' : '';
+    brandHtml='<div style="display:flex;align-items:center;gap:'+(E?'10px':'7px')+';margin-top:'+(E?'14px':'10px')+';padding:'+(E?'12px':'9px')+';background:'+surface+';border-radius:'+radius+'">'
+      +brandImg
+      +'<div style="flex:1;min-width:0"><div style="font-size:'+(E?'14px':'12px')+';font-weight:700;color:'+textMain+';font-family:'+bf+'">'+P.brand+'</div>'
+      +'<div style="display:flex;align-items:center;gap:5px;margin-top:2px"><div style="display:flex;gap:1px">'+stars+'</div>'
+      +'<span style="font-size:'+(E?'12px':'10px')+';font-weight:700;color:'+(isDark?'#e2e8f0':'#374151')+';font-family:'+bf+'">'+P.brandRating.toFixed(1)+'</span>'+reviewTxt+'</div></div>'
+      +'<button onclick="window.scrollTo({top:document.body.scrollHeight,behavior:\'smooth\'})" style="background:none;border:1.5px solid '+ac+';color:'+ac+';border-radius:20px;padding:'+(E?'6px 14px':'5px 11px')+';font-size:'+(E?'11px':'10px')+';font-weight:700;cursor:pointer;font-family:'+bf+';white-space:nowrap">Kunjungi →</button>'
+      +'</div>';
+  }
+
+  var infoHtml='<div style="padding:'+(E?'18px 16px':'12px 14px')+';background:'+card+'">'
+    +badgesHtml
+    +'<h1 style="font-size:'+(E?'22px':'18px')+';font-weight:800;color:'+textMain+';font-family:'+tf+';line-height:1.25;margin-bottom:'+(E?'5px':'4px')+'">'+(P.produk||'Nama Produk')+'</h1>'
+    +(P.sub?'<div style="font-size:'+(E?'15px':'13px')+';color:'+ac+';font-weight:600;font-family:'+bf+';margin-bottom:'+(E?'8px':'6px')+'">'+P.sub+'</div>':'')
+    +(P.tagline?'<p style="font-size:'+(E?'14px':'12px')+';color:'+textSub+';line-height:1.6;font-family:'+bf+'">'+P.tagline+'</p>':'')
+    +timerHtml
+    +brandHtml
+    +'</div>';
+
+  // HARGA
+  var discount='';
+  if(P.hargaOld && P.harga){
+    var ho=parseInt(P.hargaOld.replace(/\D/g,'')), hn=parseInt(P.harga.replace(/\D/g,''));
+    if(ho>hn && ho>0){ discount='<span style="background:'+ac+';color:'+btnText+';font-size:'+(E?'12px':'10px')+';font-weight:700;padding:'+(E?'3px 9px':'2px 7px')+';border-radius:6px;margin-left:8px;font-family:'+bf+'">-'+Math.round((ho-hn)/ho*100)+'%</span>'; }
+  }
+  var perksHtml='';
+  if(P.perks.length){
+    perksHtml='<div style="margin-top:'+(E?'12px':'9px')+';display:flex;flex-direction:column;gap:'+(E?'7px':'5px')+'">'
+      + P.perks.map(function(pk){return '<div style="display:flex;align-items:center;gap:7px;font-size:'+(E?'14px':'12px')+';color:'+textSub+';font-family:'+bf+'"><span style="color:#22c55e;font-size:'+(E?'15px':'13px')+'">✓</span>'+pk+'</div>';}).join('')
+      + '</div>';
+  }
+  var hargaHtml='<div style="padding:'+(E?'18px 16px':'12px 14px')+';background:'+card+';border-top:1px solid '+border+'">'
+    +'<div style="display:flex;align-items:baseline;flex-wrap:wrap">'
+    +'<span style="font-size:'+(E?'32px':'24px')+';font-weight:800;color:'+ac+';font-family:'+tf+'">Rp '+(P.harga||'0')+'</span>'
+    +(P.hargaOld?'<span style="font-size:'+(E?'16px':'13px')+';color:'+textMute+';text-decoration:line-through;margin-left:10px;font-family:'+bf+'">Rp '+P.hargaOld+'</span>':'')
+    +discount+'</div>'+perksHtml+'</div>';
+
+  // VARIAN
+  var varianHtml = buildVarianHtml(ac, bf, E);
+
+  // FITUR
+  var featHtml='';
+  if(feats.length){
+    featHtml='<div style="padding:'+(E?'18px 16px':'12px 14px')+';background:'+card+';border-top:1px solid '+border+'">'
+      +'<div style="font-size:'+(E?'13px':'11px')+';font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:'+textMute+';margin-bottom:'+(E?'14px':'10px')+';font-family:'+bf+'">Keunggulan</div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:'+(E?'10px':'7px')+'">'
+      + feats.map(function(f){return '<div style="display:flex;align-items:flex-start;gap:'+(E?'9px':'7px')+';padding:'+(E?'10px':'8px')+';background:'+surface+';border-radius:'+radius+'"><span style="font-size:'+(E?'20px':'16px')+';flex-shrink:0">'+f.icon+'</span><div><div style="font-size:'+(E?'13px':'11px')+';font-weight:700;color:'+textMain+';font-family:'+bf+'">'+f.label+'</div>'+(f.sub?'<div style="font-size:'+(E?'12px':'10px')+';color:'+textMute+';font-family:'+bf+';margin-top:1px">'+f.sub+'</div>':'')+'</div></div>';}).join('')
+      +'</div></div>';
+  }
+
+  // DETAIL PRODUK (judul saja)
+  var hasAnyKeung = fotoBlocks.some(function(fb){return fb.keunggulan.some(function(k){return k.teks.trim();});});
+  var detailProdukHtml='';
+  if(hasAnyKeung){
+    detailProdukHtml='<div style="background:'+card+';padding:'+(E?'16px 16px 4px':'10px 14px 2px')+'"><div style="font-size:'+(E?'13px':'11px')+';font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:'+textMute+';font-family:'+bf+'">DETAIL PRODUK</div></div>';
+  }
+
+  // FOTO DETAIL (foto + keunggulan masing-masing)
+  var fotoDetailHtml = fotoBlocks.map(function(fb,fi){
+    if(!fb.url.trim()) return '';
+    var kList=fb.keunggulan.filter(function(k){return k.teks.trim();});
+    var kHtml='';
+    if(kList.length){
+      kHtml='<div style="padding:'+(E?'14px 16px':'10px 14px')+'">'
+        + kList.map(function(k){return '<div style="display:flex;align-items:flex-start;gap:'+(E?'12px':'8px')+';margin-bottom:'+(E?'12px':'8px')+';padding-bottom:'+(E?'12px':'8px')+';border-bottom:1px solid '+border+'"><span style="font-size:'+(E?'20px':'15px')+';flex-shrink:0;margin-top:1px">'+k.icon+'</span><span style="font-size:'+(E?'15px':'13px')+';color:'+textSub+';line-height:1.65;font-family:'+bf+'">'+k.teks+'</span></div>';}).join('')
+        +'</div>';
+    }
+    return '<div style="background:'+card+';border-bottom:1px solid '+border+'"><div style="background:#f8f8f8;line-height:0;overflow:hidden"><img src="'+fb.url+'" style="width:100%;height:auto;display:block;object-fit:fill" onerror="this.style.display=\'none\'"></div>'+kHtml+'</div>';
+  }).join('');
+
+  // ORDER
+  var orderHtml='<div style="padding:'+(E?'20px 16px':'14px 14px')+';background:'+surface+';border-top:1px solid '+border+'">'
+    +'<div style="text-align:center;margin-bottom:'+(E?'14px':'10px')+'"><div style="font-size:'+(E?'18px':'15px')+';font-weight:800;color:'+textMain+';font-family:'+tf+'">'+(P.orderTitle||'Pesan Sekarang')+'</div>'
+    +(P.orderSub?'<div style="font-size:'+(E?'14px':'12px')+';color:'+textMute+';margin-top:3px;font-family:'+bf+'">'+P.orderSub+'</div>':'')+'</div>';
+  if(P.embedCode){
+    orderHtml += E ? '<div id="oo-embed-placeholder"></div>' : '<div id="oo-iframe-wrap" style="width:100%;border-radius:8px;overflow:hidden;border:1px solid '+border+'"><iframe id="oo-embed-iframe" srcdoc="" style="width:100%;min-height:420px;border:none;display:block" scrolling="no"></iframe></div>';
+  } else {
+    orderHtml += '<div style="background:'+card+';border:1px dashed '+border+';border-radius:'+radius+';padding:'+(E?'20px':'14px')+';text-align:center;color:'+textMute+';font-size:'+(E?'14px':'12px')+';font-family:'+bf+'">Form order belum dikonfigurasi.</div>';
+  }
+  orderHtml += '</div>';
+
+  // FOOTER
+  var footerHtml='';
+  if(P.footerOn===true){
+    footerHtml='<div style="background:'+(s.footerBg||bg)+';color:'+(s.footerColor||textMute)+';padding:'+(E?'14px 16px':'10px 14px')+';text-align:center;font-size:'+(E?'13px':'11px')+';font-family:'+bf+';border-top:1px solid '+border+'">'+P.footer+'</div>';
+  }
+
+  return carouselHtml + buildUrgency(P,ac,bf,E) + infoHtml + hargaHtml + varianHtml + featHtml + detailProdukHtml + fotoDetailHtml + orderHtml + footerHtml;
+}
+
+// ═══════════════ STYLE DEFINITIONS ═══════════════
+// mk: bikin render function yang sudah tahu style base + override-nya
+function mk(baseKey, extra){
+  return function(d, isE){
+    var base = STYLE_BASE[baseKey];
+    return buildLP(Object.assign({}, base, extra), d, isE);
+  };
+}
+
+// Base info per style (fonts, accent, name, tag, previewBg)
+var STYLE_BASE = {
+  bold:    {name:'Bold',tag:'Tegas & kontras',accent:'#e94560',fonts:{title:'Poppins,sans-serif',body:'Inter,sans-serif'},previewBg:'#e94560'},
+  fresh:   {name:'Fresh',tag:'Cerah & muda',accent:'#10b981',fonts:{title:'Poppins,sans-serif',body:'Inter,sans-serif'},previewBg:'#10b981'},
+  dark:    {name:'Dark',tag:'Elegan gelap',accent:'#fbbf24',fonts:{title:'Space Grotesk,sans-serif',body:'Inter,sans-serif'},previewBg:'#1a1a1a',dark:true},
+  elegant: {name:'Elegant',tag:'Mewah klasik',accent:'#b8860b',fonts:{title:'Playfair Display,serif',body:'Crimson Text,serif'},previewBg:'#b8860b'},
+  neon:    {name:'Neon',tag:'Futuristik',accent:'#00f0ff',fonts:{title:'Space Grotesk,sans-serif',body:'Inter,sans-serif'},previewBg:'#0a0a0a',dark:true},
+  pastel:  {name:'Pastel',tag:'Lembut feminin',accent:'#ec4899',fonts:{title:'Poppins,sans-serif',body:'Inter,sans-serif'},previewBg:'#ec4899'},
+  minimal: {name:'Minimal',tag:'Bersih sederhana',accent:'#000000',fonts:{title:'Inter,sans-serif',body:'Inter,sans-serif'},previewBg:'#000'},
+  gradient:{name:'Gradient',tag:'Warna dinamis',accent:'#7C3AED',fonts:{title:'Poppins,sans-serif',body:'Inter,sans-serif'},previewBg:'#7C3AED'},
+  nature:  {name:'Nature',tag:'Organik alami',accent:'#16a34a',fonts:{title:'Poppins,sans-serif',body:'Inter,sans-serif'},previewBg:'#16a34a'},
+  luxury:  {name:'Luxury',tag:'Premium emas',accent:'#d4af37',fonts:{title:'Playfair Display,serif',body:'Inter,sans-serif'},previewBg:'#0a0a0a',dark:true},
+};
+
+var STYLES = {
+  bold: Object.assign({}, STYLE_BASE.bold, {render:mk('bold',{pageBg:'#fff',surface:'#fafafa',card:'#fff',borderCol:'#f0f0f0',textMain:'#111',textSub:'#555',textMute:'#aaa',btnText:'#fff',radius:'8px',footerBg:'#111',footerColor:'#bbb'})}),
+  fresh: Object.assign({}, STYLE_BASE.fresh, {render:mk('fresh',{pageBg:'#fff',surface:'#f0fdf4',card:'#fff',borderCol:'#dcfce7',textMain:'#064e3b',textSub:'#047857',textMute:'#6ee7b7',btnText:'#fff',radius:'12px',footerBg:'#064e3b',footerColor:'rgba(255,255,255,.7)'})}),
+  dark: Object.assign({}, STYLE_BASE.dark, {render:mk('dark',{pageBg:'#0d0d0d',surface:'#1a1a1a',card:'#141414',borderCol:'#2a2a2a',textMain:'#f5f5f5',textSub:'#aaa',textMute:'#666',btnText:'#000',radius:'8px',footerBg:'#000',footerColor:'#777',dark:true})}),
+  elegant: Object.assign({}, STYLE_BASE.elegant, {render:mk('elegant',{pageBg:'#fffdf8',surface:'#faf6ed',card:'#fff',borderCol:'#f0e6d2',textMain:'#3d2f1f',textSub:'#6b5841',textMute:'#b8a888',btnText:'#fff',radius:'4px',footerBg:'#3d2f1f',footerColor:'rgba(255,255,255,.65)'})}),
+  neon: Object.assign({}, STYLE_BASE.neon, {render:mk('neon',{pageBg:'#0a0a0a',surface:'#141414',card:'#0f0f0f',borderCol:'#1f2937',textMain:'#fff',textSub:'#9ca3af',textMute:'#4b5563',btnText:'#000',radius:'6px',footerBg:'#000',footerColor:'#666',dark:true})}),
+  pastel: Object.assign({}, STYLE_BASE.pastel, {render:mk('pastel',{pageBg:'#fffafc',surface:'#fdf2f8',card:'#fff',borderCol:'#fce7f3',textMain:'#831843',textSub:'#be185d',textMute:'#f9a8d4',btnText:'#fff',radius:'14px',footerBg:'#831843',footerColor:'rgba(255,255,255,.7)'})}),
+  minimal: Object.assign({}, STYLE_BASE.minimal, {render:mk('minimal',{pageBg:'#fff',surface:'#f5f5f5',card:'#fff',borderCol:'#eee',textMain:'#000',textSub:'#666',textMute:'#bbb',btnText:'#fff',radius:'0px',footerBg:'#f5f5f5',footerColor:'#999'})}),
+  gradient: Object.assign({}, STYLE_BASE.gradient, {render:mk('gradient',{pageBg:'#fff',surface:'#f9f5ff',card:'#fff',borderCol:'#ede4ff',textMain:'#1a0a2e',textSub:'#555',textMute:'#aaa',btnText:'#fff',radius:'12px',footerBg:'#7C3AED',footerColor:'rgba(255,255,255,.7)'})}),
+  nature: Object.assign({}, STYLE_BASE.nature, {render:mk('nature',{pageBg:'#f8fff4',surface:'#f0faf0',card:'#fff',borderCol:'#d4edda',textMain:'#1b4332',textSub:'#2d6a4f',textMute:'#74b492',btnText:'#fff',radius:'8px',footerBg:'#1b4332',footerColor:'rgba(255,255,255,.6)'})}),
+  luxury: Object.assign({}, STYLE_BASE.luxury, {render:mk('luxury',{pageBg:'#0a0a0a',surface:'#161616',card:'#111',borderCol:'#2a2416',textMain:'#f5f0e0',textSub:'#bbab8a',textMute:'#6b5f44',btnText:'#000',radius:'4px',footerBg:'#000',footerColor:'#8a7a55',dark:true})}),
+};
+</script>
+
+<script>
+// ═══════════════ TAB SWITCH ═══════════════
+function sw(name, el){
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   document.getElementById('tab-'+name).classList.add('active');
   el.classList.add('active');
-  if(name==='fitur') renderFeats();
-  if(name==='foto') renderFotoBlocks();
   if(name==='hero') renderHeroSlots();
-  if(name==='style') renderStyleGrid();
+  if(name==='foto') renderFotoBlocks();
+  if(name==='fitur') renderFeats();
   if(name==='varian'){renderSizeSlots();renderColorSlots();renderPaketSlots();}
+  if(name==='style') renderStyleGrid();
 }
 
-function setMode(mode,el){
-  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  var iframe=document.getElementById('lp-preview');
-  if(iframe){
-    iframe.style.maxWidth = mode==='desktop' ? '100%' : '420px';
-    iframe.style.borderRadius = mode==='desktop' ? '0' : '12px';
-  }
-}
-
-function renderStyleGrid(){
-  const keys=Object.keys(STYLES);
-  // Mini LP mock per style
-  const mocks={
-    bold:{bar:'#F4052B',img:'linear-gradient(180deg,#e55,#c33)',line1:'#f87',line2:'#fcc',btn:'#F4052B',bg:'#fff0f0',dark:false},
-    fresh:{bar:'#00C851',img:'linear-gradient(180deg,#5d5,#3a3)',line1:'#7d7',line2:'#beb',btn:'#00C851',bg:'#f4fff6',dark:false},
-    dark:{bar:'#333',img:'linear-gradient(180deg,#444,#222)',line1:'#FFD70088',line2:'#66605088',btn:'#FFD700',bg:'#111',dark:true},
-    elegant:{bar:'#2C1810',img:'linear-gradient(180deg,#7a5c3a,#4a3020)',line1:'#B8860B88',line2:'#d4b87688',btn:'#2C1810',bg:'#FDF6E9',dark:false},
-    neon:{bar:'#050011',img:'linear-gradient(180deg,#0d0025,#1a0033)',line1:'#00F5FF88',line2:'#00F5FF44',btn:'#00F5FF',bg:'#050011',dark:true},
-    pastel:{bar:'#FFB3C6',img:'linear-gradient(180deg,#FFC8DD,#FFB3C6)',line1:'#FF6B9D88',line2:'#ff9dc088',btn:'#FF6B9D',bg:'#FFF0F5',dark:false},
-    minimal:{bar:'#f8f8f8',img:'linear-gradient(180deg,#eee,#ddd)',line1:'#33333355',line2:'#99999933',btn:'#222',bg:'#fff',dark:false},
-    gradient:{bar:'#7C3AED',img:'linear-gradient(135deg,#7C3AED,#EC4899)',line1:'#b388ff88',line2:'#f48fb188',btn:'#7C3AED',bg:'#fff',dark:false},
-    nature:{bar:'#1B4332',img:'linear-gradient(180deg,#2D6A4F,#1B4332)',line1:'#52B78888',line2:'#95d5b288',btn:'#2D6A4F',bg:'#F8FFF4',dark:false},
-    luxury:{bar:'#0a0a0a',img:'linear-gradient(180deg,#1a1200,#0a0800)',line1:'#C9A84C88',line2:'#a07830aa',btn:'#C9A84C',bg:'#0a0a0a',dark:true},
-    custom:{bar:'#e94560',img:'linear-gradient(135deg,#e94560,#0f3460)',line1:'#e9456088',line2:'#0f346088',btn:'#e94560',bg:'#fff',dark:false},
-  };
-  const styleNames={bold:'Bold Impact',fresh:'Fresh & Clean',dark:'Dark Premium',elegant:'Elegant Serif',neon:'Neon Glow',pastel:'Soft Pastel',minimal:'Ultra Minimal',gradient:'Gradient Pop',nature:'Nature Organic',luxury:'Luxury Gold',custom:'Custom'};
-  const styleTags={bold:'Tegas · Berani · Full Warna',fresh:'Segar · Modern · Clean',dark:'Gelap · Eksklusif · Dramatic',elegant:'Serif · Elegan · Berkelas',neon:'Futuristik · Glowing · Vivid',pastel:'Feminin · Lembut · Hangat',minimal:'Bersih · Luas · Tipografi',gradient:'Colorful · Gradient · Energik',nature:'Natural · Organik · Earthy',luxury:'Premium · Gold · Prestige',custom:'Warna Sendiri'};
-  const pillColors={bold:['#F4052B','#ff6b35'],fresh:['#00C851','#00a844'],dark:['#FFD700','#888'],elegant:['#B8860B','#2C1810'],neon:['#00F5FF','#7B2FBE'],pastel:['#FF6B9D','#FFC8DD'],minimal:['#222','#999'],gradient:['#7C3AED','#EC4899'],nature:['#2D6A4F','#52B788'],luxury:['#C9A84C','#0a0a0a'],custom:['#e94560','#0f3460']};
-  const pillLabels={bold:['Bold','Vivid'],fresh:['Fresh','Rounded'],dark:['Dark','Gold'],elegant:['Serif','Cream'],neon:['Neon','Glow'],pastel:['Pastel','Soft'],minimal:['Mono','Thin'],gradient:['Gradient','Pop'],nature:['Earth','Green'],luxury:['Black','Gold'],custom:['Custom','Edit']};
-
-  document.getElementById('style-grid').innerHTML=keys.map(k=>{
-    const s=STYLES[k];
-    const m=mocks[k]||mocks.bold;
-    const isActive=curStyle===k;
-    const pl=pillColors[k]||['#888','#555'];
-    const plb=pillLabels[k]||['Style',''];
-    const txtColor=m.dark?'#e2e8f0':'#1a1a2e';
-    const lineColor=m.dark?'rgba(255,255,255,.12)':'rgba(0,0,0,.08)';
-    return `<div class="style-card${isActive?' active':''}" style="--accent-color:${s.accent}" onclick="selectStyle('${k}')">
-      <div class="sc-check">✓</div>
-      <div class="sc-preview" style="background:${m.bg}">
-        <div class="sc-preview-mock">
-          <div class="sc-preview-mock-bar" style="background:${m.bar}"></div>
-          <div class="sc-preview-mock-img" style="background:${m.img}"></div>
-          <div style="background:${m.bg};padding:3px 4px">
-            <div class="sc-preview-mock-line" style="background:${m.line1}"></div>
-            <div class="sc-preview-mock-line" style="background:${m.line2};width:70%"></div>
-            <div class="sc-preview-mock-btn" style="background:${m.btn}"></div>
-          </div>
-        </div>
-      </div>
-      <div class="sc-body">
-        <div class="sc-name">${styleNames[k]||s.name}</div>
-        <div class="sc-tag">${styleTags[k]||s.tag}</div>
-        <div class="sc-pills">
-          <span class="sc-pill" style="background:${pl[0]}22;color:${pl[0]};border:1px solid ${pl[0]}44">${plb[0]}</span>
-          ${plb[1]?`<span class="sc-pill" style="background:${pl[1]}22;color:${m.dark?pl[1]||'#aaa':pl[1]};border:1px solid ${pl[1]}44">${plb[1]}</span>`:''}
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-  document.getElementById('custom-wrap').style.display=curStyle==='custom'?'block':'none';
-}
-
-function selectStyle(k){curStyle=k;renderStyleGrid();lu();}
-
-function checkEmbed(){
-  const code=gv('f-embed-code').trim();
-  const st=document.getElementById('embed-status');
-  st.style.display='block';
-  if(!code){st.className='embed-wait';st.textContent='Belum ada kode embed.';lu();return;}
-  const isOO=code.includes('orderonline')||code.includes('ooef')||code.includes('ooe(');
-  const hasDiv=code.includes('class="ooef"')||code.includes("class='ooef'");
-  const hasScript=code.includes('<script')||code.includes('xEmbedInit');
-  if(isOO&&hasDiv&&hasScript){
-    st.className='embed-ok';
-    st.textContent='✓ OrderOnline embed lengkap (div + script) — siap!';
-  } else if(isOO){
-    st.className='embed-wait';
-    st.textContent='⚠ Terdeteksi OrderOnline tapi kode tidak lengkap. Salin SEMUA kode dari awal <!-- sampai akhir -->.';
-  } else if(code.includes('<form')||code.includes('<iframe')){
-    st.className='embed-ok';
-    st.textContent='✓ Form embed terdeteksi — siap!';
-  } else {
-    st.className='embed-wait';
-    st.textContent='⚠ Format tidak dikenali. Pastikan salin semua kode embed.';
-  }
-  lu();
-}
-
+// ═══════════════ HERO SLOTS ═══════════════
 function renderHeroSlots(){
-  document.getElementById('hero-slots').innerHTML=heroSlots.map((url,i)=>`
-    <div class="slot-card">
-      <div class="slot-header">
-        <div class="slot-num">${i+1}</div>
-        <span style="font-size:11px;font-weight:600;color:#a0aec0">Slide ${i+1}</span>
-        ${heroSlots.length>1?`<button onclick="removeHero(${i})" style="margin-left:auto;font-size:10px;padding:2px 8px;border:1px solid #2d3748;border-radius:4px;background:none;cursor:pointer;color:#718096;font-family:Inter,sans-serif">✕</button>`:''}
-      </div>
-      <div class="url-row">
-        <input type="text" placeholder="https://..." value="${url}" oninput="heroSlots[${i}]=this.value;updateHT(${i},this.value)" style="font-size:11px">
-        <div id="ht-${i}" class="${url?'img-ok':'img-empty'}">${url?'✓':'🖼'}</div>
-      </div>
-      ${url?`<img src="${url}" alt="" style="width:100%;height:70px;object-fit:cover;border-radius:6px;display:block" onerror="this.style.display='none'">`:''}
-    </div>`).join('');
+  var c=document.getElementById('hero-slots');if(!c)return;
+  c.innerHTML=heroSlots.map(function(u,i){
+    return '<div class="slot"><div class="slot-head"><div class="slot-num">'+(i+1)+'</div><div class="slot-title">Foto Hero '+(i+1)+'</div>'+(heroSlots.length>1?'<button class="btn-x" onclick="removeHero('+i+')">✕</button>':'')+'</div><input value="'+u.replace(/"/g,'&quot;')+'" placeholder="https://..." oninput="heroSlots['+i+']=this.value;lu()" style="width:100%;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:8px 10px;color:#e2e8f0;font-size:12px;font-family:inherit"></div>';
+  }).join('');
   document.getElementById('btn-add-hero').style.display=heroSlots.length>=6?'none':'block';
 }
-function updateHT(i,url){const b=document.getElementById('ht-'+i);if(b){b.className=url&&url.startsWith('http')?'img-ok':'img-empty';b.textContent=url&&url.startsWith('http')?'✓':'🖼';}heroSlots[i]=url;lu();}
 function addHero(){if(heroSlots.length<6){heroSlots.push('');renderHeroSlots();lu();}}
 function removeHero(i){if(heroSlots.length>1){heroSlots.splice(i,1);renderHeroSlots();lu();}}
 
+// ═══════════════ FOTO BLOCKS ═══════════════
 function renderFotoBlocks(){
-  document.getElementById('foto-blocks').innerHTML=fotoBlocks.map((fb,fi)=>`
-    <div class="slot-card">
-      <div class="slot-header">
-        <div class="slot-num slot-num-b">${fi+1}</div>
-        <span style="font-size:11px;font-weight:600;color:#a0aec0">Foto ${fi+1}</span>
-        ${fotoBlocks.length>1?`<button onclick="removeFoto(${fi})" style="margin-left:auto;font-size:10px;padding:2px 8px;border:1px solid #2d3748;border-radius:4px;background:none;cursor:pointer;color:#718096;font-family:Inter,sans-serif">✕</button>`:''}
-      </div>
-      <div class="url-row">
-        <input type="text" placeholder="https://..." value="${fb.url}" oninput="fotoBlocks[${fi}].url=this.value;updateFT(${fi},this.value)" style="font-size:11px">
-        <div id="ft-${fi}" class="${fb.url?'img-ok':'img-empty'}">${fb.url?'✓':'🖼'}</div>
-      </div>
-      ${fb.url?`<img src="${fb.url}" alt="" style="width:100%;height:70px;object-fit:cover;border-radius:6px;margin-bottom:8px;display:block" onerror="this.style.display='none'">`:''}
-      <div class="k-label">Keunggulan di foto ini</div>
-      <div id="kd-${fi}">${fb.keunggulan.map((k,ki)=>`
-        <div class="k-row">
-          <input type="text" value="${k.icon}" oninput="fotoBlocks[${fi}].keunggulan[${ki}].icon=this.value;lu()" style="text-align:center;font-size:13px;padding:3px;border:1px solid #2d3748;border-radius:5px;background:#16213e;color:#e2e8f0;outline:none;width:100%">
-          <input type="text" value="${k.teks}" placeholder="Tulis keunggulan..." oninput="fotoBlocks[${fi}].keunggulan[${ki}].teks=this.value;lu()" style="font-size:11px">
-          ${fb.keunggulan.length>1?`<button onclick="removeK(${fi},${ki})" style="font-size:10px;padding:2px 5px;border:1px solid #2d3748;border-radius:3px;background:none;cursor:pointer;color:#4a5568;font-family:Inter,sans-serif">✕</button>`:'<span></span>'}
-        </div>`).join('')}</div>
-      <button class="btn-add-k" onclick="addK(${fi})">+ Keunggulan</button>
-    </div>`).join('');
+  var c=document.getElementById('foto-blocks');if(!c)return;
+  c.innerHTML=fotoBlocks.map(function(fb,fi){
+    var kHtml=fb.keunggulan.map(function(k,ki){
+      return '<div class="row"><input value="'+k.icon+'" oninput="fotoBlocks['+fi+'].keunggulan['+ki+'].icon=this.value;lu()" style="width:38px;text-align:center;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:7px;color:#e2e8f0;font-size:14px;flex-shrink:0"><input value="'+k.teks.replace(/"/g,'&quot;')+'" placeholder="Tulis keunggulan..." oninput="fotoBlocks['+fi+'].keunggulan['+ki+'].teks=this.value;lu()" style="flex:1;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:7px 9px;color:#e2e8f0;font-size:12px"><button class="btn-x" onclick="removeK('+fi+','+ki+')">✕</button></div>';
+    }).join('');
+    return '<div class="slot" style="padding:12px"><div class="slot-head"><div class="slot-num">'+(fi+1)+'</div><div class="slot-title">Foto '+(fi+1)+'</div>'+(fotoBlocks.length>1?'<button class="btn-x" onclick="removeFoto('+fi+')">✕</button>':'')+'</div>'
+      +'<input value="'+fb.url.replace(/"/g,'&quot;')+'" placeholder="https://..." oninput="fotoBlocks['+fi+'].url=this.value;lu()" style="width:100%;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:8px 10px;color:#e2e8f0;font-size:12px;margin-bottom:10px">'
+      +'<div style="font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#e94560;margin-bottom:7px">Keunggulan di Foto Ini</div>'
+      +kHtml
+      +'<button class="btn-add" onclick="addK('+fi+')" style="margin-top:2px">+ Keunggulan</button></div>';
+  }).join('');
   document.getElementById('btn-add-foto').style.display=fotoBlocks.length>=6?'none':'block';
 }
-function updateFT(fi,url){const b=document.getElementById('ft-'+fi);if(b){b.className=url&&url.startsWith('http')?'img-ok':'img-empty';b.textContent=url&&url.startsWith('http')?'✓':'🖼';}fotoBlocks[fi].url=url;lu();}
-function addFoto(){if(fotoBlocks.length<6){fotoBlocks.push({url:'',keunggulan:[{icon:'✨',teks:''},{icon:'🌿',teks:''}]});renderFotoBlocks();lu();}}
+function addFoto(){if(fotoBlocks.length<6){fotoBlocks.push({url:'',keunggulan:[{icon:'✨',teks:''}]});renderFotoBlocks();lu();}}
 function removeFoto(fi){if(fotoBlocks.length>1){fotoBlocks.splice(fi,1);renderFotoBlocks();lu();}}
 function addK(fi){fotoBlocks[fi].keunggulan.push({icon:'✨',teks:''});renderFotoBlocks();lu();}
 function removeK(fi,ki){if(fotoBlocks[fi].keunggulan.length>1){fotoBlocks[fi].keunggulan.splice(ki,1);renderFotoBlocks();lu();}}
 
+// ═══════════════ FEATS ═══════════════
 function renderFeats(){
-  document.getElementById('feats-container').innerHTML=feats.map((f,i)=>`
-    <div class="feat-row">
-      <input type="text" value="${f.icon}" oninput="feats[${i}].icon=this.value;lu()" style="text-align:center;font-size:15px;padding:5px;border:1px solid #2d3748;border-radius:6px;background:#0f3460;color:#e2e8f0;outline:none;width:100%">
-      <div class="feat-sub">
-        <input type="text" value="${f.label}" oninput="feats[${i}].label=this.value;lu()" placeholder="Nama fitur" style="font-size:11px">
-        <input type="text" value="${f.sub}" oninput="feats[${i}].sub=this.value;lu()" placeholder="Sub teks" style="font-size:11px">
-        <button onclick="rmFeat(${i})" style="font-size:10px;padding:2px 7px;border:1px solid #2d3748;border-radius:4px;background:none;cursor:pointer;width:fit-content;font-family:Inter,sans-serif;color:#718096">✕</button>
-      </div>
-    </div>`).join('');
+  var c=document.getElementById('feats-list');if(!c)return;
+  c.innerHTML=feats.map(function(f,i){
+    return '<div class="slot"><div class="row"><input value="'+f.icon+'" oninput="feats['+i+'].icon=this.value;lu()" style="width:38px;text-align:center;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:7px;color:#e2e8f0;font-size:14px;flex-shrink:0"><input value="'+f.label.replace(/"/g,'&quot;')+'" placeholder="Label" oninput="feats['+i+'].label=this.value;lu()" style="flex:1;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:7px 9px;color:#e2e8f0;font-size:12px">'+(feats.length>1?'<button class="btn-x" onclick="rmFeat('+i+')">✕</button>':'')+'</div><input value="'+f.sub.replace(/"/g,'&quot;')+'" placeholder="Sub deskripsi" oninput="feats['+i+'].sub=this.value;lu()" style="width:100%;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:7px 9px;color:#e2e8f0;font-size:11px;margin-top:6px"></div>';
+  }).join('');
+  document.getElementById('btn-add-feat').style.display=feats.length>=8?'none':'block';
 }
-function addFeat(){feats.push({icon:'⭐',label:'Fitur Baru',sub:'Deskripsi'});renderFeats();lu();}
-function rmFeat(i){feats.splice(i,1);renderFeats();lu();}
+function addFeat(){if(feats.length<8){feats.push({icon:'⭐',label:'Fitur Baru',sub:'Deskripsi'});renderFeats();lu();}}
+function rmFeat(i){if(feats.length>1){feats.splice(i,1);renderFeats();lu();}}
 
-function buildPreviewHTML(){
-  var d = getPageData();
-  var s = STYLES[curStyle];
-  var bgColor = (curStyle==='dark'||curStyle==='neon'||curStyle==='luxury')?'#0a0a0a':(curStyle==='minimal'?'#f5f5f5':'#ede9e3');
-  var wrapBg  = (curStyle==='dark'||curStyle==='neon'||curStyle==='luxury')?'#0d0d0d':'#fff';
-  var fontLink = '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">';
-  var body = s.render(d, false);
-  // Ganti iframe placeholder dengan embed asli
-  if(d.embedCode){
-    body = body.replace(/<div id="oo-iframe-wrap"[^]*?<\/div>\s*<\/div>/,'').replace('<div id="oo-embed-placeholder"></div>','') + d.embedCode;
+// ═══════════════ SIZE SLOTS ═══════════════
+function renderSizeSlots(){
+  var c=document.getElementById('size-slots');if(!c)return;
+  c.innerHTML=sizeSlots.map(function(s,i){
+    return '<div class="row"><input value="'+s.val.replace(/"/g,'&quot;')+'" placeholder="Ukuran" oninput="sizeSlots['+i+'].val=this.value;lu()" style="flex:1;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:7px 9px;color:#e2e8f0;font-size:12px">'+(sizeSlots.length>1?'<button class="btn-x" onclick="rmSize('+i+')">✕</button>':'')+'</div>';
+  }).join('');
+}
+function addSize(){sizeSlots.push({val:''});renderSizeSlots();lu();}
+function rmSize(i){if(sizeSlots.length>1){sizeSlots.splice(i,1);renderSizeSlots();lu();}}
+function addPresetSize(type){
+  var p={pakaian:['S','M','L','XL','XXL'],sepatu:['36','37','38','39','40'],universal:['All Size']};
+  sizeSlots=p[type].map(function(v){return {val:v};});renderSizeSlots();lu();
+}
+
+// ═══════════════ COLOR SLOTS ═══════════════
+function renderColorSlots(){
+  var c=document.getElementById('color-slots');if(!c)return;
+  c.innerHTML=colorSlots.map(function(cl,i){
+    return '<div class="slot" style="padding:10px"><div class="row" style="margin-bottom:6px"><input type="color" value="'+cl.hex+'" oninput="colorSlots['+i+'].hex=this.value;lu()" style="width:38px;height:34px;border:1px solid #2d3748;border-radius:6px;background:#16213e;cursor:pointer;flex-shrink:0;padding:2px"><input value="'+cl.name.replace(/"/g,'&quot;')+'" placeholder="Nama warna" oninput="colorSlots['+i+'].name=this.value;lu()" style="flex:1;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:7px 9px;color:#e2e8f0;font-size:12px">'+(colorSlots.length>1?'<button class="btn-x" onclick="rmColor('+i+')">✕</button>':'')+'</div><input value="'+cl.img.replace(/"/g,'&quot;')+'" placeholder="URL foto warna ini (opsional)" oninput="colorSlots['+i+'].img=this.value;lu()" style="width:100%;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:7px 9px;color:#e2e8f0;font-size:11px"></div>';
+  }).join('');
+}
+function addColor(){colorSlots.push({name:'',hex:'#cccccc',img:''});renderColorSlots();lu();}
+function rmColor(i){if(colorSlots.length>1){colorSlots.splice(i,1);renderColorSlots();lu();}}
+
+// ═══════════════ PAKET SLOTS ═══════════════
+function renderPaketSlots(){
+  var c=document.getElementById('paket-slots');if(!c)return;
+  c.innerHTML=paketSlots.map(function(p,i){
+    return '<div class="slot" style="padding:10px"><div class="slot-head" style="margin-bottom:7px"><span style="font-size:10px;font-weight:600;color:#a0aec0">Paket '+(i+1)+'</span>'+(paketSlots.length>1?'<button class="btn-x" onclick="rmPaket('+i+')">✕</button>':'')+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px"><input value="'+p.nama.replace(/"/g,'&quot;')+'" placeholder="1 pcs" oninput="paketSlots['+i+'].nama=this.value;lu()" style="background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:7px 9px;color:#e2e8f0;font-size:11px"><input value="'+p.harga.replace(/"/g,'&quot;')+'" placeholder="Harga" oninput="paketSlots['+i+'].harga=this.value;lu()" style="background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:7px 9px;color:#e2e8f0;font-size:11px"></div><input value="'+p.ket.replace(/"/g,'&quot;')+'" placeholder="Keterangan (Hemat 10%)" oninput="paketSlots['+i+'].ket=this.value;lu()" style="width:100%;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:7px 9px;color:#e2e8f0;font-size:11px"></div>';
+  }).join('');
+  document.getElementById('btn-add-paket').style.display=paketSlots.length>=6?'none':'block';
+}
+function addPaket(){if(paketSlots.length<6){paketSlots.push({nama:'',harga:'',ket:''});renderPaketSlots();lu();}}
+function rmPaket(i){if(paketSlots.length>1){paketSlots.splice(i,1);renderPaketSlots();lu();}}
+
+// ═══════════════ STYLE GRID ═══════════════
+function renderStyleGrid(){
+  var c=document.getElementById('style-grid');if(!c)return;
+  c.innerHTML=Object.keys(STYLES).map(function(k){
+    var s=STYLES[k];
+    var active=curStyle===k?' active':'';
+    return '<div class="style-card'+active+'" style="--accent-color:'+s.accent+'" onclick="selectStyle(\''+k+'\')"><div class="sc-check">✓</div><div class="sc-preview" style="background:'+s.previewBg+'"><div style="padding:8px"><div style="height:6px;width:60%;background:rgba(255,255,255,.9);border-radius:2px;margin-bottom:4px"></div><div style="height:4px;width:80%;background:rgba(255,255,255,.5);border-radius:2px;margin-bottom:8px"></div><div style="height:24px;background:rgba(255,255,255,.25);border-radius:3px"></div></div></div><div class="sc-info"><div class="sc-name">'+s.name+'</div><div class="sc-desc">'+s.tag+'</div></div></div>';
+  }).join('');
+}
+function selectStyle(k){curStyle=k;renderStyleGrid();lu();}
+
+// ═══════════════ TOGGLES ═══════════════
+function toggleFooter(){
+  var cb=document.getElementById('f-footer-on');cb.checked=!cb.checked;
+  document.getElementById('f-footer-track').style.background=cb.checked?'#e94560':'#2d3748';
+  document.getElementById('f-footer-knob').style.transform=cb.checked?'translateX(16px)':'translateX(0)';
+  lu();
+}
+function toggleUrgency(){
+  var cb=document.getElementById('f-urgency-on');cb.checked=!cb.checked;
+  document.getElementById('f-urgency-track').style.background=cb.checked?'#e94560':'#2d3748';
+  document.getElementById('f-urgency-knob').style.transform=cb.checked?'translateX(16px)':'translateX(0)';
+  lu();
+}
+function toggleTimer(){
+  var cb=document.getElementById('f-timer-on');cb.checked=!cb.checked;
+  document.getElementById('f-timer-track').style.background=cb.checked?'#e94560':'#2d3748';
+  document.getElementById('f-timer-knob').style.transform=cb.checked?'translateX(16px)':'translateX(0)';
+  var body=document.getElementById('f-timer-body');body.style.opacity=cb.checked?'1':'0.4';body.style.pointerEvents=cb.checked?'auto':'none';
+  lu();
+}
+function toggleTimerLabel(){
+  var cb=document.getElementById('f-timer-label-on');cb.checked=!cb.checked;
+  document.getElementById('f-timer-label-track').style.background=cb.checked?'#e94560':'#2d3748';
+  document.getElementById('f-timer-label-knob').style.transform=cb.checked?'translateX(14px)':'translateX(0)';
+  lu();
+}
+function toggleSizeDetail(){
+  var cb=document.getElementById('v-size-detail-on');cb.checked=!cb.checked;
+  document.getElementById('v-size-detail-track').style.background=cb.checked?'#e94560':'#2d3748';
+  document.getElementById('v-size-detail-knob').style.transform=cb.checked?'translateX(14px)':'translateX(0)';
+  var body=document.getElementById('v-size-detail-body');body.style.opacity=cb.checked?'1':'0.4';body.style.pointerEvents=cb.checked?'auto':'none';
+  lu();
+}
+function toggleVarian(type){
+  var cb=document.getElementById('v-'+type+'-on');cb.checked=!cb.checked;
+  varianState[type]=cb.checked;
+  document.getElementById('v-'+type+'-track').style.background=cb.checked?'#e94560':'#2d3748';
+  document.getElementById('v-'+type+'-knob').style.transform=cb.checked?'translateX(16px)':'translateX(0)';
+  var body=document.getElementById('v-'+type+'-body');if(body){body.style.opacity=cb.checked?'1':'0.4';body.style.pointerEvents=cb.checked?'auto':'none';}
+  lu();
+}
+
+// ═══════════════ BRAND THUMB & EMBED CHECK ═══════════════
+function updateBrandThumb(){
+  var url=gv('f-brand-img');
+  document.getElementById('brand-thumb').style.backgroundImage=url?'url('+url+')':'none';
+}
+function checkEmbed(){
+  var code=gv('f-embed-code').trim();
+  var st=document.getElementById('embed-status');
+  if(!code){st.style.display='none';return;}
+  st.style.display='block';
+  if(code.indexOf('orderonline')>=0 || code.indexOf('<iframe')>=0 || code.indexOf('<script')>=0 || code.indexOf('<div')>=0){
+    st.style.background='#1a3a2a';st.style.color='#86efac';st.style.border='1px solid #166534';
+    st.textContent='✓ Kode embed terdeteksi.';
+  } else {
+    st.style.background='#3a2a1a';st.style.color='#fbbf24';st.style.border='1px solid #92400e';
+    st.textContent='⚠ Pastikan ini kode embed yang benar.';
   }
-  return '<!DOCTYPE html><html lang="id"><head>'
-    +'<meta charset="UTF-8">'
-    +'<meta name="viewport" content="width=device-width,initial-scale=1.0">'
-    +fontLink
-    +'<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,sans-serif;background:'+bgColor+';display:flex;justify-content:center}'+'.wrap{width:100%;max-width:520px;background:'+wrapBg+'}</style>'
-    +'</head><body><div class="wrap">'+body+'</div>'
-    +'<scr'+'ipt>(function(){document.querySelectorAll(".wrap script").forEach(function(o){var n=document.createElement("script");Array.from(o.attributes).forEach(function(a){n.setAttribute(a.name,a.value);});n.textContent=o.textContent;if(o.parentNode)o.parentNode.replaceChild(n,o);});})();<'+'/script>'
-    +'</body></html>';
+}
+
+// ═══════════════ GET PAGE DATA ═══════════════
+function getPageData(){
+  return {
+    brand:gv('f-brand'),
+    brandImg:gv('f-brand-img'),
+    brandRating:parseFloat(gv('f-brand-rating'))||5,
+    brandReview:gv('f-brand-review'),
+    produk:gv('f-produk')||'Nama Produk',
+    sub:gv('f-sub'),
+    tagline:gv('f-tagline'),
+    badges:(gv('f-badges')||'').split(',').map(function(b){return b.trim();}).filter(Boolean),
+    harga:gv('f-harga'),
+    hargaOld:gv('f-harga-old'),
+    urgency:(document.getElementById('f-urgency-on')||{checked:true}).checked ? gv('f-urgency') : '',
+    perks:(gv('f-perks')||'').split('\n').map(function(p){return p.trim();}).filter(Boolean),
+    footer:gv('f-footer')||'© 2025',
+    footerOn:(document.getElementById('f-footer-on')||{checked:true}).checked,
+    orderTitle:gv('f-order-title')||'Pesan Sekarang',
+    orderSub:gv('f-order-sub'),
+    embedCode:gv('f-embed-code').trim(),
+    timerOn:(document.getElementById('f-timer-on')||{checked:false}).checked,
+    timerLabelOn:(document.getElementById('f-timer-label-on')||{checked:true}).checked,
+    timerLabel:gv('f-timer-label')||'Promo Berakhir Dalam',
+    timerD:parseInt(gv('f-timer-d'))||0,
+    timerH:parseInt(gv('f-timer-h'))||0,
+    timerM:parseInt(gv('f-timer-m'))||0,
+    timerS:parseInt(gv('f-timer-s'))||0,
+  };
+}
+
+// ═══════════════ PREVIEW (iframe) ═══════════════
+function buildPreviewHTML(){
+  var d=getPageData();var s=STYLES[curStyle];
+  var bgColor=(curStyle==='dark'||curStyle==='neon'||curStyle==='luxury')?'#0a0a0a':(curStyle==='minimal'?'#f5f5f5':'#ede9e3');
+  var wrapBg=(curStyle==='dark'||curStyle==='neon'||curStyle==='luxury')?'#0d0d0d':'#fff';
+  var fontLink='<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">';
+  var body=s.render(d,false);
+  if(d.embedCode){
+    body=body.replace('<div id="oo-embed-placeholder"></div>','')+'';
+  }
+  var embedScript='';
+  if(d.embedCode){
+    embedScript='<scr'+'ipt>(function(){var f=document.getElementById("oo-embed-iframe");if(!f)return;var doc=f.contentDocument||f.contentWindow.document;doc.open();doc.write('+JSON.stringify('<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;font-family:Inter,sans-serif}</style></head><body>'+d.embedCode+'</body></html>')+');doc.close();function rz(){try{var h=doc.body.scrollHeight;if(h>50)f.style.height=(h+20)+"px";}catch(e){}}setTimeout(rz,500);setTimeout(rz,1500);setTimeout(rz,3000);})();<'+'/scr'+'ipt>';
+  }
+  return '<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">'+fontLink
+    +'<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,sans-serif;background:'+bgColor+';display:flex;justify-content:center}.wrap{width:100%;max-width:520px;background:'+wrapBg+'}</style></head><body><div class="wrap">'+body+'</div>'+embedScript+'</body></html>';
 }
 
 function lu(){
-  var iframe = document.getElementById('lp-preview');
-  if(!iframe) return;
-  var html = buildPreviewHTML();
-  var iDoc = iframe.contentDocument || iframe.contentWindow.document;
-  iDoc.open(); iDoc.write(html); iDoc.close();
-  // Auto resize iframe sesuai konten
-  function resize(){
-    try{
-      var h = iDoc.body ? iDoc.body.scrollHeight : 400;
-      if(h > 100) iframe.style.height = h + 'px';
-    }catch(e){}
-  }
-  setTimeout(resize, 300);
-  setTimeout(resize, 800);
-  setTimeout(resize, 2000);
-  setTimeout(resize, 4000);
+  var iframe=document.getElementById('lp-preview');if(!iframe)return;
+  var html=buildPreviewHTML();
+  var iDoc=iframe.contentDocument||iframe.contentWindow.document;
+  iDoc.open();iDoc.write(html);iDoc.close();
+  function resize(){try{var h=iDoc.body?iDoc.body.scrollHeight:400;if(h>100)iframe.style.height=h+'px';}catch(e){}}
+  setTimeout(resize,300);setTimeout(resize,800);setTimeout(resize,2000);setTimeout(resize,4000);
 }
 
+// ═══════════════ MODE ═══════════════
+function setMode(mode,el){
+  document.querySelectorAll('.mode-btn').forEach(function(b){b.classList.remove('active');});
+  el.classList.add('active');
+  var iframe=document.getElementById('lp-preview');
+  if(iframe){iframe.style.maxWidth=mode==='desktop'?'100%':'420px';iframe.style.borderRadius=mode==='desktop'?'0':'12px';}
+}
+
+// ═══════════════ EXPORT ═══════════════
 function getExportHTML(){
-  var d = getPageData();
-  var s = STYLES[curStyle];
-  var bgColor = (curStyle==='dark'||curStyle==='neon'||curStyle==='luxury')?'#0a0a0a':(curStyle==='minimal'?'#f5f5f5':'#ede9e3');
-  var wrapBg  = (curStyle==='dark'||curStyle==='neon'||curStyle==='luxury')?'#0d0d0d':'#fff';
-  var fontLink = '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">';
-  var body = s.render(d, true);
-  var reinject = '<scr'+'ipt>(function(){document.querySelectorAll(".wrap script").forEach(function(o){var n=document.createElement("script");Array.from(o.attributes).forEach(function(a){n.setAttribute(a.name,a.value);});n.textContent=o.textContent;if(o.parentNode)o.parentNode.replaceChild(n,o);});})();<'+'/script>';
-  var html = '<!DOCTYPE html><html lang="id"><head>'
-    +'<meta charset="UTF-8">'
-    +'<meta name="viewport" content="width=device-width,initial-scale=1.0">'
-    +'<title>'+(d.brand||'Toko')+' — '+(d.produk||'Produk')+'</title>'
-    +fontLink
-    +'<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,sans-serif;background:'+bgColor+';min-height:100vh;display:flex;justify-content:center;padding:24px 0}.wrap{width:100%;max-width:520px;background:'+wrapBg+'}@media(max-width:560px){body{padding:0}.wrap{max-width:100%}}</style>'
-    +'</head><body><div class="wrap">'+body+'</div>'+reinject+'</body></html>';
-  // Ganti placeholder embed
+  var d=getPageData();var s=STYLES[curStyle];
+  var bgColor=(curStyle==='dark'||curStyle==='neon'||curStyle==='luxury')?'#0a0a0a':(curStyle==='minimal'?'#f5f5f5':'#ede9e3');
+  var wrapBg=(curStyle==='dark'||curStyle==='neon'||curStyle==='luxury')?'#0d0d0d':'#fff';
+  var fontLink='<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">';
+  var body=s.render(d,true);
+  var reinject='<scr'+'ipt>(function(){document.querySelectorAll(".wrap script").forEach(function(o){var n=document.createElement("script");Array.from(o.attributes).forEach(function(a){n.setAttribute(a.name,a.value);});n.textContent=o.textContent;if(o.parentNode)o.parentNode.replaceChild(n,o);});})();<'+'/scr'+'ipt>';
+  var html='<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>'+(d.brand||'Toko')+' \u2014 '+(d.produk||'Produk')+'</title>'+fontLink
+    +'<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,sans-serif;background:'+bgColor+';min-height:100vh;display:flex;justify-content:center;padding:24px 0}.wrap{width:100%;max-width:520px;background:'+wrapBg+'}@media(max-width:560px){body{padding:0}.wrap{max-width:100%}}</style></head><body><div class="wrap">'+body+'</div>'+reinject+'</body></html>';
   if(d.embedCode){
-    html = html.replace('<div id="oo-embed-placeholder"></div>', d.embedCode);
-    html = html.replace(/<div id="oo-iframe-wrap"[^]*?<\/div>\s*<\/div>/, d.embedCode);
+    html=html.replace('<div id="oo-embed-placeholder"></div>', d.embedCode);
   }
   return html;
 }
 
 function doExport(){
-  const html=getExportHTML();
-  const brand=(gv('f-brand')||'landing').replace(/\s+/g,'-').toLowerCase();
-  const blob=new Blob([html],{type:'text/html'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download=brand+'.html';a.click();
+  var html=getExportHTML();
+  var blob=new Blob([html],{type:'text/html'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download='landing-page.html';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
 
 function doCopy(){
-  const html=getExportHTML();
-  const btn=document.getElementById('btn-cp');
-  const done=()=>{btn.textContent='✓ Tersalin!';btn.classList.add('done');setTimeout(()=>{btn.textContent='⎘ Copy Kode';btn.classList.remove('done');},2500);};
-  navigator.clipboard.writeText(html).then(done).catch(()=>{
-    const ta=document.createElement('textarea');ta.value=html;ta.style.cssText='position:fixed;opacity:0';
+  var html=getExportHTML();
+  var btn=document.getElementById('btn-cp');
+  var done=function(){btn.textContent='✓ Tersalin!';btn.classList.add('done');setTimeout(function(){btn.textContent='⎘ Copy Kode';btn.classList.remove('done');},2500);};
+  navigator.clipboard.writeText(html).then(done).catch(function(){
+    var ta=document.createElement('textarea');ta.value=html;ta.style.cssText='position:fixed;opacity:0';
     document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done();
   });
 }
 
 function doReset(){
-  if(!confirm('Reset semua data?')) return;
-  ['f-brand','f-produk','f-sub','f-tagline','f-badges','f-footer','f-harga','f-harga-old','f-urgency','f-perks','f-order-title','f-order-sub','f-embed-code','f-timer-label','f-timer-d','f-timer-h','f-timer-m','f-timer-s','f-brand-img','f-brand-rating','f-brand-review'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  if(!confirm('Reset semua data?'))return;
+  ['f-brand','f-brand-img','f-brand-review','f-produk','f-sub','f-tagline','f-badges','f-footer','f-harga','f-harga-old','f-urgency','f-perks','f-order-title','f-order-sub','f-embed-code','f-timer-label'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('f-brand-rating').value='4.9';
   document.getElementById('f-order-title').value='Pesan Sekarang';
   document.getElementById('f-order-sub').value='Isi form di bawah, kami proses dalam 1x24 jam';
+  document.getElementById('f-timer-label').value='Promo Berakhir Dalam';
   heroSlots=['',''];
-  fotoBlocks=[{url:'',keunggulan:[{icon:'✨',teks:''},{icon:'🌿',teks:''}]},{url:'',keunggulan:[{icon:'✅',teks:''},{icon:'⏱️',teks:''}]}];
+  fotoBlocks=[{url:'',keunggulan:[{icon:'✨',teks:''},{icon:'🌿',teks:''}]},{url:'',keunggulan:[{icon:'✅',teks:''},{icon:'⏱️',teks:''}]},{url:'',keunggulan:[{icon:'💎',teks:''},{icon:'🛡️',teks:''}]},{url:'',keunggulan:[{icon:'🔥',teks:''},{icon:'⭐',teks:''}]}];
   feats=[{icon:'🌿',label:'Bahan Premium',sub:'Kualitas terjamin'},{icon:'🤍',label:'Lembut & Nyaman',sub:'Cocok dipakai lama'},{icon:'✅',label:'Berkualitas',sub:'Pilihan terbaik'},{icon:'⏱️',label:'Praktis',sub:'Hemat waktu'}];
-  const st=document.getElementById('embed-status');if(st)st.style.display='none';
   sizeSlots=[{val:'S'},{val:'M'},{val:'L'},{val:'XL'},{val:'XXL'}];
   colorSlots=[{name:'Hitam',hex:'#111111',img:''},{name:'Putih',hex:'#FFFFFF',img:''},{name:'Coklat',hex:'#8B6340',img:''}];
   paketSlots=[{nama:'1 pcs',harga:'',ket:''},{nama:'2 pcs',harga:'',ket:'Hemat 10%'},{nama:'3 pcs',harga:'',ket:'Hemat 20%'}];
   varianState={size:true,color:true,paket:false};
-  var sdcb=document.getElementById('v-size-detail-on');var sdtrack=document.getElementById('v-size-detail-track');var sdknob=document.getElementById('v-size-detail-knob');var sdbody=document.getElementById('v-size-detail-body');
-  if(sdcb)sdcb.checked=false;if(sdtrack)sdtrack.style.background='#2d3748';if(sdknob)sdknob.style.transform='translateX(0)';if(sdbody){sdbody.style.opacity='0.4';sdbody.style.pointerEvents='none';}
-  var ttcb=document.getElementById('f-timer-on');var ttrack=document.getElementById('f-timer-track');var tknob=document.getElementById('f-timer-knob');var tbody=document.getElementById('f-timer-body');
-  if(ttcb)ttcb.checked=false;if(ttrack)ttrack.style.background='#2d3748';if(tknob)tknob.style.transform='translateX(0)';if(tbody){tbody.style.opacity='0.4';tbody.style.pointerEvents='none';}
-  var tlcb=document.getElementById('f-timer-label-on');var tltrack=document.getElementById('f-timer-label-track');var tlknob=document.getElementById('f-timer-label-knob');
-  if(tlcb)tlcb.checked=true;if(tltrack)tltrack.style.background='#e94560';if(tlknob)tlknob.style.transform='translateX(14px)';
-  var utrack=document.getElementById('f-urgency-track');var uknob=document.getElementById('f-urgency-knob');var ucb=document.getElementById('f-urgency-on');
-  if(ucb)ucb.checked=true;if(utrack)utrack.style.background='#e94560';if(uknob)uknob.style.transform='translateX(16px)';
-  var ftrack=document.getElementById('f-footer-track');var fknob=document.getElementById('f-footer-knob');var fcb=document.getElementById('f-footer-on');
-  if(fcb)fcb.checked=true;if(ftrack)ftrack.style.background='#e94560';if(fknob)fknob.style.transform='translateX(16px)';
+  updateBrandThumb();
+  document.getElementById('embed-status').style.display='none';
+  document.getElementById('auto-status').style.display='none';
   renderHeroSlots();renderFotoBlocks();renderFeats();renderStyleGrid();renderSizeSlots();renderColorSlots();renderPaketSlots();
-  ['size','color','paket'].forEach(function(type){
-    var on=varianState[type];
-    var track=document.getElementById('v-'+type+'-track');
-    var knob=document.getElementById('v-'+type+'-knob');
-    var body=document.getElementById('v-'+type+'-body');
-    var cb=document.getElementById('v-'+type+'-on');
-    if(cb) cb.checked=on;
-    if(track) track.style.background=on?'#e94560':'#2d3748';
-    if(knob)  knob.style.transform=on?'translateX(16px)':'translateX(0)';
-    if(body){body.style.opacity=on?'1':'0.4';body.style.pointerEvents=on?'auto':'none';}
-  });
   lu();
 }
 
+// ═══════════════ INIT ═══════════════
+loadGeminiKey();
 renderHeroSlots();
 renderFotoBlocks();
 renderFeats();
@@ -1532,18 +1101,6 @@ renderStyleGrid();
 renderSizeSlots();
 renderColorSlots();
 renderPaketSlots();
-// Sync visual toggle dengan varianState awal
-['size','color','paket'].forEach(function(type){
-  var on=varianState[type];
-  var track=document.getElementById('v-'+type+'-track');
-  var knob=document.getElementById('v-'+type+'-knob');
-  var body=document.getElementById('v-'+type+'-body');
-  var cb=document.getElementById('v-'+type+'-on');
-  if(cb) cb.checked=on;
-  if(track) track.style.background=on?'#e94560':'#2d3748';
-  if(knob)  knob.style.transform=on?'translateX(16px)':'translateX(0)';
-  if(body){body.style.opacity=on?'1':'0.4';body.style.pointerEvents=on?'auto':'none';}
-});
 lu();
 </script>
 </body>
