@@ -156,6 +156,20 @@ body{font-family:Inter,sans-serif;background:#0a0e27;color:#e2e8f0;height:100vh;
       <!-- HERO -->
       <div id="tab-hero" class="tab-content">
         <div style="font-size:11px;color:#718096;margin-bottom:12px;line-height:1.5">Foto utama produk (carousel). Bisa 1-6 foto, geser untuk lihat semua.</div>
+        <div class="box">
+          <div class="box-title">📐 Rasio Foto Hero</div>
+          <div class="fg" style="margin:0">
+            <select id="f-hero-ratio" onchange="heroRatio=this.value;lu()" style="font-size:12px">
+              <option value="1:1">Kotak 1:1 — Universal (disarankan)</option>
+              <option value="4:5">Potret 4:5 — Fashion / baju</option>
+              <option value="3:4">Potret 3:4 — Lebih tinggi</option>
+              <option value="4:3">Lanskap 4:3 — Lebih lebar</option>
+              <option value="16:9">Lanskap 16:9 — Banner</option>
+              <option value="auto">Auto — Ikuti ukuran asli foto</option>
+            </select>
+          </div>
+          <div style="font-size:10px;color:#718096;margin-top:7px;line-height:1.5">Rasio tetap bikin semua foto tampil rapi & presisi meski ukuran aslinya beda-beda.</div>
+        </div>
         <div id="hero-slots"></div>
         <button class="btn-add" onclick="addHero()" id="btn-add-hero">+ Tambah Foto Hero</button>
       </div>
@@ -339,6 +353,7 @@ function gv(id){var el=document.getElementById(id);return el?el.value:'';}
 
 // ═══════════════ STATE ═══════════════
 let curStyle = 'bold';
+let heroRatio = '1:1';
 let heroSlots = ['', ''];
 let fotoBlocks = [
   {url:'', keunggulan:[{icon:'✨',teks:''},{icon:'🌿',teks:''}]},
@@ -480,13 +495,23 @@ async function autoGenerate(){
 // ═══════════════ CAROUSEL BUILDER ═══════════════
 function buildCarousel(slots, accent, isE){
   var valid = slots.filter(function(u){return u.trim();});
+  // Hitung aspect-ratio CSS dari heroRatio
+  var ratioCSS='', imgFit='';
+  if(heroRatio && heroRatio!=='auto'){
+    var parts=heroRatio.split(':');
+    ratioCSS='aspect-ratio:'+parts[0]+'/'+parts[1]+';';
+    imgFit='width:100%;height:100%;object-fit:cover;object-position:center;display:block';
+  } else {
+    imgFit='width:100%;height:auto;display:block';
+  }
   if(valid.length===0){
-    return '<div style="height:'+(isE?'380px':'300px')+';background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:14px">Belum ada foto hero</div>';
+    var emptyRatio = ratioCSS ? ratioCSS : 'height:'+(isE?'380px':'300px')+';';
+    return '<div style="'+emptyRatio+'background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:14px">Belum ada foto hero</div>';
   }
   var uid = 'cr'+Math.random().toString(36).substr(2,6);
   var tot = valid.length;
   var slides = valid.map(function(u){
-    return '<div style="min-width:100%;flex-shrink:0"><img src="'+u+'" style="width:100%;height:auto;display:block" onerror="this.style.display=\'none\'"></div>';
+    return '<div style="min-width:100%;flex-shrink:0;'+ratioCSS+'overflow:hidden"><img src="'+u+'" style="'+imgFit+'" onerror="this.style.display=\'none\'"></div>';
   }).join('');
   var dots = '';
   for(var i=0;i<tot;i++){
@@ -1089,6 +1114,7 @@ function doReset(){
   colorSlots=[{name:'Hitam',hex:'#111111',img:''},{name:'Putih',hex:'#FFFFFF',img:''},{name:'Coklat',hex:'#8B6340',img:''}];
   paketSlots=[{nama:'1 pcs',harga:'',ket:''},{nama:'2 pcs',harga:'',ket:'Hemat 10%'},{nama:'3 pcs',harga:'',ket:'Hemat 20%'}];
   varianState={size:true,color:true,paket:false};
+  heroRatio='1:1';var hr=document.getElementById('f-hero-ratio');if(hr)hr.value='1:1';
   updateBrandThumb();
   document.getElementById('embed-status').style.display='none';
   document.getElementById('auto-status').style.display='none';
