@@ -169,6 +169,13 @@ body{font-family:Inter,sans-serif;background:#0a0e27;color:#e2e8f0;height:100vh;
             </select>
           </div>
           <div style="font-size:10px;color:#718096;margin-top:7px;line-height:1.5">Rasio tetap bikin semua foto tampil rapi & presisi meski ukuran aslinya beda-beda.</div>
+          <div class="fg" style="margin:10px 0 0">
+            <label>Mode Tampilan Foto</label>
+            <select id="f-hero-fit" onchange="heroFit=this.value;lu()" style="font-size:12px">
+              <option value="cover">Penuh — foto mengisi kotak rapi (disarankan)</option>
+              <option value="contain">Utuh — seluruh foto terlihat (ada latar blur)</option>
+            </select>
+          </div>
         </div>
         <div id="hero-slots"></div>
         <button class="btn-add" onclick="addHero()" id="btn-add-hero">+ Tambah Foto Hero</button>
@@ -354,7 +361,8 @@ function gv(id){var el=document.getElementById(id);return el?el.value:'';}
 // ═══════════════ STATE ═══════════════
 let curStyle = 'bold';
 let heroRatio = '1:1';
-let heroSlots = ['', ''];
+let heroFit = 'cover';
+let heroSlots = [{url:'',posX:50,posY:50,zoom:100},{url:'',posX:50,posY:50,zoom:100}];
 let fotoBlocks = [
   {url:'', keunggulan:[{icon:'✨',teks:''},{icon:'🌿',teks:''}]},
   {url:'', keunggulan:[{icon:'✅',teks:''},{icon:'⏱️',teks:''}]},
@@ -494,13 +502,21 @@ async function autoGenerate(){
 <script>
 // ═══════════════ CAROUSEL BUILDER ═══════════════
 function buildCarousel(slots, accent, isE){
-  var valid = slots.filter(function(u){return u.trim();});
+  var valid = slots.filter(function(h){return (h.url||'').trim();});
   // Hitung aspect-ratio CSS dari heroRatio
-  var ratioCSS='', imgFit='';
+  var ratioCSS='', slideExtra='', imgFit='';
+  var fitMode = (typeof heroFit!=='undefined') ? heroFit : 'contain';
   if(heroRatio && heroRatio!=='auto'){
     var parts=heroRatio.split(':');
     ratioCSS='aspect-ratio:'+parts[0]+'/'+parts[1]+';';
-    imgFit='width:100%;height:100%;object-fit:cover;object-position:center;display:block';
+    if(fitMode==='cover'){
+      imgFit='width:100%;height:100%;object-fit:cover;object-position:center;display:block';
+      slideExtra='overflow:hidden';
+    } else {
+      // contain: seluruh foto terlihat utuh, presisi di tengah, latar putih
+      imgFit='width:100%;height:100%;object-fit:contain;object-position:center;display:block';
+      slideExtra='overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center';
+    }
   } else {
     imgFit='width:100%;height:auto;display:block';
   }
@@ -510,8 +526,25 @@ function buildCarousel(slots, accent, isE){
   }
   var uid = 'cr'+Math.random().toString(36).substr(2,6);
   var tot = valid.length;
-  var slides = valid.map(function(u){
-    return '<div style="min-width:100%;flex-shrink:0;'+ratioCSS+'overflow:hidden"><img src="'+u+'" style="'+imgFit+'" onerror="this.style.display=\'none\'"></div>';
+  var useContainBlur = (heroRatio && heroRatio!=='auto' && fitMode!=='cover');
+  var slides = valid.map(function(h){
+    var u=h.url;
+    var posX=(h.posX!=null)?h.posX:50;
+    var posY=(h.posY!=null)?h.posY:50;
+    var zoom=(h.zoom!=null)?h.zoom:100;
+    if(useContainBlur){
+      // Foto utuh di tengah + latar blur dari foto itu sendiri (efek premium)
+      return '<div style="min-width:100%;flex-shrink:0;'+ratioCSS+'overflow:hidden;position:relative;background:#f5f5f5">'
+        +'<div style="position:absolute;inset:0;background-image:url('+u+');background-size:cover;background-position:center;filter:blur(20px) brightness(0.9);transform:scale(1.1)"></div>'
+        +'<img src="'+u+'" style="position:relative;width:100%;height:100%;object-fit:contain;object-position:center;display:block;z-index:1" onerror="this.style.display=\'none\'">'
+        +'</div>';
+    }
+    if(heroRatio && heroRatio!=='auto'){
+      // Cover dengan posisi & zoom yang bisa diatur (seperti FB)
+      return '<div style="min-width:100%;flex-shrink:0;'+ratioCSS+'overflow:hidden;background-image:url('+u+');background-size:'+zoom+'%;background-position:'+posX+'% '+posY+'%;background-repeat:no-repeat"></div>';
+    }
+    // Auto: foto natural
+    return '<div style="min-width:100%;flex-shrink:0"><img src="'+u+'" style="'+imgFit+'" onerror="this.style.display=\'none\'"></div>';
   }).join('');
   var dots = '';
   for(var i=0;i<tot;i++){
@@ -861,12 +894,32 @@ function sw(name, el){
 // ═══════════════ HERO SLOTS ═══════════════
 function renderHeroSlots(){
   var c=document.getElementById('hero-slots');if(!c)return;
-  c.innerHTML=heroSlots.map(function(u,i){
-    return '<div class="slot"><div class="slot-head"><div class="slot-num">'+(i+1)+'</div><div class="slot-title">Foto Hero '+(i+1)+'</div>'+(heroSlots.length>1?'<button class="btn-x" onclick="removeHero('+i+')">✕</button>':'')+'</div><input value="'+u.replace(/"/g,'&quot;')+'" placeholder="https://..." oninput="heroSlots['+i+']=this.value;lu()" style="width:100%;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:8px 10px;color:#e2e8f0;font-size:12px;font-family:inherit"></div>';
+  c.innerHTML=heroSlots.map(function(h,i){
+    var url=h.url||'';
+    var hasUrl=url.trim();
+    // Panel reposisi hanya muncul kalau ada URL & mode cover
+    var reposPanel = (hasUrl && heroFit==='cover' && heroRatio!=='auto') ? (
+      '<div style="margin-top:9px;background:#16213e;border:1px solid #2d3748;border-radius:8px;padding:10px">'
+      +'<div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#a0aec0;margin-bottom:8px">🎯 Atur Posisi Foto</div>'
+      // Preview mini dengan posisi live
+      +'<div style="width:100%;aspect-ratio:1/1;max-width:130px;margin:0 auto 10px;border-radius:8px;overflow:hidden;background:#000;background-image:url('+url+');background-size:'+(h.zoom||100)+'%;background-position:'+(h.posX||50)+'% '+(h.posY||50)+'%;background-repeat:no-repeat;border:2px solid #2d3748"></div>'
+      +'<div style="margin-bottom:7px"><div style="display:flex;justify-content:space-between;font-size:10px;color:#718096;margin-bottom:3px"><span>↔ Horizontal</span><span>'+(h.posX||50)+'%</span></div>'
+      +'<input type="range" min="0" max="100" value="'+(h.posX||50)+'" oninput="heroSlots['+i+'].posX=parseInt(this.value);renderHeroSlots();lu()" style="width:100%;accent-color:#e94560;cursor:pointer"></div>'
+      +'<div style="margin-bottom:7px"><div style="display:flex;justify-content:space-between;font-size:10px;color:#718096;margin-bottom:3px"><span>↕ Vertikal</span><span>'+(h.posY||50)+'%</span></div>'
+      +'<input type="range" min="0" max="100" value="'+(h.posY||50)+'" oninput="heroSlots['+i+'].posY=parseInt(this.value);renderHeroSlots();lu()" style="width:100%;accent-color:#e94560;cursor:pointer"></div>'
+      +'<div><div style="display:flex;justify-content:space-between;font-size:10px;color:#718096;margin-bottom:3px"><span>🔍 Zoom</span><span>'+(h.zoom||100)+'%</span></div>'
+      +'<input type="range" min="100" max="250" value="'+(h.zoom||100)+'" oninput="heroSlots['+i+'].zoom=parseInt(this.value);renderHeroSlots();lu()" style="width:100%;accent-color:#e94560;cursor:pointer"></div>'
+      +'<button onclick="heroSlots['+i+'].posX=50;heroSlots['+i+'].posY=50;heroSlots['+i+'].zoom=100;renderHeroSlots();lu()" style="width:100%;margin-top:8px;background:none;border:1px solid #2d3748;border-radius:6px;padding:6px;color:#718096;font-size:11px;cursor:pointer;font-family:inherit">↺ Reset Posisi</button>'
+      +'</div>'
+    ) : '';
+    return '<div class="slot"><div class="slot-head"><div class="slot-num">'+(i+1)+'</div><div class="slot-title">Foto Hero '+(i+1)+'</div>'+(heroSlots.length>1?'<button class="btn-x" onclick="removeHero('+i+')">✕</button>':'')+'</div>'
+      +'<input value="'+url.replace(/"/g,'&quot;')+'" placeholder="https://..." oninput="heroSlots['+i+'].url=this.value;renderHeroSlots();lu()" style="width:100%;background:#16213e;border:1px solid #2d3748;border-radius:6px;padding:8px 10px;color:#e2e8f0;font-size:12px;font-family:inherit">'
+      +reposPanel
+      +'</div>';
   }).join('');
   document.getElementById('btn-add-hero').style.display=heroSlots.length>=6?'none':'block';
 }
-function addHero(){if(heroSlots.length<6){heroSlots.push('');renderHeroSlots();lu();}}
+function addHero(){if(heroSlots.length<6){heroSlots.push({url:'',posX:50,posY:50,zoom:100});renderHeroSlots();lu();}}
 function removeHero(i){if(heroSlots.length>1){heroSlots.splice(i,1);renderHeroSlots();lu();}}
 
 // ═══════════════ FOTO BLOCKS ═══════════════
@@ -1108,14 +1161,14 @@ function doReset(){
   document.getElementById('f-order-title').value='Pesan Sekarang';
   document.getElementById('f-order-sub').value='Isi form di bawah, kami proses dalam 1x24 jam';
   document.getElementById('f-timer-label').value='Promo Berakhir Dalam';
-  heroSlots=['',''];
+  heroSlots=[{url:'',posX:50,posY:50,zoom:100},{url:'',posX:50,posY:50,zoom:100}];
   fotoBlocks=[{url:'',keunggulan:[{icon:'✨',teks:''},{icon:'🌿',teks:''}]},{url:'',keunggulan:[{icon:'✅',teks:''},{icon:'⏱️',teks:''}]},{url:'',keunggulan:[{icon:'💎',teks:''},{icon:'🛡️',teks:''}]},{url:'',keunggulan:[{icon:'🔥',teks:''},{icon:'⭐',teks:''}]}];
   feats=[{icon:'🌿',label:'Bahan Premium',sub:'Kualitas terjamin'},{icon:'🤍',label:'Lembut & Nyaman',sub:'Cocok dipakai lama'},{icon:'✅',label:'Berkualitas',sub:'Pilihan terbaik'},{icon:'⏱️',label:'Praktis',sub:'Hemat waktu'}];
   sizeSlots=[{val:'S'},{val:'M'},{val:'L'},{val:'XL'},{val:'XXL'}];
   colorSlots=[{name:'Hitam',hex:'#111111',img:''},{name:'Putih',hex:'#FFFFFF',img:''},{name:'Coklat',hex:'#8B6340',img:''}];
   paketSlots=[{nama:'1 pcs',harga:'',ket:''},{nama:'2 pcs',harga:'',ket:'Hemat 10%'},{nama:'3 pcs',harga:'',ket:'Hemat 20%'}];
   varianState={size:true,color:true,paket:false};
-  heroRatio='1:1';var hr=document.getElementById('f-hero-ratio');if(hr)hr.value='1:1';
+  heroRatio='1:1';heroFit='cover';var hr=document.getElementById('f-hero-ratio');if(hr)hr.value='1:1';var hf=document.getElementById('f-hero-fit');if(hf)hf.value='cover';
   updateBrandThumb();
   document.getElementById('embed-status').style.display='none';
   document.getElementById('auto-status').style.display='none';
